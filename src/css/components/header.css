@@ -1,0 +1,57 @@
+.header {
+  @apply w-full bg-white py-10 px-5;
+  background-color: var(--header-bg-color);
+  color: var(--header-text-color);
+}
+
+.header-items {
+  @apply border-solid border-gray-600 w-full flex flex-col-reverse gap-y-5 md:flex-row justify-between items-center;
+}
+
+.header-tabs {
+  @apply w-full md:w-1/2 lg:w-1/2 flex flex-row justify-between p-0.5 border border-solid border-gray-500 rounded-2xl;
+}
+
+.header-tab-item {
+  @apply bg-gradient-to-tr from-purple-950 to-violet-500 rounded-2xl px-4 py-1.5 text-white text-sm font-semibold cursor-pointer;
+}
+
+.header-side-tabs {
+  @apply w-full md:w-1/2 flex flex-row justify-between md:justify-end items-center gap-x-5;
+}
+
+.user-profile-item {
+  @apply w-9 h-9 rounded-full border border-solid border-gray-600 object-contain cursor-pointer;
+}
+
+.header-side-tabs-side-icons {
+  @apply flex flex-row gap-x-5 items-center;
+}
+
+.log-out-button {
+  @apply border-gray-600 flex flex-row items-center gap-x-5 border border-solid px-3 py-1 rounded-2xl cursor-pointer;
+}
+
+.log-out-button-icon {
+  @apply bg-white;
+}
+
+.log-out-button-title {
+  @apply text-sm font-semibold;
+}
+
+.notifications-button {
+  @apply w-9 h-9 border border-solid border-gray-600 rounded-full flex flex-row justify-center items-center cursor-pointer;
+}
+
+.toggle-theme-button {
+  @apply w-8 h-4 rounded-2xl border border-solid border-gray-600 relative;
+}
+
+.toggle-button-switcher-left {
+  @apply w-6 h-6 rounded-full bg-violet-900 absolute top-1/2 transform -translate-y-1/2 -left-3 cursor-pointer transition-all ease-in;
+}
+
+.toggle-button-switcher-right {
+  @apply w-6 h-6 rounded-full bg-violet-900 absolute top-1/2 transform -translate-y-1/2 -right-3 cursor-pointer transition-all ease-in;
+}

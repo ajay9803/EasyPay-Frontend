@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --header-bg-color: white;
+  --header-text-color: black;
+}
+
+[theme="DARK"] {
+  --bg-color: black;
+  --text-color: white;
+  --header-bg-color: #1a1a1a;
+  --header-text-color: white;
+}
+
+/* * {
+  border: 1px solid purple;
+} */
