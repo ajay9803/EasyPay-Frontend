@@ -1,5 +1,5 @@
 .header {
-  @apply w-full bg-white py-10 px-5;
+  @apply w-full py-10 px-5;
   background-color: var(--header-bg-color);
   color: var(--header-text-color);
 }

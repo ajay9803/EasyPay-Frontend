@@ -1,0 +1,105 @@
+.home-section {
+  @apply w-full flex flex-col md:flex-row md:gap-x-4 gap-y-10 py-10 px-5 mb-32;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.home-section-left-bar {
+  @apply w-full md:w-3/5 flex flex-col gap-y-10;
+}
+
+.account-details {
+  @apply flex flex-col w-full gap-y-4;
+}
+
+.account-details-title {
+  @apply text-lg tracking-widest;
+}
+
+.account-card {
+  @apply h-28 w-full bg-gradient-to-tr from-purple-950 to-violet-500 rounded-2xl flex flex-col justify-between items-start p-3;
+}
+
+.card-amount {
+  @apply text-xl text-white font-semibold tracking-wider cursor-pointer;
+}
+
+.card-title {
+  @apply text-sm tracking-wide text-white;
+}
+
+.quick-transactions-section {
+  @apply w-full flex flex-col gap-y-5;
+}
+
+.quick-transactions-section-title {
+  @apply text-lg tracking-widest;
+}
+
+.quick-transactions {
+  @apply w-full flex flex-row rounded-2xl p-2 shadow-black shadow-sm gap-x-3;
+}
+
+.add-quick-transaction {
+  @apply h-24 w-20 rounded-2xl border border-solid flex flex-col items-center justify-center gap-y-3;
+}
+
+.add-icon {
+  @apply h-9 w-9 rounded-full border border-dotted border-purple-700;
+}
+
+.add-icon-title {
+  @apply text-sm tracking-wider;
+}
+
+.quick-transaction {
+  @apply h-24 w-20 rounded-2xl border border-solid flex flex-col items-center justify-center gap-y-3;
+}
+
+.quick-transaction-image {
+  @apply h-9 w-9 rounded-full border border-dotted border-purple-700;
+}
+
+.quick-transaction-title {
+  @apply text-sm tracking-wider;
+}
+
+.recent-transactions-section {
+  @apply w-full md:w-2/5;
+}
+
+.recent-transactions-section-title {
+  @apply text-xl font-semibold tracking-wider mb-5;
+}
+
+.recent-transactions {
+  @apply flex flex-col gap-y-1 rounded-2xl shadow-md shadow-gray-800;
+}
+
+.transaction-item {
+  @apply flex flex-row items-center justify-between px-3 py-4;
+}
+
+.transaction-details {
+  @apply flex flex-row items-center gap-x-2;
+}
+
+.transaction-type-debit {
+  @apply w-9 h-9 rounded-full bg-green-600;
+}
+
+.transaction-type-credit {
+  @apply w-9 h-9 rounded-full bg-red-600;
+}
+
+.transaction-details-tab {
+  @apply flex flex-col gap-y-1.5 text-sm;
+}
+
+.transaction-username {
+  @apply font-bold;
+}
+
+.transaction-amount {
+  @apply text-sm;
+}

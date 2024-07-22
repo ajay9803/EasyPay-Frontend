@@ -1,0 +1,13 @@
+.login-page {
+  @apply w-full flex flex-row;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.login-image {
+  @apply hidden md:block w-1/2 h-96 object-cover border border-solid border-purple-700;
+}
+
+.login-form {
+  @apply hidden md:block w-full md:w-1/2;
+}

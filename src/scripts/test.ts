@@ -1,8 +1,10 @@
 import Router from "universal-router";
-import { Header } from "../views/components/header";
+// import { Header } from "./header";
+// import { Home } from "../views/pages/home";
 
 document.addEventListener("DOMContentLoaded", () => {
-  Header.header();
+  // Header.header();
+  // Home.accountDetails();
 
   // custom routers using Universal-Router
   const router = new Router([
