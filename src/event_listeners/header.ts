@@ -1,8 +1,8 @@
 export class Header {
-  static async load(): Promise<string> {
+  static load: () => Promise<string> = async () => {
     const response = await fetch("src/views/components/header.html");
     return response.text();
-  }
+  };
 
-  static initEventListeners() {}
+  static initEventListeners: () => void = () => {};
 }

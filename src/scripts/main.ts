@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const appHeader = document.getElementById("header") as HTMLHeadElement;
   appHeader.innerHTML = header;
   HeaderActions.toggleSwitch();
+  HeaderActions.getLoggedInState();
 
   Router.init();
   window.addEventListener("hashchange", () => Router.loadContent());

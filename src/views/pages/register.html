@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+</head>
+
+<body>
+    <div class="body w-full px-5 py-10 flex flex-row items-center">
+        <div class="hidden md:block w-1/2 max-h-screen">
+            <img class="h-screen w-full object-cover" alt="login" src="https://cdn.corporatefinanceinstitute.com/assets/digital-wallet-1024x683.jpeg">
+        </div>
+        <div class="w-full md:w-1/2 flex items-center justify-center min-h-screen ">
+            <div class="rounded-lg p-8 w-full max-w-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <img src="./images/e-wallet.png" alt="Easy Pay Logo" class="h-10">
+                    <a href="/#/login" class="text-purple-600">
+                        <span class="mr-2">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </span> Go To Login</a>
+                </div>
+                <h2 class="text-3xl font-semibold text-purple-800 mb-2 tracking-wider">Join the cashless world.</h2>
+                <p class="text-gray-600 my-6 font-semibold">By having a Easy Pay account, you can pay, book and transfer
+                    cash easily.
+                    Sign up in
+                    just seconds.</p>
+
+                <form>
+                    <div class="mb-4">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <i class="fa-regular fa-user"></i>
+                            </span>
+                            <input type="text" id="full-name"
+                                class="input block w-full pl-10 pr-3 py-2 border rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                placeholder="Full name">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <i class="fa-solid fa-phone "></i>
+                            </span>
+                            <input type="text" id="mobile-number"
+                                class="input block w-full pl-10 pr-3 py-2 border rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                placeholder="Mobile number">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <i class="fa-regular fa-envelope"></i>
+                            </span>
+                            <input type="email" id="email"
+                                class="input block w-full pl-10 pr-3 py-2 border rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <i class="fa-regular fa-calendar"></i>
+                            </span>
+                            <input type="text" id="dob"
+                                class="input block w-full pl-10 pr-3 py-2 border rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                placeholder="Date of Birth (YYYY-MM-DD) in AD">
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex items-center mt-2">
+                            <label class="inline-flex items-center mr-4">
+                                <input type="radio" class="form-radio" name="gender" value="male">
+                                <span class="ml-2">Male</span>
+                            </label>
+                            <label class="inline-flex items-center mr-4">
+                                <input type="radio" class="form-radio" name="gender" value="female">
+                                <span class="ml-2">Female</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio" name="gender" value="other">
+                                <span class="ml-2">Other</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" id="password"
+                                class="input block w-full pl-10 pr-3 py-2 border rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" id="confirm-password"
+                                class="input block w-full pl-10 pr-3 py-2 border rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                placeholder="Confirm Password">
+                        </div>
+                    </div>
+                    <button id="register-button" type="submit"
+                        class="w-full bg-purple-500 text-white py-2 rounded-md hover:bg-purple-600 transition duration-150">Sign
+                        Up</button>
+                </form>
+            </div>
+        </div>
+</body>
+
+</html>

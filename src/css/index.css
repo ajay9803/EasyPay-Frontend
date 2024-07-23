@@ -7,6 +7,8 @@
   --text-color: black;
   --header-bg-color: white;
   --header-text-color: black;
+  --input-bg-color: white;
+  --input-text-color: black;
 }
 
 [theme="DARK"] {
@@ -14,8 +16,10 @@
   --text-color: white;
   --header-bg-color: #1a1a1a;
   --header-text-color: white;
+  --input-bg-color: #1a1a1a;
+  --input-text-color: white;
 }
-
-/* * {
+/* 
+* {
   border: 1px solid purple;
 } */

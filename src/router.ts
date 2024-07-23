@@ -2,18 +2,17 @@ import { HomePage } from "./event_listeners/home";
 import { AboutUsPage } from "./event_listeners/about_us";
 import { HomeActions } from "./scripts/home";
 import { LoginPage } from "./event_listeners/login";
+import { LoginActions } from "./scripts/login";
+import { RegisterPage } from "./event_listeners/register";
+import { RegisterActions } from "./scripts/register";
 
-const routes: { [key: string]: { component: any; actions: (() => void)[] } } = {
+const routes: { [key: string]: { component: any } } = {
   "#/home": {
     component: HomePage,
-    actions: [
-      HomeActions.toggleViewAmount,
-      HomeActions.getQuickTransactions,
-      HomeActions.getRecentTransactions,
-    ],
   },
-  "#/about-us": { component: AboutUsPage, actions: [] },
-  "#/login": {component: LoginPage, actions: []}
+  "#/about-us": { component: AboutUsPage },
+  "#/login": { component: LoginPage },
+  "#/register": { component: RegisterPage },
 };
 
 export class Router {
@@ -23,9 +22,6 @@ export class Router {
     if (route) {
       const content = await route.component.load();
       document.getElementById("body")!.innerHTML = content;
-      route.actions.forEach((action) => {
-        action();
-      });
 
       route.component.initEventListeners();
     }

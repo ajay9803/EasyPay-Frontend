@@ -1,8 +1,12 @@
+import { LoginActions } from "../scripts/login";
+
 export class LoginPage {
-  static async load(): Promise<string> {
+  static load: () => Promise<string> = async () => {
     const response = await fetch("src/views/pages/login.html");
     return response.text();
   }
 
-  static initEventListeners() {}
+  static initEventListeners: () => void = () => {
+    LoginActions.login();
+  };
 }

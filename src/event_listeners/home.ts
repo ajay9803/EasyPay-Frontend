@@ -1,8 +1,14 @@
+import { HomeActions } from "../scripts/home";
+
 export class HomePage {
-  static async load(): Promise<string> {
+  static load: () => Promise<string> = async () => {
     const response = await fetch("src/views/pages/home.html");
     return response.text();
-  }
+  };
 
-  static initEventListeners() {}
+  static initEventListeners: () => void = () => {
+    HomeActions.toggleViewAmount();
+    HomeActions.getQuickTransactions();
+    HomeActions.getRecentTransactions();
+  };
 }

@@ -121,12 +121,10 @@ export class HomeActions {
       } else {
         transactionType.classList.add("transaction-type-credit");
       }
-      
 
       // Create transaction details tab
       const transactionDetailsTab = document.createElement("div");
 
-      
       transactionDetailsTab.classList.add("transaction-details-tab");
 
       const username = document.createElement("p");
