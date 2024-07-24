@@ -1,10 +1,10 @@
-import { HomePage } from "./event_listeners/home";
-import { AboutUsPage } from "./event_listeners/about_us";
-import { HomeActions } from "./scripts/home";
-import { LoginPage } from "./event_listeners/login";
-import { LoginActions } from "./scripts/login";
-import { RegisterPage } from "./event_listeners/register";
-import { RegisterActions } from "./scripts/register";
+import { HomePage } from "./loaders/home";
+import { AboutUsPage } from "./loaders/about_us";
+import { LoginPage } from "./loaders/login";
+import { RegisterPage } from "./loaders/register";
+import { Header } from "./loaders/header";
+import { VerifyOtpPage } from "./loaders/verify_otp";
+import { LoadBalancePage } from "./loaders/load_balance";
 
 const routes: { [key: string]: { component: any } } = {
   "#/home": {
@@ -13,6 +13,8 @@ const routes: { [key: string]: { component: any } } = {
   "#/about-us": { component: AboutUsPage },
   "#/login": { component: LoginPage },
   "#/register": { component: RegisterPage },
+  "#/verify-otp": { component: VerifyOtpPage },
+  "#/load-balance": {component: LoadBalancePage}
 };
 
 export class Router {
@@ -28,6 +30,7 @@ export class Router {
   }
 
   static handleRouteChange() {
+    Header.initEventListeners();
     Router.loadContent();
   }
   static init() {

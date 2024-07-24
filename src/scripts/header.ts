@@ -1,12 +1,13 @@
 import Theme from "../enums/theme";
+import { Router } from "../router";
 
 export class HeaderActions {
   static toggleSwitch: () => void = () => {
-    const currentTheme = localStorage.getItem("theme");
+    const currentTheme = localStorage.getItem("theme") ?? "LIGHT";
 
     document.documentElement.setAttribute(
       "theme",
-      currentTheme === Theme.DARK ? "DARK" : "LIGHT"
+      currentTheme && currentTheme === Theme.DARK ? "DARK" : "LIGHT"
     );
 
     const toggleSwitcher = document.getElementById(
@@ -32,6 +33,18 @@ export class HeaderActions {
     };
   };
 
+  static logoutUser: () => void = () => {
+    const logoutButton = document.getElementById(
+      "log-out-button"
+    ) as HTMLDivElement;
+
+    logoutButton.onclick = () => {
+      localStorage.clear();
+      window.history.pushState(null, "", "/#/login");
+      Router.handleRouteChange();
+    };
+  };
+
   static getLoggedInState: () => void = () => {
     const user = localStorage.getItem("user");
 
@@ -39,35 +52,33 @@ export class HeaderActions {
       "log-out-button"
     ) as HTMLDivElement;
 
-    const notificationsButton = document.getElementById('notifications-button') as HTMLDivElement;
+    const notificationsButton = document.getElementById(
+      "notifications-button"
+    ) as HTMLDivElement;
 
     const userProfile = document.getElementById(
       "user-profile"
     ) as HTMLDivElement;
 
-    console.log(user);
+    const loginButton = document.getElementById(
+      "tab-login-button"
+    ) as HTMLDivElement;
+    const registerButton = document.getElementById(
+      "tab-register-button"
+    ) as HTMLDivElement;
+
     if (user) {
       logoutButton.style.display = "block";
-      userProfile.style.display = "block";
-      notificationsButton.style.display = "block";
+      userProfile.style.display = "flex";
+      notificationsButton.style.display = "flex";
+      loginButton.style.display = "none";
+      registerButton.style.display = "none";
     } else {
       logoutButton.style.display = "none";
       userProfile.style.display = "none";
       notificationsButton.style.display = "none";
-
-      const sideIcons = document.getElementById("side-icons") as HTMLDivElement;
-
-      const loginButton = document.createElement("a") as HTMLAnchorElement;
-      loginButton.innerHTML = "Login";
-      loginButton.href = "/#/login";
-      loginButton.classList.add("login-button");
-      sideIcons.appendChild(loginButton);
-
-      const registerButton = document.createElement("a") as HTMLAnchorElement;
-      registerButton.innerHTML = "Register";
-      registerButton.href = "/#/register"; 
-      registerButton.classList.add("register-button");
-      sideIcons.appendChild(registerButton);
+      loginButton.style.display = "block";
+      registerButton.style.display = "block";
     }
   };
 }

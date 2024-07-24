@@ -13,7 +13,7 @@
 }
 
 .header-tab-item {
-  @apply bg-gradient-to-tr from-purple-950 to-violet-500 rounded-2xl px-4 py-1.5 text-white text-sm font-semibold cursor-pointer;
+  @apply bg-gradient-to-tr from-blue-700 to-blue-500 rounded-2xl px-4 py-1.5 text-white text-sm font-semibold cursor-pointer;
 }
 
 .header-side-tabs {
@@ -21,7 +21,7 @@
 }
 
 .user-profile-item {
-  @apply w-9 h-9 rounded-full border border-solid border-gray-600 object-contain cursor-pointer;
+  @apply w-9 h-9 rounded-full border border-solid border-gray-600 object-contain cursor-pointer flex flex-col justify-center items-center;
 }
 
 .header-side-tabs-side-icons {
@@ -49,11 +49,11 @@
 }
 
 .toggle-button-switcher-left {
-  @apply w-6 h-6 rounded-full bg-violet-900 absolute top-1/2 transform -translate-y-1/2 -left-3 cursor-pointer transition-all ease-in;
+  @apply w-6 h-6 rounded-full bg-blue-900 absolute top-1/2 transform -translate-y-1/2 -left-3 cursor-pointer transition-all ease-in;
 }
 
 .toggle-button-switcher-right {
-  @apply w-6 h-6 rounded-full bg-violet-900 absolute top-1/2 transform -translate-y-1/2 -right-3 cursor-pointer transition-all ease-in;
+  @apply w-6 h-6 rounded-full bg-blue-900 absolute top-1/2 transform -translate-y-1/2 -right-3 cursor-pointer transition-all ease-in;
 }
 
 .login-button {

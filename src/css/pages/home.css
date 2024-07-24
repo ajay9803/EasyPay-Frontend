@@ -15,7 +15,7 @@
 }
 
 .account-card {
-  @apply h-28 w-full bg-gradient-to-tr from-purple-950 to-violet-500 rounded-2xl flex flex-col justify-between items-start p-3;
+  @apply h-28 w-full bg-gradient-to-tr from-blue-950 to-blue-500 rounded-2xl flex flex-col justify-between items-start p-3;
 }
 
 .card-amount {
@@ -100,4 +100,28 @@
 
 .transaction-amount {
   @apply text-sm;
+}
+
+.services-section {
+  @apply w-full;
+}
+
+.services-title {
+  @apply text-xl tracking-wider mb-5;
+}
+
+.services {
+  @apply flex flex-row flex-wrap gap-5;
+}
+
+.service-item {
+  @apply flex flex-col items-center gap-y-5 p-4 border-2 border-solid rounded-xl border-blue-600;
+}
+
+.service-item-icon {
+  @apply text-2xl text-blue-700;
+}
+
+.service-item-title {
+  @apply text-sm text-blue-700;
 }

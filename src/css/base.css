@@ -1,9 +1,11 @@
 .body {
   background-color: var(--bg-color);
   color: var(--text-color);
+  border-color: var(--border-color);
 }
 
 .input {
   background-color: var(--input-bg-color);
   color: var(--input-text-color);
+  border-color: var(--border-color);
 }

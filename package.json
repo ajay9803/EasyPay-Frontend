@@ -16,6 +16,7 @@
     "vite": "^5.3.4"
   },
   "dependencies": {
-    "universal-router": "^9.2.0"
+    "universal-router": "^9.2.0",
+    "yup": "^1.4.0"
   }
 }

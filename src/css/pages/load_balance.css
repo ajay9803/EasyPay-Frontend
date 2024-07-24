@@ -1,0 +1,73 @@
+.load-balance-page {
+  @apply px-5 w-full flex flex-col;
+}
+
+.divider {
+  @apply h-[1px] w-full bg-blue-700;
+}
+
+.normal-divider {
+  @apply h-[1px] w-full;
+  background: var(--border-color);
+}
+
+.load-balance-card {
+  @apply mt-10 px-5 py-5 shadow-sm shadow-black;
+}
+
+.load-balance-card-head {
+  @apply flex flex-row gap-x-5 items-center pb-5;
+}
+
+.load-balance-head-icon {
+  @apply border border-solid px-2 py-1  text-blue-500;
+  border-color: var(--border-color);
+}
+
+.load-balance-head-title {
+  @apply font-semibold tracking-wider;
+}
+
+.bank-accounts {
+  @apply py-5 w-full flex flex-col items-start;
+}
+
+.linked-accounts-head {
+  @apply bg-blue-200 flex flex-col items-center px-3 py-3 gap-y-2 border-b-2 border-solid border-b-blue-800;
+}
+
+.linked-accounts-icon {
+  @apply text-black;
+}
+
+.linked-accounts-title {
+  @apply text-sm text-black;
+}
+
+.linked-accounts {
+  @apply my-5 flex flex-col md:flex-row gap-x-5 gap-y-5 w-full;
+}
+
+.account-card {
+  @apply flex flex-col justify-between w-full md:w-80 h-40 p-4 relative;
+}
+
+.bank-name-heads {
+  @apply flex flex-col gap-y-1;
+}
+
+.bank-name {
+  @apply text-white tracking-wider font-semibold;
+}
+
+.bank-location {
+  @apply text-xs text-white tracking-wide;
+}
+
+.bank-image {
+  @apply absolute top-0 right-5 h-12 w-12;
+}
+
+.bank-account-number {
+  @apply text-white font-semibold tracking-widest;
+}

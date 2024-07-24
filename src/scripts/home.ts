@@ -1,17 +1,39 @@
+import { IUser } from "../interfaces/user";
+import AuthService from "../services/auth";
+import UserUtils from "../utils/user";
+
 let viewAmount: boolean = false;
 
 export class HomeActions {
+  static getUpdatedUserDetails: () => Promise<void> = async () => {
+    const accessToken = UserUtils.getAccessToken();
+    const user: IUser = await AuthService.fetchUser(accessToken);
+
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+      const amountElement = document.getElementById(
+        "card-amount"
+      ) as HTMLParagraphElement;
+
+      amountElement.innerHTML = viewAmount
+        ? `Rs. ${user.balance}`
+        : "Rs. XXX.XX";
+    }
+  };
+
   static toggleViewAmount: () => void = () => {
+    let balance: number;
+    const userData = UserUtils.getUserDetails();
+
+    balance = userData ? parseInt(userData.balance) : 0;
     const amountElement = document.getElementById(
       "card-amount"
     ) as HTMLParagraphElement;
 
     const toggle = () => {
-      console.log("The card-amount is: ", amountElement);
-
       viewAmount = !viewAmount;
 
-      amountElement.innerHTML = viewAmount ? "Rs. 3,500" : "Rs. XXX.XX";
+      amountElement.innerHTML = viewAmount ? `Rs. ${balance}` : "Rs. XXX.XX";
     };
 
     amountElement.onclick = () => {
