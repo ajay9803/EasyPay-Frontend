@@ -1,0 +1,37 @@
+<div class="body kyc-form-page">
+    <div class="kyc-image-section">
+        <img src="https://adyen.getbynder.com/transform/4298074a-0912-4f9d-972c-7ba9270df075/blog-header-digital-wallets?io=transform:fill,width:654,height:368&io=transform:crop,width:654,height:368"
+            alt="KYC Image" class="kyc-img">
+    </div>
+    <div class="form-section">
+        <h2 class="form-title">KYC Form</h2>
+        <form id="kyc-form">
+            <div class="kyc-form-group">
+                <label for="user-image" class="form-label">User Image</label>
+                <input type="file" id="user-image" name="userImage" accept="image/*" class="input kyc-file-input">
+                <p class="mt-1 text-red-600 font-sm tracking-wide" id="user-image-error"></p>
+            </div>
+            <div class="kyc-form-group">
+                <label for="citizenship-number" class="form-label">Citizenship Number</label>
+                <input type="text" id="citizenship-number" name="citizenshipNumber" class="input kyc-input-field"
+                    placeholder="Enter your citizenship number">
+                <p class="mt-1 text-red-600 font-sm tracking-wide" id="citizenship-number-error"></p>
+            </div>
+            <div class="kyc-form-group">
+                <label for="issue-date" class="form-label">Issue Date</label>
+                <input type="text" id="issue-date" name="issueDate" class="input kyc-input-field"
+                    placeholder="YYYY-MM-DD">
+                <p class="mt-1 text-red-600 font-sm tracking-wide" id="issue-date-error"></p>
+            </div>
+            <div class="kyc-form-group">
+                <label for="citizenship-image" class="form-label">Citizenship Image</label>
+                <input type="file" id="citizenship-image" name="citizenshipImage" accept="image/*"
+                    class="input kyc-file-input">
+                <p class="mt-1 text-red-600 font-sm tracking-wide" id="citizenship-image-error"></p>
+            </div>
+            <div class="form-button">
+                <button type="submit" class="kyc-btn-continue">Continue</button>
+            </div>
+        </form>
+    </div>
+</div>

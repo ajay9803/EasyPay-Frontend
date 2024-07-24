@@ -77,7 +77,7 @@ export class RegisterActions {
         await registerSchema.validate(formObject, { abortEarly: false });
 
         await AuthService.sendSignupOtp({
-          userName: formObject.fullName as string,
+          username: formObject.fullName as string,
           email: formObject.email as string,
           dob: formObject.dob as string,
           gender: formObject.gender as string,

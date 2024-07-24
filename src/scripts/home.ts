@@ -21,6 +21,28 @@ export class HomeActions {
     }
   };
 
+  static updateHomeView: () => void = () => {
+    const user = UserUtils.getUserDetails();
+
+    const homeSection = document.getElementById(
+      "home-section"
+    ) as HTMLDivElement;
+    const kycFormServiceItem = document.getElementById(
+      "kyc-service-item"
+    ) as HTMLDivElement;
+
+    if (user) {
+      if (!user.isVerified) {
+        kycFormServiceItem.style.display = "flex";
+      } else {
+        kycFormServiceItem.style.display = "none";
+      }
+    } else {
+      console.log('No user found.');
+      homeSection.style.display = "none";
+    }
+  };
+
   static toggleViewAmount: () => void = () => {
     let balance: number;
     const userData = UserUtils.getUserDetails();

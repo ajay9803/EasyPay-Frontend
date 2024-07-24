@@ -3,8 +3,125 @@ import { Toast } from "../utils/toast";
 import UserUtils from "../utils/user";
 
 export class LoadBalancePageActions {
-  showLoadBalanceModal = () => {};
   static loadLinkedAccounts: () => void = () => {
+    const showLoadBalanceModal = (bankAccount: any) => {
+      const appElement = document.getElementById("app") as HTMLDivElement;
+
+      const blackBackgroundElement = document.createElement(
+        "div"
+      ) as HTMLDivElement;
+
+      const closeModal = () => {
+        appElement.removeChild(blackBackgroundElement);
+      };
+
+      blackBackgroundElement.onclick = () => {
+        closeModal();
+      };
+
+      blackBackgroundElement.classList.add("load-fund-modal");
+      blackBackgroundElement.classList.add("load_fund_modal");
+
+      const modalContainer = document.createElement("div");
+      modalContainer.classList.add("load-fund-modal-container");
+      modalContainer.classList.add("body");
+
+      modalContainer.onclick = (e: Event) => {
+        e.stopPropagation();
+      };
+
+      const header = document.createElement("p") as HTMLParagraphElement;
+      header.classList.add("load-fund-modal-header");
+      header.innerHTML = "Load Fund";
+
+      const logoContainer = document.createElement("div") as HTMLDivElement;
+      logoContainer.classList.add("load-fund-logo-container");
+      const logoImage = document.createElement("img");
+      logoImage.src = bankAccount.imageUrl;
+      logoImage.alt = "bank-logo";
+      logoImage.classList.add("load-fund-logo-image");
+      logoContainer.appendChild(logoImage);
+
+      const bankName = document.createElement("p") as HTMLParagraphElement;
+      bankName.classList.add("load-fund-bank-name");
+      bankName.innerHTML = bankAccount.name;
+
+      const amountSection = document.createElement("div") as HTMLDivElement;
+      amountSection.classList.add("mb-4");
+
+      const amountInput = document.createElement("input") as HTMLInputElement;
+      amountInput.type = "number";
+      amountInput.id = "amount";
+      amountInput.classList.add("load-fund-input");
+      amountInput.classList.add("input");
+      amountInput.placeholder = "Enter amount";
+
+      const quickAmountButtons = document.createElement(
+        "div"
+      ) as HTMLDivElement;
+      quickAmountButtons.classList.add("quick-amount-buttons");
+      const amounts = [500, 1000, 2000, 5000, 10000];
+      amounts.forEach((amount) => {
+        const button = document.createElement("button");
+        button.classList.add("quick-amount-button");
+        button.innerHTML = `+${amount}`;
+        quickAmountButtons.appendChild(button);
+      });
+
+      amountSection.appendChild(amountInput);
+      amountSection.appendChild(quickAmountButtons);
+
+      const purposeSection = document.createElement("div") as HTMLDivElement;
+      purposeSection.classList.add("purpose-section");
+      const purposeLabel = document.createElement("label") as HTMLLabelElement;
+
+      purposeLabel.innerHTML = "Purpose";
+      const purposeSelect = document.createElement("select");
+      purposeSelect.id = "purpose";
+      purposeSelect.classList.add("load-fund-purpose-select");
+      purposeSelect.classList.add("input");
+
+      const options = [
+        "Personal Use",
+        "Lend / Borrow",
+        "Bill Sharing",
+        "Family Expenses",
+      ];
+      options.forEach((optionText) => {
+        const option = document.createElement("option") as HTMLOptionElement;
+        option.textContent = optionText;
+        purposeSelect.appendChild(option);
+      });
+      purposeSection.appendChild(purposeLabel);
+      purposeSection.appendChild(purposeSelect);
+
+      const buttonsSection = document.createElement("div");
+      buttonsSection.classList.add("buttons-section");
+      const cancelButton = document.createElement("button");
+      cancelButton.classList.add("load-fund-cancel-button");
+      cancelButton.textContent = "Cancel";
+      const proceedButton = document.createElement("button");
+      proceedButton.classList.add("load-fund-proceed-button");
+      proceedButton.textContent = "Proceed";
+
+      buttonsSection.appendChild(cancelButton);
+      cancelButton.onclick = () => {
+        closeModal();
+      };
+      buttonsSection.appendChild(proceedButton);
+
+      modalContainer.appendChild(header);
+      modalContainer.appendChild(logoContainer);
+      modalContainer.appendChild(bankName);
+      modalContainer.appendChild(amountSection);
+      modalContainer.appendChild(purposeSection);
+      modalContainer.appendChild(buttonsSection);
+
+      blackBackgroundElement.appendChild(modalContainer);
+
+      appElement.appendChild(blackBackgroundElement);
+    };
+
     const linkedAccountsElement = document.getElementById(
       "linked-accounts"
     ) as HTMLDivElement;
@@ -20,7 +137,10 @@ export class LoadBalancePageActions {
 
           linkedAccountsElement.appendChild(accountCard);
 
-          accountCard.onclick = () => {};
+          accountCard.onclick = () => {
+            console.log("Show load fund modal.");
+            showLoadBalanceModal(bankAccount);
+          };
 
           const bankNameHeads = document.createElement("div") as HTMLDivElement;
           bankNameHeads.classList.add("bank-name-heads");

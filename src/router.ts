@@ -5,6 +5,7 @@ import { RegisterPage } from "./loaders/register";
 import { Header } from "./loaders/header";
 import { VerifyOtpPage } from "./loaders/verify_otp";
 import { LoadBalancePage } from "./loaders/load_balance";
+import { KycFormPage } from "./loaders/kyc_form";
 
 const routes: { [key: string]: { component: any } } = {
   "#/home": {
@@ -14,7 +15,8 @@ const routes: { [key: string]: { component: any } } = {
   "#/login": { component: LoginPage },
   "#/register": { component: RegisterPage },
   "#/verify-otp": { component: VerifyOtpPage },
-  "#/load-balance": {component: LoadBalancePage}
+  "#/load-balance": { component: LoadBalancePage },
+  "#/fill-kyc-form": { component: KycFormPage },
 };
 
 export class Router {
