@@ -1,5 +1,5 @@
 .home-section {
-  @apply w-full flex flex-col md:flex-row md:gap-x-4 gap-y-10 py-10 px-5 pb-32;
+  @apply w-full flex flex-col md:flex-row md:gap-x-4 gap-y-10 py-10 px-5 md:px-20 pb-32;
 }
 
 .home-section-left-bar {
@@ -15,7 +15,7 @@
 }
 
 .account-card {
-  @apply h-28 w-full bg-gradient-to-tr from-blue-950 to-blue-500 rounded-2xl flex flex-col justify-between items-start p-3;
+  @apply h-28 w-full bg-gradient-to-tr from-blue-950 to-sky-500 rounded-2xl flex flex-col justify-between items-start p-3 relative;
 }
 
 .card-amount {
@@ -71,7 +71,8 @@
 }
 
 .recent-transactions {
-  @apply flex flex-col gap-y-1 rounded-2xl shadow-md shadow-gray-800;
+  @apply flex flex-col gap-y-1 rounded-2xl;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 17px 0 rgba(0, 0, 0, 0.19);
 }
 
 .transaction-item {
@@ -82,12 +83,16 @@
   @apply flex flex-row items-center gap-x-2;
 }
 
+.transaction-type {
+  @apply flex flex-col items-center justify-center;
+}
+
 .transaction-type-debit {
-  @apply w-9 h-9 rounded-full bg-green-600;
+  @apply w-9 h-9 rounded-full bg-green-500 [rotate:130deg];
 }
 
 .transaction-type-credit {
-  @apply w-9 h-9 rounded-full bg-red-600;
+  @apply w-9 h-9 rounded-full bg-red-500  [rotate:-50deg];
 }
 
 .transaction-details-tab {
@@ -98,8 +103,20 @@
   @apply font-bold;
 }
 
-.transaction-amount {
-  @apply text-sm;
+.transaction-amount-debit {
+  @apply text-sm font-semibold text-green-600;
+}
+
+.transaction-amount-credit {
+  @apply text-sm font-semibold text-red-600;
+}
+
+.transaction-icon-debit {
+  @apply text-white;
+}
+
+.transaction-icon-credit {
+  @apply text-white;
 }
 
 .services-section {
@@ -124,4 +141,20 @@
 
 .service-item-title {
   @apply text-sm text-blue-700;
+}
+
+.verified-icon {
+  @apply text-green-500 text-xl absolute bottom-3 left-24;
+}
+
+.check-icon {
+  @apply text-white text-xs absolute bottom-[15.5px] left-[100px];
+}
+
+.easy-pay-logo {
+  @apply h-10 w-10;
+}
+
+.refresh-icon {
+  @apply text-white absolute top-6 right-6;
 }

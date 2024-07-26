@@ -7,18 +7,48 @@ let viewAmount: boolean = false;
 export class HomeActions {
   static getUpdatedUserDetails: () => Promise<void> = async () => {
     const accessToken = UserUtils.getAccessToken();
-    const user: IUser = await AuthService.fetchUser(accessToken);
 
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-      const amountElement = document.getElementById(
-        "card-amount"
-      ) as HTMLParagraphElement;
+    if (accessToken) {
+      const user: IUser = await AuthService.fetchUser(accessToken);
 
-      amountElement.innerHTML = viewAmount
-        ? `Rs. ${user.balance}`
-        : "Rs. XXX.XX";
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+
+        const verifiedIcon = document.getElementById(
+          "verified-icon"
+        ) as HTMLElement;
+        const checkIcon = document.getElementById("check-icon") as HTMLElement;
+
+        if (user.isVerified) {
+          console.log("User is verified.");
+          verifiedIcon.style.display = "block";
+          checkIcon.style.display = "block";
+        } else {
+          console.log("User is not verified.");
+          verifiedIcon.style.display = "none";
+          checkIcon.style.display = "none";
+        }
+
+        const amountElement = document.getElementById(
+          "card-amount"
+        ) as HTMLParagraphElement;
+
+        amountElement.innerHTML = viewAmount
+          ? `Rs. ${user.balance}`
+          : "Rs. XXX.XX";
+      }
     }
+  };
+
+  static refreshIconEventlisteners: () => Promise<void> = async () => {
+    const refreshIcon = document.getElementById(
+      "refresh-icon"
+    ) as HTMLLIElement;
+
+    refreshIcon.onclick = async () => {
+      console.log("Refresh icon is clicked.");
+      this.getUpdatedUserDetails();
+    };
   };
 
   static updateHomeView: () => void = () => {
@@ -31,15 +61,50 @@ export class HomeActions {
       "kyc-service-item"
     ) as HTMLDivElement;
 
+    const dashboardSection = document.getElementById(
+      "dashboard-section"
+    ) as HTMLDivElement;
+
     if (user) {
+      dashboardSection.style.display = "none";
+      homeSection.style.display = "flex";
       if (!user.isVerified) {
         kycFormServiceItem.style.display = "flex";
       } else {
         kycFormServiceItem.style.display = "none";
       }
     } else {
-      console.log('No user found.');
       homeSection.style.display = "none";
+      dashboardSection.style.display = "flex flex-col";
+
+      const slides = document.querySelectorAll(
+        ".carousel-inner-img"
+      ) as NodeListOf<HTMLImageElement>;
+      let counter = 0;
+      let direction = 1;
+
+      console.log(slides);
+      slides.forEach((slide, index) => {
+        slide.style.left = `${index * 100}%`;
+      });
+
+      const slideImage = () => {
+        slides.forEach((slide) => {
+          slide.style.transform = `translateX(-${counter * 100}%)`;
+        });
+      };
+
+      setInterval(() => {
+        counter += direction;
+
+        if (counter === slides.length - 1) {
+          direction = -1;
+        } else if (counter === 0) {
+          direction = 1;
+        }
+
+        slideImage();
+      }, 2000);
     }
   };
 
@@ -158,13 +223,26 @@ export class HomeActions {
       const transactionDetails = document.createElement("div");
       transactionDetails.classList.add("transaction-details");
 
+      const transactionAmount = document.createElement("div");
+
+      transactionAmount.innerHTML = `Rs. ${transaction.amount}`;
+
       // Create transaction type
       const transactionType = document.createElement("div");
+      transactionType.classList.add("transaction-type");
+      const transactionIcon = document.createElement("i") as HTMLElement;
+      transactionIcon.classList.add("fa-solid", "fa-arrow-right");
       if (transaction.type === "debit") {
         transactionType.classList.add("transaction-type-debit");
+        transactionType.classList.add("transaction-icon-debit");
+        transactionAmount.classList.add("transaction-amount-debit");
       } else {
         transactionType.classList.add("transaction-type-credit");
+        transactionType.classList.add("transaction-icon-credit");
+        transactionAmount.classList.add("transaction-amount-credit");
       }
+
+      transactionType.appendChild(transactionIcon);
 
       // Create transaction details tab
       const transactionDetailsTab = document.createElement("div");
@@ -184,15 +262,9 @@ export class HomeActions {
       transactionDetails.appendChild(transactionType);
       transactionDetails.appendChild(transactionDetailsTab);
 
-      // Create transaction amount
-      const transactionAmount = document.createElement("div");
-      transactionAmount.classList.add("transaction-amount");
-      transactionAmount.textContent = transaction.amount;
-
       transactionItem.appendChild(transactionDetails);
       transactionItem.appendChild(transactionAmount);
 
-      // Append transaction item to the container
       recentTransactionsElement.appendChild(transactionItem);
     });
   };

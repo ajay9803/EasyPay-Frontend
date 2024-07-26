@@ -2,6 +2,9 @@ import AuthService from "../services/auth";
 import { Toast } from "../utils/toast";
 import { loginSchema } from "../schemas/login";
 import * as yup from "yup";
+import { Router } from "../router";
+import { IUser } from "../interfaces/user";
+import { isUserAdmin } from "../utils/admin_check";
 
 export class LoginActions {
   static login: () => void = () => {
@@ -24,6 +27,10 @@ export class LoginActions {
       emailErrorMessageElement.innerHTML = "";
       passwordErrorMessageElement.innerHTML = "";
     };
+
+    const loginButton = document.getElementById(
+      "login-button"
+    ) as HTMLButtonElement;
 
     emailInput.oninput = () => {
       loginSchema
@@ -78,15 +85,34 @@ export class LoginActions {
       }
 
       if (isFormValid) {
-        await AuthService.login(emailInput.value, passwordInput.value);
+        loginButton.innerHTML = "Loading";
+        await AuthService.login(emailInput.value, passwordInput.value)
+          .then((jsonData: any) => {
+            localStorage.setItem("user", JSON.stringify(jsonData.user));
+            localStorage.setItem("access-token", jsonData.accessToken);
+            localStorage.setItem("refresh-token", jsonData.refreshToken);
+
+            Toast.showToast(jsonData.message);
+
+            const user: IUser = jsonData.user;
+
+            if (isUserAdmin(user.roleId)) {
+              history.pushState(null, "", "/#/admin/verify-kyc-applications");
+            } else {
+              history.pushState(null, "", "/#/home");
+            }
+            
+            Router.handleRouteChange();
+          })
+          .catch((e: any) => {
+            Toast.showToast(e.message);
+          }).finally(() => {
+            loginButton.innerHTML = "login"
+          });
       }
 
       return isFormValid;
     };
-
-    const loginButton = document.getElementById(
-      "login-button"
-    ) as HTMLButtonElement;
 
     loginButton.onclick = (e: MouseEvent) => {
       e.preventDefault();

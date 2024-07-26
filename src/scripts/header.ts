@@ -63,22 +63,19 @@ export class HeaderActions {
     const loginButton = document.getElementById(
       "tab-login-button"
     ) as HTMLDivElement;
-    const registerButton = document.getElementById(
-      "tab-register-button"
-    ) as HTMLDivElement;
+
+
 
     if (user) {
-      logoutButton.style.display = "block";
+      logoutButton.style.display = "flex";
       userProfile.style.display = "flex";
       notificationsButton.style.display = "flex";
       loginButton.style.display = "none";
-      registerButton.style.display = "none";
     } else {
       logoutButton.style.display = "none";
       userProfile.style.display = "none";
       notificationsButton.style.display = "none";
       loginButton.style.display = "block";
-      registerButton.style.display = "block";
     }
   };
 }

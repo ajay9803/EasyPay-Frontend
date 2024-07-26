@@ -1,23 +1,23 @@
 .header {
-  @apply w-full py-10 px-5;
+  @apply w-full py-10 px-5 md:px-20;
   background-color: var(--header-bg-color);
   color: var(--header-text-color);
 }
 
 .header-items {
-  @apply border-solid border-gray-600 w-full flex flex-col-reverse gap-y-5 md:flex-row justify-between items-center;
+  @apply border-solid border-gray-600 w-full flex gap-y-5 flex-row justify-between items-center;
+}
+
+.menu-button {
+  @apply block md:hidden text-xl mr-4;
 }
 
 .header-tabs {
-  @apply w-full md:w-1/2 lg:w-1/2 flex flex-row justify-between p-0.5 border border-solid border-gray-500 rounded-2xl;
+  @apply w-full hidden md:flex flex-row gap-x-5 justify-between p-0.5 border border-solid border-gray-500 rounded-3xl;
 }
 
 .header-tab-item {
-  @apply bg-gradient-to-tr from-blue-700 to-blue-500 rounded-2xl px-4 py-1.5 text-white text-sm font-semibold cursor-pointer;
-}
-
-.header-side-tabs {
-  @apply w-full md:w-1/2 flex flex-row justify-between md:justify-end items-center gap-x-5;
+  @apply bg-gradient-to-tr from-blue-700 to-blue-500 rounded-3xl px-2 md:px-6 py-2 text-white text-sm font-semibold cursor-pointer flex flex-row justify-center gap-x-2 items-center flex-1;
 }
 
 .user-profile-item {
@@ -25,11 +25,15 @@
 }
 
 .header-side-tabs-side-icons {
-  @apply flex flex-row gap-x-5 items-center;
+  @apply w-full flex flex-row justify-end gap-x-5 items-center;
+}
+
+.auth-buttons {
+  @apply flex flex-row gap-x-5;
 }
 
 .log-out-button {
-  @apply border-gray-600 flex flex-row items-center gap-x-5 border border-solid px-3 py-1 rounded-2xl cursor-pointer;
+  @apply border-gray-600 border border-solid px-3 py-1 rounded-2xl cursor-pointer;
 }
 
 .log-out-button-icon {
@@ -41,11 +45,11 @@
 }
 
 .notifications-button {
-  @apply w-9 h-9 border border-solid border-gray-600 rounded-full flex flex-row justify-center items-center cursor-pointer;
+  @apply w-9 h-9 border border-solid border-gray-600 rounded-full flex flex-row justify-center items-center cursor-pointer mr-2;
 }
 
 .toggle-theme-button {
-  @apply w-8 h-4 rounded-2xl border border-solid border-gray-600 relative;
+  @apply w-8 h-4 rounded-2xl border border-solid border-gray-600 relative mr-2;
 }
 
 .toggle-button-switcher-left {
@@ -60,6 +64,10 @@
   @apply rounded-sm px-6 py-0.5 border border-solid border-gray-700 font-semibold;
 }
 
-.register-button {
-  @apply rounded-sm px-6 py-0.5 border border-solid border-gray-700 font-semibold;
+.user-action-buttons {
+  @apply w-full flex flex-row gap-x-5 items-center justify-end;
+}
+
+.user-settings-buttons {
+  @apply flex flex-row gap-x-3 items-center w-full justify-end;
 }

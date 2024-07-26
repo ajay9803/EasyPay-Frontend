@@ -8,6 +8,7 @@ export class HomePage {
 
   static initEventListeners: () => void = () => {
     HomeActions.getUpdatedUserDetails();
+    HomeActions.refreshIconEventlisteners();
     HomeActions.updateHomeView();
     HomeActions.toggleViewAmount();
     HomeActions.getQuickTransactions();

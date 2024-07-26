@@ -1,38 +1,53 @@
 import { kycSchema } from "../schemas/kyc";
 import * as yup from "yup";
 import { Toast } from "../utils/toast";
+import KycService from "../services/kyc";
+import UserUtils from "../utils/user";
 
 class KycFormActions {
   static submitKycForm: () => void = () => {
     const kycForm = document.getElementById("kyc-form") as HTMLFormElement;
 
+    const userImageInput = document.getElementById(
+      "user-image"
+    ) as HTMLInputElement;
+    const userImageError = document.getElementById(
+      "user-image-error"
+    ) as HTMLParagraphElement;
+    const citizenshipNumberInput = document.getElementById(
+      "citizenship-number"
+    ) as HTMLInputElement;
+    const citizenshipNumberError = document.getElementById(
+      "citizenship-number-error"
+    ) as HTMLParagraphElement;
+    const issueDateInput = document.getElementById(
+      "issue-date"
+    ) as HTMLInputElement;
+    const issueDateError = document.getElementById(
+      "issue-date-error"
+    ) as HTMLParagraphElement;
+    const citizenshipImageInput = document.getElementById(
+      "citizenship-image"
+    ) as HTMLInputElement;
+    const citizenshipImageError = document.getElementById(
+      "citizenship-image-error"
+    ) as HTMLParagraphElement;
+
+    const removeErrorMessages = () => {
+      citizenshipImageError.innerHTML = "";
+      citizenshipNumberError.innerHTML = "";
+      userImageError.innerHTML = "";
+      issueDateError.innerHTML = "";
+      citizenshipImageError.classList.remove("error-border");
+      citizenshipNumberError.classList.remove("error.border");
+      userImageError.classList.remove("error-border");
+      issueDateError.classList.remove("error-border");
+    };
+
     kycForm.addEventListener("submit", (e: SubmitEvent) => {
       e.preventDefault();
 
-      const userImageInput = document.getElementById(
-        "user-image"
-      ) as HTMLInputElement;
-      const userImageError = document.getElementById(
-        "user-image-error"
-      ) as HTMLParagraphElement;
-      const citizenshipNumberInput = document.getElementById(
-        "citizenship-number"
-      ) as HTMLInputElement;
-      const citizenshipNumberError = document.getElementById(
-        "citizenship-number-error"
-      ) as HTMLParagraphElement;
-      const issueDateInput = document.getElementById(
-        "issue-date"
-      ) as HTMLInputElement;
-      const issueDateError = document.getElementById(
-        "issue-date-error"
-      ) as HTMLParagraphElement;
-      const citizenshipImageInput = document.getElementById(
-        "citizenship-image"
-      ) as HTMLInputElement;
-      const citizenshipImageError = document.getElementById(
-        "citizenship-image-error"
-      ) as HTMLParagraphElement;
+      removeErrorMessages();
 
       const formData = new FormData(kycForm);
       const formObject: { [key: string]: FormDataEntryValue } = {};
@@ -40,12 +55,12 @@ class KycFormActions {
         formObject[key] = value;
       });
 
-      console.log("The filled up form is: ", formObject);
       kycSchema
         .validate(formObject, { abortEarly: false })
-        .then(() => {
+        .then(async () => {
           console.log("Form is valid", formObject);
-          Toast.showToast("Form submitted successfully!");
+          const accessToken = UserUtils.getAccessToken();
+          await KycService.applyForKyc(accessToken, formObject );
         })
         .catch((err) => {
           if (err instanceof yup.ValidationError) {

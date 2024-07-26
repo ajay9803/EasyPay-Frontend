@@ -1,0 +1,15 @@
+.dashboard-section {
+  @apply w-full;
+}
+
+.dummy-features {
+  @apply w-full bg-blue-500 flex flex-row gap-x-5 text-sm tracking-wider md:text-base text-white font-semibold items-center justify-center md:justify-start px-5 md:px-20 py-4;
+}
+
+.carousel-inner {
+  @apply  relative flex overflow-hidden w-full h-48;
+}
+
+.carousel-inner-img {
+  @apply  w-full h-48 object-cover absolute transition-all ease-linear duration-1000;
+}

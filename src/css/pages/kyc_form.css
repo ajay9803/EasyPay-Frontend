@@ -1,5 +1,5 @@
 .kyc-form-page {
-  @apply flex  w-full px-5;
+  @apply flex  w-full px-5 md:px-20;
 }
 
 .kyc-image-section {
@@ -19,7 +19,6 @@
 .form-title {
   @apply text-2xl font-semibold tracking-wider mb-4 text-center;
 }
-
 
 .kyc-input-field,
 .kyc-file-input {

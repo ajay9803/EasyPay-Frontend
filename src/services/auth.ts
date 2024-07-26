@@ -22,15 +22,10 @@ class AuthService {
       if (response.status !== 200) {
         throw new Error(jsonData.message);
       } else {
-        Toast.showToast(jsonData.message);
-        localStorage.setItem("user", JSON.stringify(jsonData.user));
-        localStorage.setItem("access-token", jsonData.accessToken);
-        localStorage.setItem("refresh-token", jsonData.refreshToken);
-        history.pushState(null, "", "/#/home");
-        Router.handleRouteChange();
+        return jsonData;
       }
     } catch (e: any) {
-      Toast.showToast(e.message);
+      throw e;
     }
   };
 

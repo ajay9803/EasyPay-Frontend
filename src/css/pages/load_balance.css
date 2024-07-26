@@ -1,5 +1,5 @@
 .load-balance-page {
-  @apply px-5 w-full flex flex-col;
+  @apply px-5 md:px-20 w-full flex flex-col;
 }
 
 .divider {
@@ -12,7 +12,7 @@
 }
 
 .load-balance-card {
-  @apply mt-10 px-5 py-5 shadow-sm shadow-black;
+  @apply mt-10 px-5 py-5 ;
 }
 
 .load-balance-card-head {
@@ -48,7 +48,7 @@
   @apply my-5 flex flex-col md:flex-row gap-x-5 gap-y-5 w-full;
 }
 
-.account-card {
+.bank-account-card {
   @apply flex flex-col justify-between w-full md:w-80 h-40 p-4 relative cursor-pointer;
 }
 

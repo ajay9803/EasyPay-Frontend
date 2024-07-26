@@ -1,6 +1,9 @@
+import { IBankAccount } from "../interfaces/bank_account";
 import BankAccountService from "../services/bank_account";
+import UserService from "../services/user";
 import { Toast } from "../utils/toast";
 import UserUtils from "../utils/user";
+import { HomeActions } from "./home";
 
 export class LoadBalancePageActions {
   static loadLinkedAccounts: () => void = () => {
@@ -20,7 +23,6 @@ export class LoadBalancePageActions {
       };
 
       blackBackgroundElement.classList.add("load-fund-modal");
-      blackBackgroundElement.classList.add("load_fund_modal");
 
       const modalContainer = document.createElement("div");
       modalContainer.classList.add("load-fund-modal-container");
@@ -66,6 +68,10 @@ export class LoadBalancePageActions {
         button.classList.add("quick-amount-button");
         button.innerHTML = `+${amount}`;
         quickAmountButtons.appendChild(button);
+
+        button.onclick = () => {
+          amountInput.value = `${amount}`;
+        };
       });
 
       amountSection.appendChild(amountInput);
@@ -87,6 +93,7 @@ export class LoadBalancePageActions {
         "Bill Sharing",
         "Family Expenses",
       ];
+
       options.forEach((optionText) => {
         const option = document.createElement("option") as HTMLOptionElement;
         option.textContent = optionText;
@@ -104,17 +111,56 @@ export class LoadBalancePageActions {
       proceedButton.classList.add("load-fund-proceed-button");
       proceedButton.textContent = "Proceed";
 
+      const remarksInput = document.createElement("input") as HTMLInputElement;
+      remarksInput.type = "text";
+      remarksInput.id = "remarks";
+      remarksInput.classList.add("load-fund-input");
+      remarksInput.classList.add("input");
+      remarksInput.placeholder = "Enter remarks";
+
       buttonsSection.appendChild(cancelButton);
       cancelButton.onclick = () => {
         closeModal();
       };
+
       buttonsSection.appendChild(proceedButton);
+      proceedButton.onclick = async () => {
+        console.log(purposeSelect.value);
+        if (amountInput.value.length <= 0) {
+          amountInput.classList.add("error-border");
+          Toast.showToast("Please enter the amount.");
+        } else if (+amountInput.value < 100) {
+          amountInput.classList.add("error-border");
+          Toast.showToast("Amount should be greater than Rs.99.");
+        } else if (remarksInput.value.length <= 0) {
+          remarksInput.classList.add("error-border");
+          Toast.showToast("Please enter the remarks.");
+        } else {
+          amountInput.classList.remove("error-border");
+          const accessToken = UserUtils.getAccessToken();
+          console.log(bankAccount);
+          await UserService.loadBalance(
+            accessToken,
+            bankAccount.id,
+            +amountInput.value
+          )
+            .then((data: any) => {
+              Toast.showToast(data.message);
+              closeModal();
+              HomeActions.getUpdatedUserDetails();
+            })
+            .catch((e) => {
+              Toast.showToast(e.message);
+            });
+        }
+      };
 
       modalContainer.appendChild(header);
       modalContainer.appendChild(logoContainer);
       modalContainer.appendChild(bankName);
       modalContainer.appendChild(amountSection);
       modalContainer.appendChild(purposeSection);
+      modalContainer.appendChild(remarksInput);
       modalContainer.appendChild(buttonsSection);
 
       blackBackgroundElement.appendChild(modalContainer);
@@ -122,18 +168,22 @@ export class LoadBalancePageActions {
       appElement.appendChild(blackBackgroundElement);
     };
 
+    const loadBalanceErrorElement = document.getElementById('load-balance-error') as HTMLDivElement;
+    const loadBalanceErrorMessage = document.getElementById('load-balance-error-message') as HTMLParagraphElement;
+
     const linkedAccountsElement = document.getElementById(
       "linked-accounts"
     ) as HTMLDivElement;
 
     const accessToken = UserUtils.getAccessToken();
+    loadBalanceErrorElement.style.display = "none";
     BankAccountService.fetchUserBankAccounts(accessToken)
-      .then((data: []) => {
+      .then((data: IBankAccount[]) => {
         console.log("The data is: ", data);
-        data.forEach((bankAccount: any) => {
+        data.forEach((bankAccount: IBankAccount) => {
           const accountCard = document.createElement("div") as HTMLDivElement;
 
-          accountCard.classList.add("account-card");
+          accountCard.classList.add("bank-account-card", "account-card");
 
           linkedAccountsElement.appendChild(accountCard);
 
@@ -172,7 +222,8 @@ export class LoadBalancePageActions {
         });
       })
       .catch((e: any) => {
-        Toast.showToast(e.message);
+        loadBalanceErrorElement.style.display = 'flex';
+        loadBalanceErrorMessage.innerHTML = e.message || "Something went wrong. Please try again.";
       })
       .finally(() => {});
   };

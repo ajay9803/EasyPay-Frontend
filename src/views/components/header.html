@@ -1,30 +1,41 @@
 <div class="header-items">
-    <div class="header-tabs">
-        <div class="header-tab-item">Home</div>
-        <div class="header-tab-item">Transactions</div>
-        <div class="header-tab-item">Analytics</div>
-        <div class="header-tab-item">Settings</div>
+    <div class="menu-button">
+        <i class="fa-solid fa-bars"></i>
     </div>
-    <div class="header-side-tabs">
-        <div id="user-profile" class="user-profile-item">
-            <i class="fa-regular fa-user"></i>
+    <div id="menus" class="header-tabs">
+        <a class="header-tab-item">
+            <i class="fa-solid fa-house"></i>
+            <p> Home </p>
+        </a>
+        <div class="header-tab-item">
+            <i class="fa-solid fa-wallet"></i>
+            <p> Transactions </p>
         </div>
-        <div id="side-icons" class="header-side-tabs-side-icons">
+        <div class="header-tab-item">
+            <i class="fa-solid fa-gear"></i>
+            <p> Settings </p>
+        </div>
+    </div>
+    <div id="side-icons" class="header-side-tabs-side-icons">
+        <div class="user-settings-buttons">
+            <div id="user-profile" class="user-profile-item">
+                <i class="fa-regular fa-user"></i>
+            </div>
             <div id="notifications-button" class="notifications-button">
                 <i class="fas fa-bell"></i>
-            </div>
-            <div id="log-out-button" class="log-out-button">
-                <p class="log-out-button-title">Logout</p>
             </div>
             <div class="toggle-theme-button">
                 <div id="toggle-switcher"></div>
             </div>
+            <div id="log-out-button" class="log-out-button">
+                <p class="log-out-button-title">Logout</p>
+            </div>
+        </div>
+        <div class="auth-buttons">
             <a href="/#/login">
                 <div id="tab-login-button" class="login-button"> Login </div>
             </a>
-            <a href="/#/register">
-                <div id="tab-register-button" class="register-button"> Register </div>
-            </a>
+
         </div>
     </div>
 </div>
