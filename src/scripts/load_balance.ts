@@ -142,7 +142,9 @@ export class LoadBalancePageActions {
           await UserService.loadBalance(
             accessToken,
             bankAccount.id,
-            +amountInput.value
+            +amountInput.value,
+            purposeSelect.value,
+            remarksInput.value,
           )
             .then((data: any) => {
               Toast.showToast(data.message);

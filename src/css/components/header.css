@@ -2,6 +2,7 @@
   @apply w-full py-10 px-5 md:px-20;
   background-color: var(--header-bg-color);
   color: var(--header-text-color);
+  transition: color 0.5s ease-in;
 }
 
 .header-items {

@@ -26,16 +26,19 @@ export class ViewKycApplicationsAction {
             const tableRow = document.createElement(
               "div"
             ) as HTMLTableRowElement;
-            tableRow.classList.add("table-row");
+            tableRow.classList.add("kyc-table-row");
 
-            const userName = document.createElement("div") as HTMLDivElement;
+            const userName = document.createElement(
+              "p"
+            ) as HTMLParagraphElement;
+            userName.classList.add("table-row-username");
             userName.innerHTML = application.username;
             tableRow.appendChild(userName);
 
             const actions = document.createElement("div") as HTMLDivElement;
             actions.classList.add("table-item-actions");
 
-            if (application.status !== "Verified") {
+            if (application.status === "Pending") {
               const approveButton = document.createElement(
                 "button"
               ) as HTMLButtonElement;
@@ -44,7 +47,7 @@ export class ViewKycApplicationsAction {
               actions.appendChild(approveButton);
 
               approveButton.onclick = async () => {
-                await KycService.verifyKycApplications(
+                await KycService.verifyKycApplication(
                   accessToken,
                   application.userId,
                   true
@@ -66,8 +69,21 @@ export class ViewKycApplicationsAction {
               rejectButton.classList.add("reject-button");
               rejectButton.innerHTML = "Reject";
               actions.appendChild(rejectButton);
-              rejectButton.onclick = () => {
-                console.log("Reject button clicked.");
+              rejectButton.onclick = async () => {
+                await KycService.verifyKycApplication(
+                  accessToken,
+                  application.userId,
+                  false
+                )
+                  .then(async (data) => {
+                    const selectedStatus = selectInput.value;
+                    console.log(selectedStatus);
+                    await fetchTheApplications(selectedStatus);
+                    Toast.showToast(data.message);
+                  })
+                  .catch((e) => {
+                    Toast.showToast(e.message);
+                  });
               };
             }
 
@@ -175,7 +191,7 @@ export class ViewKycApplicationsAction {
         })
         .catch((e) => {
           tableBody.innerHTML = e.message;
-          tableBody.classList.add("py-5");
+          tableBody.classList.add("py-5", "text-center");
         });
     };
 

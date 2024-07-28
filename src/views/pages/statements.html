@@ -1,0 +1,106 @@
+<div class="body px-5 md:px-20 py-5 relative overflow-hidden">
+    <div class="flex justify-between items-center mb-4">
+        <p class="text-lg font-semibold tracking-wider">Statements</p>
+    </div>
+
+    <div class="flex flex-wrap gap-x-5 gap-y-2 mb-4">
+        <div class="flex flex-col items-start gap-y-2">
+            <label for="date" class="font-medium">Start Date:</label>
+            <input type="date" id="date" class="input border rounded px-2 py-1" placeholder="">
+        </div>
+        <div class="flex flex-col items-start gap-y-2">
+            <label for="date" class="font-medium">End Date:</label>
+            <input type="date" id="date" class="input border rounded px-2 py-1" placeholder="">
+        </div>
+        <div class="flex flex-col items-start gap-y-2">
+            <label for="channel" class="font-medium">Channel:</label>
+            <select id="channel" class="input border rounded px-2 py-1">
+                <option value="Web">Web</option>
+            </select>
+        </div>
+        <div class="flex flex-col items-start gap-y-2">
+            <label for="drcr" class="font-medium">Dr / Cr:</label>
+            <select id="drcr" class="input border rounded px-2 py-1">
+                <option value="All">All</option>
+                <option value="Debit">Debit</option>
+                <option value="Credit">Credit</option>
+            </select>
+        </div>
+    </div>
+    <table id="statement-table" class="w-full text-left table-auto border-collapse">
+        <thead id="statement-table-head" class="hidden md:table-header-group">
+            <tr class="text-sm statement-table-head-row">
+                <th class="p-2">#</th>
+                <th class="p-2">DESCRIPTION</th>
+                <th class="p-2">DATE</th>
+                <th class="p-2">CHANNEL</th>
+                <th class="p-2">DR.</th>
+                <th class="p-2">CR.</th>
+                <th class="p-2">BALANCE</th>
+            </tr>
+        </thead>
+        <div id="statements-error" class="flex flex-col md:flex-row items-center justify-center w-full px-10 py-10">
+            <img src="./images/error.png" alt="cat-shocked" class="object-cover h-28 md:h-56" />
+            <div class="flex flex-col gap-y-2 ">
+                <p class="text-sm font-semibold text-center">
+                    Oops! Something went wrong.
+                </p>
+                <p id="statements-error-message" class="text-sm tracking-wide text-zinc-500 text-center">
+                </p>
+            </div>
+        </div>
+    </table>
+    <div id="statement-modal-background" class="hidden fixed top-0 left-0 right-0 h-screen bg-black bg-opacity-25">
+    </div>
+    <div id="statement-modal"
+        class="statement-modal fixed w-full md:w-1/2 lg:w-1/3 h-full top-0 right-0 translate-x-full transition-all duration-300 ease-in flex flex-col items-start px-5 py-5">
+        <div class="flex items-center justify-between mb-4 w-full">
+            <div class="flex items-center">
+                <img src="./images/e-wallet.png" alt="e-pay logo" class="w-8 h-8">
+                <h1 class="ml-4 text-lg tracking-wider font-semibold">Send Money</h1>
+            </div>
+            <i id="close-statement-modal-button" class="fa-solid fa-xmark text-xl cursor-pointer"></i>
+        </div>
+        <div class="border-b pb-4 mb-4 w-full">
+            <h2 class="font-semibold">Transaction Details</h2>
+        </div>
+        <div class="space-y-2 w-full text-sm">
+            <div class="flex justify-between">
+                <p>Date/Time</p>
+                <p id="statement-detail-date" class="font-medium">26 Jul 2024, 12:23 PM</p>
+            </div>
+            <div class="flex justify-between">
+                <p>Channel</p>
+                <p class="font-medium">Web</p>
+            </div>
+            <div class="flex justify-between">
+                <p>Processed By</p>
+                <p id="statement-detail-processor" class="font-medium">9808880359</p>
+            </div>
+            <div class="flex justify-between">
+                <p>Amount (NPR)</p>
+                <p id="statement-detail-amount" class="font-medium text-blue-500">100.00</p>
+            </div>
+        </div>
+        <div class="mt-4 border-t pt-4 space-y-2 w-full text-sm">
+            <div class="flex justify-between">
+                <p> Sender: </p>
+                <p id="statement-detail-sender" class="font-medium">Sagar Prajapati</p>
+            </div>
+            <div class="flex justify-between">
+                <p>Payment Method:</p>
+                <p class="font-medium">Easy Pay</p>
+            </div>
+            <div class="flex justify-between">
+                <p>Receiver:</p>
+                <p id="statement-detail-receiver" class="font-medium">9811962462</p>
+            </div>
+        </div>
+        <div class="mt-7 flex justify-end items-center space-x-2 w-full">
+            <!-- <button
+                class="border-2 border-solid border-sky-700 text-sky-700 hover:bg-sky-700 hover:text-white font-semibold py-2 px-4 rounded transition-all ease-in duration-300">Raise
+                Issue</button> -->
+            <i class="fa-regular fa-file-pdf text-3xl cursor-pointer"></i>
+        </div>
+    </div>
+</div>

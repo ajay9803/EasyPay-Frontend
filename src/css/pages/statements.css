@@ -1,0 +1,64 @@
+.table-row {
+  @apply hidden md:table-row-group cursor-pointer hover:bg-gradient-to-tr hover:from-blue-500 hover:to-sky-500 hover:text-white hover:scale-105 hover:font-semibold transition-all duration-300 ease-out;
+}
+
+.table-cell {
+  @apply p-4 text-sm;
+}
+
+.table-cell-desc {
+  @apply p-4 flex items-center text-sm;
+}
+
+.statement-mobile-div {
+  @apply p-4 rounded-md border border-solid flex md:hidden items-start w-full mb-5 text-sm;
+}
+
+.statement-mobile-detail-div {
+  @apply ml-4 flex-1 text-sm;
+}
+
+.statement-mobile-detail {
+  @apply font-semibold;
+}
+
+.statement-mobile-date-div {
+  @apply text-sm;
+}
+
+.cashflow-type-debit {
+  @apply text-sky-500 font-bold;
+}
+
+.cashflow-type-credit {
+  @apply text-red-500 font-bold;
+}
+
+.statement-mobile-div-remaining-balance {
+  @apply font-semibold;
+}
+
+.remaining-balance {
+  @apply text-gray-500 mt-2;
+}
+
+.statement-mobile-icon-div {
+  @apply h-8 w-8 rounded-full flex justify-center items-center border border-solid;
+  border-color: var(--border-color);
+}
+
+.statement-mobile-icon {
+  @apply h-4;
+}
+
+.statement-mobile-icon-lg {
+  @apply mr-2 h-5;
+}
+
+.statement-table-head-row {
+  background-color: var(--shadow-color);
+}
+
+.statement-modal {
+  background-color: var(--modal-color);
+}

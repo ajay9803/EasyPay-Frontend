@@ -1,0 +1,124 @@
+<div class="body px-5 py-5 md:px-20 w-full">
+    <div class="flex flex-row items-center gap-x-3">
+        <div class="h-8 w-8 border border-solid flex flex-row items-center justify-center">
+            <i class="fa-solid fa-wallet"></i>
+        </div>
+        <p class="font-semibold tracking-wide">Send Money</p>
+    </div>
+    <div class="normal-divider my-5"></div>
+    <div id="send-money-section">
+        <div class="flex flex-col gap-y-7 md:flex-row gap-x-5 text-sm">
+            <form id="send-money-form" class="w-full md:w-1/2">
+                <div class="rounded-md">
+                    <div class="mb-4">
+                        <label class="block font-bold mb-2" for="Easy Pay-id">Easy Pay Email <span
+                                class="text-red-500">*</span></label>
+                        <div class="flex">
+                            <input id="email" type="email"
+                                class="input flex-1 p-2 border border-gray-300 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                placeholder="Email Address">
+                            <button class="bg-blue-500 text-white text-xl px-4 rounded-r">↻</button>
+                        </div>
+                        <p class="mt-1 text-red-600 font-sm tracking-wide" id="send-money-email-error"></p>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block font-bold mb-2" for="amount">Amount (NPR) <span
+                                class="text-red-500">*</span></label>
+                        <input id="amount" type="number"
+                            class="input w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            value="0">
+                        <p class="mt-1 text-red-600 font-sm tracking-wide" id="send-money-amount-error"></p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block font-bold mb-2" for="purpose">Purpose <span
+                                class="text-red-500">*</span></label>
+                        <select id="purpose"
+                            class="input w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <option value="">-Select-</option>
+                            <option value="Personal Use">Personal Use</option>
+                            <option value="Bill Sharing">Bill Sharing</option>
+                            <option value="Family Expenses">Family Expenses</option>
+                            <option value="Lend / Borrow">Lend / Borrow</option>
+                        </select>
+                        <p class="mt-1 text-red-600 font-sm tracking-wide" id="send-money-purpose-error"></p>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block font-bold mb-2" for="remarks">Remarks</label>
+                        <input id="remarks" type="text"
+                            class="input w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            placeholder="Remarks">
+                        <p class="mt-1 text-red-600 font-sm tracking-wide" id="send-money-remarks-error"></p>
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <button type="submit"
+                            class="bg-blue-500 text-white py-2 px-4 rounded tracking-wider font-semibold transition-all duration-300 ease-out">PROCEED</button>
+                        <button id="send-money-clear-button" type="button"
+                            class=" border border-solid py-2 px-4 rounded tracking-wider font-semibold hover:bg-gray-400 transition-all duration-300 ease-out">CLEAR</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="p-8 rounded-md w-full md:w-1/2 border border-solid">
+                <h2 class="font-semibold mb-4">INSTRUCTION</h2>
+                <p class="text-gray-700 mb-4">
+                    <a href="#" class="text-blue-500 underline">Terms of use</a>
+                </p>
+                <ol class="list-decimal list-inside mb-6 text-xs">
+                    <li class="mb-2">Users are prohibited from using Easy Pay services to enable payments for the
+                        services
+                        and
+                        goods deemed illegal by the relevant laws of Nepal.</li>
+                    <li class="mb-2">Transfer fund to your trusted contacts only (or, only after meeting with the
+                        person
+                        face-to-face.</li>
+                    <li class="mb-2">Easy Pay will not be liable if the receiver defaults from his/her promise to
+                        repay,
+                        return,
+                        deliver the goods or services promised against the transfer.</li>
+                </ol>
+
+            </div>
+        </div>
+    </div>
+    <div id="confirm-send-money-section" class="w-full text-sm hidden">
+        <div class="flex items-center justify-center w-full">
+            <div class="rounded-lg shadow-lg p-6 md:p-10 w-full">
+                <div class="bg-blue-100 text-blue-800 p-4 rounded-md mb-6">
+                    <p class="font-medium">Please confirm the following details.</p>
+                </div>
+                <div class="flex flex-row flex-wrap">
+                    <div class="mb-4 w-full md:w-1/2 lg:w-1/3">
+                        <p class="font-medium text-blue-800">Fund Transfer to</p>
+                        <p id="send-money-username" class=" font-semibold"></p>
+                    </div>
+                    <div class="mb-4 w-full md:w-1/2 lg:w-1/3">
+                        <p class="font-medium text-blue-800">Amount (NPR)</p>
+                        <p id="send-money-amount" class=" font-semibold"></p>
+                    </div>
+                    <div class="mb-6 w-full md:w-1/2 lg:w-1/3">
+                        <p class="font-medium text-blue-800">Receiver eSewa Id:</p>
+                        <p id="send-money-email" class=" font-semibold"></p>
+                    </div>
+                    <div class="mb-4 w-full md:w-1/2 lg:w-1/3">
+                        <p class="font-medium text-blue-800">Purpose</p>
+                        <p id="send-money-purpose" class=" font-semibold"></p>
+                    </div>
+                    <div class="mb-6 w-full md:w-1/2 lg:w-1/3">
+                        <p class="font-medium text-blue-800">Remarks</p>
+                        <p id="send-money-remarks" class=" font-semibold"></p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button id="send-money-button"
+                        class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md transition duration-200 hover:bg-green-600">
+                        PROCEED </button>
+                    <button
+                        class="bg-transparent border border-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-md transition duration-200 hover:bg-gray-100">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

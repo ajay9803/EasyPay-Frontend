@@ -1,7 +1,9 @@
 .body {
+  @apply min-h-screen;
   background-color: var(--bg-color);
   color: var(--text-color);
   border-color: var(--border-color);
+  transition: color 0.5s ease-in;
 }
 
 .input {

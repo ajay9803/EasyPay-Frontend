@@ -12,15 +12,16 @@ class KycService {
     try {
       console.log("The token is: ", token);
       console.log("The form-data is: ", formObject);
-      
+
       const formData = new FormData();
 
       formData.append("citizenshipNumber", formObject.citizenshipNumber);
       formData.append("citizenshipIssueDate", formObject.issueDate);
       formData.append("userPhoto", formObject.userImage);
       formData.append("citizenshipPhoto", formObject.citizenshipImage);
+      formData.append("status", "Pending");
 
-      const response = await fetch(`${HOST_NAME}/users/apply-for-kyc`, {
+      const response = await fetch(`${HOST_NAME}/kyc/apply`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -41,7 +42,7 @@ class KycService {
 
   static fetchKycApplications: (status: string, token: string) => Promise<any> =
     async (status: string, token: string) => {
-      const url = `${HOST_NAME}/users/kyc-applications?page=1&size=1&status=${status}`;
+      const url = `${HOST_NAME}/kyc/applications?page=1&size=5&status=${status}`;
       try {
         const response = await fetch(url, {
           method: "GET",
@@ -62,7 +63,7 @@ class KycService {
       }
     };
 
-  static verifyKycApplications: (
+  static verifyKycApplication: (
     token: string,
     userId: string,
     isVerified: boolean
@@ -71,7 +72,7 @@ class KycService {
     userId: string,
     isVerified: boolean
   ) => {
-    const url = `${HOST_NAME}/users/verify-kyc-application`;
+    const url = `${HOST_NAME}/kyc/verify`;
     try {
       const response = await fetch(url, {
         method: "PATCH",

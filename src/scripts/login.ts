@@ -32,6 +32,10 @@ export class LoginActions {
       "login-button"
     ) as HTMLButtonElement;
 
+    const loginButtonContent = document.getElementById(
+      "login-button-content"
+    ) as HTMLParagraphElement;
+
     emailInput.oninput = () => {
       loginSchema
         .validateAt("email", { email: emailInput.value })
@@ -85,7 +89,7 @@ export class LoginActions {
       }
 
       if (isFormValid) {
-        loginButton.innerHTML = "Loading";
+        loginButtonContent.innerHTML = "Loading";
         await AuthService.login(emailInput.value, passwordInput.value)
           .then((jsonData: any) => {
             localStorage.setItem("user", JSON.stringify(jsonData.user));
@@ -101,13 +105,14 @@ export class LoginActions {
             } else {
               history.pushState(null, "", "/#/home");
             }
-            
+
             Router.handleRouteChange();
           })
           .catch((e: any) => {
             Toast.showToast(e.message);
-          }).finally(() => {
-            loginButton.innerHTML = "login"
+          })
+          .finally(() => {
+            loginButtonContent.innerHTML = "login";
           });
       }
 

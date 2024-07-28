@@ -12,7 +12,7 @@
   border-color: var(--border-color);
 }
 
-.kyc-img {
+.kyc-form-img {
   @apply w-full h-full object-cover;
 }
 

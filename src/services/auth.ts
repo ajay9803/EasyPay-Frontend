@@ -4,7 +4,7 @@ import { Router } from "../router";
 import { Toast } from "../utils/toast";
 
 class AuthService {
-  static login = async (email: string, password: string): Promise<void> => {
+  static login = async (email: string, password: string): Promise<any> => {
     try {
       const response = await fetch(`${HOST_NAME}/auth/login`, {
         method: "POST",

@@ -1,5 +1,9 @@
+import { IBalanceTransferStatement } from "../interfaces/statement";
 import { IUser } from "../interfaces/user";
 import AuthService from "../services/auth";
+import StatementService from "../services/statement";
+import DateUtils from "../utils/date";
+import Navigator from "../utils/navigate";
 import UserUtils from "../utils/user";
 
 let viewAmount: boolean = false;
@@ -172,100 +176,91 @@ export class HomeActions {
     });
   };
 
-  static getRecentTransactions = () => {
-    const recentTransactions: {
-      date: string;
-      type: string;
-      amount: string;
-      userName: string;
-    }[] = [
-      {
-        date: "31st July, 2024",
-        type: "debit",
-        amount: "200",
-        userName: "Test1",
-      },
-      {
-        date: "31st July, 2024",
-        type: "credit",
-        amount: "200",
-        userName: "Test1",
-      },
-      {
-        date: "31st July, 2024",
-        type: "debit",
-        amount: "200",
-        userName: "Test1",
-      },
-      {
-        date: "31st July, 2024",
-        type: "credit",
-        amount: "200",
-        userName: "Test1",
-      },
-      {
-        date: "31st July, 2024",
-        type: "credit",
-        amount: "200",
-        userName: "Test1",
-      },
-    ];
-
+  static getRecentTransactions = async () => {
     const recentTransactionsElement = document.getElementById(
       "recent-transactions"
     ) as HTMLDivElement;
-    recentTransactions.forEach((transaction) => {
-      // Create transaction item
-      const transactionItem = document.createElement("div");
-      transactionItem.classList.add("transaction-item");
 
-      // Create transaction details
-      const transactionDetails = document.createElement("div");
-      transactionDetails.classList.add("transaction-details");
+    const user = UserUtils.getUserDetails();
 
-      const transactionAmount = document.createElement("div");
+    if (user) {
+      const accessToken = UserUtils.getAccessToken();
+      await StatementService.fetchBalanceTransferStatements(accessToken, 1)
+        .then(
+          (data: {
+            statements: IBalanceTransferStatement[];
+            totalCount: number;
+          }) => {
+            data.statements.forEach((statement) => {
+              // Create transaction item
+              const transactionItem = document.createElement("div");
+              transactionItem.classList.add("transaction-item");
 
-      transactionAmount.innerHTML = `Rs. ${transaction.amount}`;
+              // Create transaction details
+              const transactionDetails = document.createElement("div");
+              transactionDetails.classList.add("transaction-details");
 
-      // Create transaction type
-      const transactionType = document.createElement("div");
-      transactionType.classList.add("transaction-type");
-      const transactionIcon = document.createElement("i") as HTMLElement;
-      transactionIcon.classList.add("fa-solid", "fa-arrow-right");
-      if (transaction.type === "debit") {
-        transactionType.classList.add("transaction-type-debit");
-        transactionType.classList.add("transaction-icon-debit");
-        transactionAmount.classList.add("transaction-amount-debit");
-      } else {
-        transactionType.classList.add("transaction-type-credit");
-        transactionType.classList.add("transaction-icon-credit");
-        transactionAmount.classList.add("transaction-amount-credit");
-      }
+              const transactionAmount = document.createElement("div");
 
-      transactionType.appendChild(transactionIcon);
+              transactionAmount.innerHTML = `Rs. ${statement.amount}`;
 
-      // Create transaction details tab
-      const transactionDetailsTab = document.createElement("div");
+              // Create transaction type
+              const transactionType = document.createElement("div");
+              transactionType.classList.add("transaction-type");
+              const transactionIcon = document.createElement(
+                "i"
+              ) as HTMLElement;
+              transactionIcon.classList.add("fa-solid", "fa-arrow-right");
+              const username = document.createElement("p");
+              username.classList.add("transaction-username");
 
-      transactionDetailsTab.classList.add("transaction-details-tab");
+              if (statement.cashFlow === "Debit") {
+                transactionType.classList.add("transaction-type-debit");
+                transactionType.classList.add("transaction-icon-debit");
+                transactionAmount.classList.add("transaction-amount-debit");
+                username.innerHTML = statement.senderUsername;
+              } else {
+                transactionType.classList.add("transaction-type-credit");
+                transactionType.classList.add("transaction-icon-credit");
+                transactionAmount.classList.add("transaction-amount-credit");
+                username.innerHTML = statement.receiverUsername;
+              }
 
-      const username = document.createElement("p");
-      username.classList.add("transaction-username");
-      username.innerHTML = transaction.userName;
+              transactionType.appendChild(transactionIcon);
 
-      const time = document.createElement("p");
-      time.innerHTML = transaction.date;
+              // Create transaction details tab
+              const transactionDetailsTab = document.createElement("div");
 
-      transactionDetailsTab.appendChild(username);
-      transactionDetailsTab.appendChild(time);
+              transactionDetailsTab.classList.add("transaction-details-tab");
 
-      transactionDetails.appendChild(transactionType);
-      transactionDetails.appendChild(transactionDetailsTab);
+              const time = document.createElement("p");
+              time.innerHTML = DateUtils.formatDate(statement.createdAt);
 
-      transactionItem.appendChild(transactionDetails);
-      transactionItem.appendChild(transactionAmount);
+              transactionDetailsTab.appendChild(username);
+              transactionDetailsTab.appendChild(time);
 
-      recentTransactionsElement.appendChild(transactionItem);
-    });
+              transactionDetails.appendChild(transactionType);
+              transactionDetails.appendChild(transactionDetailsTab);
+
+              transactionItem.appendChild(transactionDetails);
+              transactionItem.appendChild(transactionAmount);
+
+              recentTransactionsElement.appendChild(transactionItem);
+            });
+            const moreButton = document.createElement(
+              "p"
+            ) as HTMLParagraphElement;
+            moreButton.innerHTML = "More";
+            moreButton.classList.add("more-button");
+            recentTransactionsElement.appendChild(moreButton);
+            moreButton.onclick = () => {
+              Navigator.navigateTo("/#/statements");
+            };
+          }
+        )
+        .catch((e) => {
+          recentTransactionsElement.innerHTML = e.message;
+        });
+    }
   };
 }

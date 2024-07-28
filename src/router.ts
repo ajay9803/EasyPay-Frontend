@@ -8,6 +8,10 @@ import { LoadBalancePage } from "./loaders/load_balance";
 import { KycFormPage } from "./loaders/kyc_form";
 import { AdminDashboard } from "./loaders/admin_dashboard";
 import { ViewKycApplications } from "./loaders/view_kyc_applications";
+import { NotFoundPage } from "./loaders/404";
+import { SendMoneyPage } from "./loaders/send_money";
+import { ForgotPasswordPage } from "./loaders/forgot_password";
+import { StatementsPage } from "./loaders/statement";
 
 const routes: { [key: string]: { component: any } } = {
   "#/home": {
@@ -21,6 +25,9 @@ const routes: { [key: string]: { component: any } } = {
   "#/fill-kyc-form": { component: KycFormPage },
   "#/admin": { component: AdminDashboard },
   "#/admin/verify-kyc-applications": { component: ViewKycApplications },
+  "#/send-money": { component: SendMoneyPage },
+  "#/forgot-password": { component: ForgotPasswordPage },
+  "#/statements": { component: StatementsPage },
 };
 
 export class Router {
@@ -37,8 +44,8 @@ export class Router {
           document.getElementById("main-content")!.innerHTML = markup;
           subRoute.component.initEventListeners();
         } else {
-          // document.getElementById("main-content")!.innerHTML =
-          //   await notFound.load();
+          document.getElementById("body")!.innerHTML =
+            await NotFoundPage.load();
         }
       } else {
         const content = await route.component.load();
@@ -46,6 +53,8 @@ export class Router {
 
         route.component.initEventListeners();
       }
+    } else {
+      document.getElementById("body")!.innerHTML = await NotFoundPage.load();
     }
   }
 

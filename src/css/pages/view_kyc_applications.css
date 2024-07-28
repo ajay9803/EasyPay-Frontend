@@ -6,12 +6,16 @@
   @apply px-5 text-center;
 }
 
-.table-row {
-  @apply border-b w-full flex flex-row justify-between items-center;
+.kyc-table-row {
+  @apply border-b w-full flex flex-row justify-between items-center ;
+}
+
+.table-row-username {
+  @apply font-semibold tracking-wider w-1/2 text-start truncate;
 }
 
 .table-item-actions {
-  @apply pl-4 py-2 flex flex-row w-full gap-x-3 justify-end;
+  @apply pl-4 py-2 flex flex-row flex-wrap gap-3 justify-end w-1/2;
 }
 
 .approve-button {
@@ -35,7 +39,7 @@
 }
 
 .kyc-img-div {
-  @apply text-sm mt-3 tracking-wider;
+  @apply text-sm mt-3 tracking-wider w-full;
 }
 
 .kyc-img {
