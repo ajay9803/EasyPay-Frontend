@@ -184,8 +184,22 @@ export class HomeActions {
     const user = UserUtils.getUserDetails();
 
     if (user) {
+      const currentDate = new Date();
+
+      const defaultStartDate = new Date(currentDate);
+      defaultStartDate.setDate(currentDate.getDate() - 7);
+      const formattedEndDate = currentDate.toISOString().split("T")[0];
+
+      const formattedStartDate = defaultStartDate.toISOString().split("T")[0];
       const accessToken = UserUtils.getAccessToken();
-      await StatementService.fetchBalanceTransferStatements(accessToken, 1)
+      await StatementService.fetchBalanceTransferStatements(
+        accessToken,
+        1,
+        5,
+        "All",
+        formattedStartDate,
+        formattedEndDate
+      )
         .then(
           (data: {
             statements: IBalanceTransferStatement[];
@@ -234,7 +248,7 @@ export class HomeActions {
               transactionDetailsTab.classList.add("transaction-details-tab");
 
               const time = document.createElement("p");
-              time.innerHTML = DateUtils.formatDate(statement.createdAt);
+              time.innerHTML = DateUtils.formatDateFromMilliseconds(+statement.createdAt);
 
               transactionDetailsTab.appendChild(username);
               transactionDetailsTab.appendChild(time);

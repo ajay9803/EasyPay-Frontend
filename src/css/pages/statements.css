@@ -3,19 +3,19 @@
 }
 
 .table-cell {
-  @apply p-4 text-sm;
+  @apply p-4 text-sm border border-solid;
 }
 
 .table-cell-desc {
-  @apply p-4 flex items-center text-sm;
+  @apply p-4 flex items-center text-sm border border-solid;
 }
 
 .statement-mobile-div {
-  @apply p-4 rounded-md border border-solid flex md:hidden items-start w-full mb-5 text-sm;
+  @apply p-4 rounded-md border border-solid flex md:hidden items-start w-full mt-3 mb-3 text-sm;
 }
 
 .statement-mobile-detail-div {
-  @apply ml-4 flex-1 text-sm;
+  @apply ml-4 flex-1 text-sm w-full;
 }
 
 .statement-mobile-detail {

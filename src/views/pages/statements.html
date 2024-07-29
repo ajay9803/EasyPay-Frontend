@@ -2,31 +2,36 @@
     <div class="flex justify-between items-center mb-4">
         <p class="text-lg font-semibold tracking-wider">Statements</p>
     </div>
-
-    <div class="flex flex-wrap gap-x-5 gap-y-2 mb-4">
-        <div class="flex flex-col items-start gap-y-2">
-            <label for="date" class="font-medium">Start Date:</label>
-            <input type="date" id="date" class="input border rounded px-2 py-1" placeholder="">
+    <form id="statement-filter-form">
+        <div class="flex flex-wrap items-end gap-x-5 gap-y-2 mb-4">
+            <div class="flex flex-col items-start gap-y-2">
+                <label for="start-date" class="font-medium">Start Date:</label>
+                <input type="date" id="start-date" class="input border rounded px-2 py-1" placeholder="">
+            </div>
+            <div class="flex flex-col items-start gap-y-2">
+                <label for="end-date" class="font-medium">End Date:</label>
+                <input type="date" id="end-date" class="input border rounded px-2 py-1" placeholder="">
+            </div>
+            <div class="flex flex-col items-start gap-y-2">
+                <label for="channel" class="font-medium">Channel:</label>
+                <select id="channel" class="input border rounded px-2 py-1">
+                    <option value="Web">Web</option>
+                </select>
+            </div>
+            <div class="flex flex-col items-start gap-y-2">
+                <label for="drcr" class="font-medium">Dr / Cr:</label>
+                <select id="drcr" class="input border rounded px-2 py-1">
+                    <option value="All">All</option>
+                    <option value="Debit">Debit</option>
+                    <option value="Credit">Credit</option>
+                </select>
+            </div>
+            <button type="submit"
+                class="px-3 py-2.5 rounded-md bg-blue-700 text-white flex justify-center items-center">
+                <i class="fa-magnifying-glass fa-solid text-sm"></i>
+            </button>
         </div>
-        <div class="flex flex-col items-start gap-y-2">
-            <label for="date" class="font-medium">End Date:</label>
-            <input type="date" id="date" class="input border rounded px-2 py-1" placeholder="">
-        </div>
-        <div class="flex flex-col items-start gap-y-2">
-            <label for="channel" class="font-medium">Channel:</label>
-            <select id="channel" class="input border rounded px-2 py-1">
-                <option value="Web">Web</option>
-            </select>
-        </div>
-        <div class="flex flex-col items-start gap-y-2">
-            <label for="drcr" class="font-medium">Dr / Cr:</label>
-            <select id="drcr" class="input border rounded px-2 py-1">
-                <option value="All">All</option>
-                <option value="Debit">Debit</option>
-                <option value="Credit">Credit</option>
-            </select>
-        </div>
-    </div>
+    </form>
     <table id="statement-table" class="w-full text-left table-auto border-collapse">
         <thead id="statement-table-head" class="hidden md:table-header-group">
             <tr class="text-sm statement-table-head-row">
