@@ -131,6 +131,9 @@ export class StatementsActions {
       await fetchTheStatements();
     };
 
+    let currentPageNumber = 1;
+    const pageSize = 10;
+
     const fetchTheStatements = async () => {
       fetchedStatements = [];
       tableBody.innerHTML = "";
@@ -138,8 +141,8 @@ export class StatementsActions {
       statementTableHead.style.display = "table-header-group";
       await StatementService.fetchBalanceTransferStatements(
         accessToken,
-        1,
-        20,
+        currentPageNumber,
+        pageSize,
         cashFlowValue,
         startDateInput.value,
         endDateInput.value
@@ -354,6 +357,66 @@ export class StatementsActions {
                   openStatementModal(statement);
                 };
               });
+
+              const maxPageButtons = 5;
+
+              const pageNumbers = document.getElementById(
+                "page-numbers"
+              ) as HTMLDivElement;
+              const totalPages = Math.ceil(data.totalCount / pageSize);
+              pageNumbers.innerHTML = "";
+              
+
+              const prevPageButton = document.getElementById(
+                "prev-page"
+              ) as HTMLButtonElement;
+              const nextPageButton = document.getElementById(
+                "next-page"
+              ) as HTMLButtonElement;
+
+              prevPageButton.onclick = async () => {
+                currentPageNumber--;
+                await fetchTheStatements();
+              };
+
+              nextPageButton.onclick = async () => {
+                currentPageNumber++;
+                await fetchTheStatements();
+              };
+
+              if (currentPageNumber === 1) {
+                prevPageButton.disabled = true;
+                prevPageButton.style.cursor = "not-allowed";
+              } else {
+                prevPageButton.disabled = false;
+                prevPageButton.style.cursor = "pointer";
+              }
+
+              if (currentPageNumber === totalPages) {
+                nextPageButton.disabled = true;
+                nextPageButton.style.cursor = "not-allowed";
+              } else {
+                nextPageButton.disabled = false;
+                nextPageButton.style.cursor = "pointer";
+              }
+
+              for (let i = 1; i <= totalPages; i++) {
+                const pageNumber = document.createElement(
+                  "div"
+                ) as HTMLDivElement;
+                pageNumber.innerHTML = i.toString();
+                pageNumber.classList.add("page-number");
+                if (i === currentPageNumber) {
+                  pageNumber.classList.add("bg-blue-500", "text-white");
+                } else {
+                  pageNumber.classList.remove("bg-blue-500");
+                }
+                pageNumbers.appendChild(pageNumber);
+                pageNumber.onclick = async () => {
+                  currentPageNumber = i;
+                  await fetchTheStatements();
+                };
+              }
             }
           }
         )

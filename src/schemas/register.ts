@@ -1,5 +1,14 @@
 import * as yup from "yup";
 
+/**
+ * The schema for the user registration form.
+ *
+ * @typedef {object} RegisterSchema
+ * @property {string} fullName - The full name of the user.
+ * @property {string} mobileNumber - The mobile number of the user.
+ * @property {string} email - The email address of the user.
+ * @property {Date} dob - The date of birth of the user.
+ */
 export const registerSchema = yup.object().shape({
   fullName: yup.string().required("Full name is required."),
   mobileNumber: yup

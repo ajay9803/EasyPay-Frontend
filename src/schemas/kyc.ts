@@ -1,5 +1,13 @@
 import * as yup from "yup";
 
+/**
+ * Schema for KYC form validation.
+ * @typedef {Object} KycSchema
+ * @property {Mixed} userImage - User image.
+ * @property {String} citizenshipNumber - Citizenship number.
+ * @property {Date} issueDate - Date of birth.
+ * @property {Mixed} citizenshipImage - Citizenship image.
+ */
 export const kycSchema = yup.object().shape({
   userImage: yup.mixed().required("User Image is required"),
   citizenshipNumber: yup.string().required("Citizenship Number is required"),

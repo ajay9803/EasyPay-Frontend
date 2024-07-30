@@ -72,3 +72,7 @@
 .user-settings-buttons {
   @apply flex flex-row gap-x-3 items-center w-full justify-end;
 }
+
+.user-profile-modal {
+  background-color: var(--header-bg-color);
+}

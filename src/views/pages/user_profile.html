@@ -1,0 +1,102 @@
+<div class="body px-5 py-5 md:px-20 flex flex-col md:flex-row gap-5 tracking-wider">
+    <div class="flex flex-col gap-y-5 w-full md:w-2/3">
+        <div class="p-6 border border-solid rounded-md w-full">
+            <div class="flex items-center w-full">
+                <div class="flex flex-col gap-y-2 w-full">
+                    <h2 id="user-profile-username" class="text-lg font-semibold">Sagar Prajapati <span
+                            class="text-blue-500"></h2>
+                    <div class="flex items-center space-x-2">
+                        <input id="email" class="input border rounded px-2 py-1 w-full md:w-2/3" type="email"
+                            placeholder="Email address">
+                        <button id="update-email-button"
+                            class="px-4 py-1 rounded border border-solid cursor-pointer transition-all hover:scale-105">Update</button>
+                    </div>
+                    <div id="otp-div" class="hidden items-center space-x-2">
+                        <input id="otp" class="input border rounded px-2 py-1 w-36" type="text" placeholder="Otp">
+                        <button id="confirm-email-button"
+                            class="px-4 py-1 rounded border border-solid cursor-pointer transition-all hover:scale-105">Confirm</button>
+                    </div>
+                    <p class="mt-1">Joined on: <span id="user-profile-joined-at"> </span></p>
+                    <p id="current-email" class="text-blue-500"> </p>
+                    <div class="flex flex-row items-center gap-x-3 mt-3">
+                        <img src="./images/e-wallet.png" class="h-6 w-6" alt="easy-pay logo">
+                        <p class="text-blue-500"> Consumer </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="kyc-details" class="gap-4 p-6 border border-solid rounded-md flex flex-col">
+            <div class="flex flex-row justify-between">
+                <h3 class="text-lg font-semibold">Profile Detail</h3>
+                <button id="reset-password-button" class="underline hover:text-blue-700 cursor-pointer"> Reset Password
+                </button>
+            </div>
+            <div class="mt-5 space-y-2">
+                <div class="pb-5 border-b border-solid flex justify-between">
+                    <p>Kyc Verified:</p>
+                    <p class="text-blue-500 font-semibold">Verified</p>
+                </div>
+                <div class="pb-5 border-b border-solid flex justify-between">
+                    <p>Date of Birth:</p>
+                    <p id="kyc-dob"></p>
+                </div>
+                <div class="pb-5 border-b border-solid flex justify-between">
+                    <p>Gender:</p>
+                    <p id="kyc-gender"></p>
+                </div>
+                <div class="pb-5 border-b border-solid flex justify-between">
+                    <p>Citizenship Number:</p>
+                    <p id="kyc-cn"></p>
+                </div>
+                <div class="pb-5 border-b border-solid flex justify-between">
+                    <p>Citizenship Issue Date:</p>
+                    <p id="kyc-cid"></p>
+                </div>
+                <div class="flex flex-col">
+                    <p class="text-lg font-semibold">Images </p>
+                    <div id="kyc-images" class="flex flex-wrap gap-5 mt-5"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col w-full md:w-1/3 gap-y-5">
+        <div class="flex flex-col">
+            <h3 class="text-lg font-semibold">Balance</h3>
+            <div class="mt-2">
+                <div
+                    class="user-profile-balance-card flex justify-between items-center p-4 shadow rounded-lg bg-sky-50">
+                    <div>
+                        <h4 class="text-sm text-black">TOTAL BALANCE</h4>
+                        <p id="user-profile-balance" class="text-lg font-semibold text-black"></p>
+                    </div>
+                    <button id="load-balance-button"
+                        class="border border-solid border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded transition-all ease-in duration-300 font-semibold">Load
+                        Fund</button>
+                </div>
+
+                <div class="user-profile-balance-card mt-4 p-4 shadow rounded-lg bg-orange-50">
+                    <h4 class="text-sm text-black">Easy Pay POINTS</h4>
+                    <p class="font-semibold text-black">410</p>
+                </div>
+            </div>
+        </div>
+        <div class="border border-solid p-5 rounded-md bg-red-50 text-black">
+            <h3 class="text-lg font-semibold">Contact</h3>
+            <div class="mt-5 flex flex-col gap-y-3">
+                <div class="flex flex-row items-center gap-x-3">
+                    <i class="fa-solid fa-phone text-sm"></i>
+                    <p> 9841987556</p>
+                </div>
+                <div class="flex flex-row items-center gap-x-3">
+                    <i class="fa-solid fa-phone text-sm"></i>
+                    <p> 01-990 880 (Toll Free)</p>
+                </div>
+                <div class="flex flex-row items-center gap-x-3">
+                    <i class="fa-solid fa-envelope text-sm"></i>
+                    <p> admin@gmail.com</p>
+                </div>
+                <p class="text-blue-500 mt-4 hover:underline cursor-pointer">Give us your feedback</p>
+            </div>
+        </div>
+    </div>
+</div>

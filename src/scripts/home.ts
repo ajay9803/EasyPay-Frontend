@@ -248,7 +248,9 @@ export class HomeActions {
               transactionDetailsTab.classList.add("transaction-details-tab");
 
               const time = document.createElement("p");
-              time.innerHTML = DateUtils.formatDateFromMilliseconds(+statement.createdAt);
+              time.innerHTML = DateUtils.formatDateFromMilliseconds(
+                +statement.createdAt
+              );
 
               transactionDetailsTab.appendChild(username);
               transactionDetailsTab.appendChild(time);
@@ -260,6 +262,10 @@ export class HomeActions {
               transactionItem.appendChild(transactionAmount);
 
               recentTransactionsElement.appendChild(transactionItem);
+
+              transactionItem.onclick = () => {
+                Navigator.navigateTo("/#/statements");
+              };
             });
             const moreButton = document.createElement(
               "p"

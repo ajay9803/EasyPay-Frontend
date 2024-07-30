@@ -93,7 +93,8 @@ export class SendMoneyActions {
             confirmSendMoneySection.style.display = "flex";
             confirmSendMoneyEmail.innerHTML = data.email;
             confirmSendMoneyAmount.innerHTML = amount;
-            confirmSendMoneyUsername.innerHTML = data.username;
+            confirmSendMoneyUsername.innerHTML = UserUtils.coverUsername(data.username);
+
             confirmSendMoneyPurpose.innerHTML = purpose;
             confirmSendMoneyRemarks.innerHTML = remarks;
 

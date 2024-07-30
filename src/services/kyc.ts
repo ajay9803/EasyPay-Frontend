@@ -40,6 +40,30 @@ class KycService {
     }
   };
 
+  static fetchKycApplication: (token: string) => Promise<any> = async (
+    token: string
+  ) => {
+    const url = `${HOST_NAME}/kyc/application`;
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const jsonData = await response.json();
+
+      if (response.status === 200) {
+        return jsonData.application;
+      } else {
+        throw new Error(jsonData.message);
+      }
+    } catch (e) {
+      throw e;
+    }
+  };
+
   static fetchKycApplications: (status: string, token: string) => Promise<any> =
     async (status: string, token: string) => {
       const url = `${HOST_NAME}/kyc/applications?page=1&size=5&status=${status}`;

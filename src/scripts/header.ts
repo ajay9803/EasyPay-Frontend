@@ -1,7 +1,46 @@
 import Theme from "../enums/theme";
 import { Router } from "../router";
+import Navigator from "../utils/navigate";
 
 export class HeaderActions {
+  static initUserActions: () => void = () => {
+    const userMenuBackground = document.getElementById(
+      "user-menu-background"
+    ) as HTMLDivElement;
+
+    const userMenu = document.getElementById("user-menu") as HTMLDivElement;
+    const userIcon = document.getElementById(
+      "user-profile-icon"
+    ) as HTMLDivElement;
+
+    const closeModal = () => {
+      userMenuBackground.style.display = "none";
+      userMenu.classList.remove("h-32");
+      userMenu.classList.add("h-0");
+    };
+
+    const userProfileButton = document.getElementById(
+      "user-profile-button"
+    ) as HTMLDivElement;
+
+    userProfileButton.onclick = () => {
+      closeModal();
+      Navigator.navigateTo("/#/user-profile");
+    };
+
+    userMenuBackground.onclick = () => {
+      closeModal();
+    };
+
+    userIcon.onclick = () => {
+      userMenuBackground.style.display = "flex";
+      console.log("user icon clicked");
+
+      userMenu.classList.remove("h-0");
+      userMenu.classList.add("h-32");
+    };
+  };
+  
   static toggleSwitch: () => void = () => {
     const currentTheme = localStorage.getItem("theme") ?? "LIGHT";
 
@@ -63,8 +102,6 @@ export class HeaderActions {
     const loginButton = document.getElementById(
       "tab-login-button"
     ) as HTMLDivElement;
-
-
 
     if (user) {
       logoutButton.style.display = "flex";

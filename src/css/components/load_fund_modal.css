@@ -1,5 +1,5 @@
 .load-fund-modal {
-  @apply bg-black bg-opacity-55 h-full w-full fixed top-0 left-0 flex flex-col items-center justify-center;
+  @apply bg-black bg-opacity-55 h-fit w-full fixed top-0 left-0 flex flex-col items-center justify-center;
 }
 
 .load-fund-modal-container {

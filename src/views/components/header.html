@@ -18,8 +18,20 @@
     </div>
     <div id="side-icons" class="header-side-tabs-side-icons">
         <div class="user-settings-buttons">
-            <div id="user-profile" class="user-profile-item">
-                <i class="fa-regular fa-user"></i>
+            <div id="user-profile" class="user-profile-item relative">
+                <i id="user-profile-icon" class="fa-regular fa-user"></i>
+                <div id="user-menu-background" class="hidden fixed h-full w-full bg-black bg-opacity-25 top-0 right-0">
+                </div>
+                <div id="user-menu"
+                    class="user-profile-modal rounded-xl z-20 h-0 w-44 absolute right-0 top-10 transition-all duration-300 flex flex-col items-center justify-around overflow-hidden">
+                    <p id="user-profile-button"
+                        class="hover:bg-blue-500 w-full text-center py-4 transition-all duration-300 hover:text-white font-semibold ">
+                        User Profile </p>
+                    <p
+                        class="hover:bg-blue-500 w-full text-center py-4 transition-all duration-300 hover:text-white font-semibold ">
+                        Logout
+                    </p>
+                </div>
             </div>
             <div id="notifications-button" class="notifications-button">
                 <i class="fas fa-bell"></i>
@@ -35,7 +47,6 @@
             <a href="/#/login">
                 <div id="tab-login-button" class="login-button"> Login </div>
             </a>
-
         </div>
     </div>
 </div>
