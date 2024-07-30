@@ -20,7 +20,7 @@
         <div class="user-settings-buttons">
             <div id="user-profile" class="user-profile-item relative">
                 <i id="user-profile-icon" class="fa-regular fa-user"></i>
-                <div id="user-menu-background" class="hidden fixed h-full w-full bg-black bg-opacity-25 top-0 right-0">
+                <div id="user-menu-background" class="hidden fixed h-full w-full bg-black bg-opacity-25 top-0 right-0 z-10">
                 </div>
                 <div id="user-menu"
                     class="user-profile-modal rounded-xl z-20 h-0 w-44 absolute right-0 top-10 transition-all duration-300 flex flex-col items-center justify-around overflow-hidden">
@@ -33,8 +33,26 @@
                     </p>
                 </div>
             </div>
-            <div id="notifications-button" class="notifications-button">
-                <i class="fas fa-bell"></i>
+            <div id="notifications-button" class="notifications-button relative tracking-wider">
+                <i id="notification-icon" class="fas fa-bell"></i>
+                <div id="user-notification-background"
+                    class="fixed hidden h-full w-full bg-black bg-opacity-25 top-0 right-0 z-10">
+                </div>
+                <div id="notification-modal"
+                    class="user-profile-modal absolute bg-white top-12 w-96 h-0 right-0 transition-all duration-300 z-20 overflow-hidden">
+                    <div class="w-full rounded-lg shadow-lg h-full flex flex-col items-center justify-between">
+                        <div class="px-4 py-2 ">
+                            <h2 class="text-xl">Notifications</h2>
+                        </div>
+                        <div class="h-[1px] w-full bg-blue-700"></div>
+                        <div id="notifications-container"
+                            class="flex flex-col flex-1 h-full w-full overflow-auto notifications-scrollbar">
+                        </div>
+                        <div class="h-[1px] w-full bg-blue-700"></div>
+                        <button id="view-more-notifications" class="bg-blue-500 w-full text-white px-4 py-2">View
+                            More</button>
+                    </div>
+                </div>
             </div>
             <div class="toggle-theme-button">
                 <div id="toggle-switcher"></div>

@@ -1,3 +1,6 @@
+/**
+ * A class that provides functionality for displaying toast messages.
+ */
 export class Toast {
   static showToast = (errorMessage: string) => {
     const app = document.getElementById("app") as HTMLDivElement;

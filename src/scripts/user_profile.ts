@@ -50,7 +50,7 @@ export class UserProfileActions {
           const kycDob = document.getElementById(
             "kyc-dob"
           ) as HTMLParagraphElement;
-          kycDob.textContent = DateUtils.formatYearMonthDate(user.dob);
+          kycDob.textContent = DateUtils.formatToYYYYMMDD(user.dob);
 
           const kycGender = document.getElementById(
             "kyc-gender"
@@ -65,7 +65,7 @@ export class UserProfileActions {
           const kycCid = document.getElementById(
             "kyc-cid"
           ) as HTMLParagraphElement;
-          kycCid.textContent = DateUtils.formatYearMonthDate(
+          kycCid.textContent = DateUtils.formatToYYYYMMDD(
             application.citizenshipIssueDate
           );
 

@@ -3,10 +3,25 @@ import { INewUser, IUser } from "../interfaces/user";
 import { Router } from "../router";
 import { Toast } from "../utils/toast";
 
+/**
+ * Service class for interacting with the authentication API.
+ */
 class AuthService {
-  static login = async (email: string, password: string): Promise<any> => {
+  /**
+   * Authenticates the user with the provided email and password.
+   *
+   * @param {string} email - The email of the user.
+   * @param {string} password - The password of the user.
+   * @return {Promise<any>} A promise that resolves to the response data upon successful authentication,
+   * or rejects with an error message.
+   */
+  static login: (email: string, password: string) => Promise<any> = async (
+    email: string,
+    password: string
+  ): Promise<any> => {
+    const url = `${HOST_NAME}/auth/login`;
     try {
-      const response = await fetch(`${HOST_NAME}/auth/login`, {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,9 +44,21 @@ class AuthService {
     }
   };
 
-  static register = async (user: INewUser, otp: string): Promise<void> => {
+  /**
+   * Registers a new user with the provided user details and OTP.
+   *
+   * @param {INewUser} user - The details of the new user.
+   * @param {string} otp - The OTP received via email.
+   * @return {Promise<void>} A promise that resolves when registration is successful,
+   * or rejects with an error message.
+   */
+  static register: (user: INewUser, otp: string) => Promise<void> = async (
+    user: INewUser,
+    otp: string
+  ): Promise<void> => {
+    const url = `${HOST_NAME}/users`;
     try {
-      const response = await fetch(`${HOST_NAME}/users`, {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,8 +79,12 @@ class AuthService {
         throw new Error(jsonData.message);
       } else {
         Toast.showToast(jsonData.message);
+
+        // Redirect to login page
         history.pushState(null, "", "/#/login");
         Router.handleRouteChange();
+
+        // Remove new user data from local storage
         localStorage.removeItem("new-user-data");
       }
     } catch (e: any) {
@@ -61,9 +92,19 @@ class AuthService {
     }
   };
 
-  static sendSignupOtp = async (user: INewUser): Promise<void> => {
+  /**
+   * Sends a signup OTP to the user's email address.
+   *
+   * @param {INewUser} user - The user object containing user details.
+   * @return {Promise<void>} A promise that resolves when the OTP is sent successfully,
+   * or rejects with an error message.
+   */
+  static sendSignupOtp: (user: INewUser) => Promise<void> = async (
+    user: INewUser
+  ): Promise<void> => {
+    const url = `${HOST_NAME}/auth/sign-up-otp`;
     try {
-      const response = await fetch(`${HOST_NAME}/auth/sign-up-otp`, {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,9 +129,19 @@ class AuthService {
     }
   };
 
-  static resendSignupOtp = async (email: string): Promise<void> => {
+  /**
+   * Sends a resend signup OTP to the user's email address.
+   *
+   * @param {string} email - The email address of the user.
+   * @return {Promise<void>} A promise that resolves when the OTP is sent successfully,
+   * or rejects with an error message.
+   */
+  static resendSignupOtp: (email: string) => Promise<void> = async (
+    email: string
+  ): Promise<void> => {
+    const url = `${HOST_NAME}/auth/sign-up-otp`;
     try {
-      const response = await fetch(`${HOST_NAME}/auth/sign-up-otp`, {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -112,12 +163,19 @@ class AuthService {
     }
   };
 
+  /**
+   * Fetches user details from the API.
+   *
+   * @param {string} token - The authentication token.
+   * @return {Promise<IUser>} A promise that resolves with the user details,
+   * or rejects with an error message.
+   */
   static fetchUser: (token: string) => Promise<IUser> = async (
     token: string
   ) => {
-    console.log("Fetch user is running.");
+    const url = `${HOST_NAME}/users`;
     try {
-      const response = await fetch(`${HOST_NAME}/users`, {
+      const response = await fetch(url, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

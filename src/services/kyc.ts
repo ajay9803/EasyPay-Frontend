@@ -1,20 +1,34 @@
 import { HOST_NAME } from "../constants/auth";
 import { Toast } from "../utils/toast";
 
+/**
+ * The KycService class provides methods for interacting with the KYC API.
+ */
 class KycService {
+  /**
+   * Applies for KYC.
+   *
+   * @async
+   * @function applyForKyc
+   * @memberof KycService
+   * @param {string} token - The authentication token.
+   * @param {Object.<string, FormDataEntryValue>} formObject - The form data
+   * containing the applicant's details.
+   * @return {Promise<void>} A promise that resolves when the KYC application
+   * is successfully submitted.
+   */
   static applyForKyc: (
     token: string,
     formData: { [key: string]: FormDataEntryValue }
   ) => Promise<void> = async (
     token: string,
     formObject: { [key: string]: FormDataEntryValue }
-  ) => {
+  ): Promise<void> => {
     try {
-      console.log("The token is: ", token);
-      console.log("The form-data is: ", formObject);
-
+      // Construct the form data
       const formData = new FormData();
 
+      // Add the form data to the form
       formData.append("citizenshipNumber", formObject.citizenshipNumber);
       formData.append("citizenshipIssueDate", formObject.issueDate);
       formData.append("userPhoto", formObject.userImage);
@@ -40,9 +54,15 @@ class KycService {
     }
   };
 
+  /**
+   * Fetches the KYC application associated with the given access token.
+   *
+   * @param {string} token - The access token of the user.
+   * @return {Promise<any>} A promise that resolves to the KYC application data.
+   */
   static fetchKycApplication: (token: string) => Promise<any> = async (
     token: string
-  ) => {
+  ): Promise<any> => {
     const url = `${HOST_NAME}/kyc/application`;
     try {
       const response = await fetch(url, {
@@ -64,8 +84,14 @@ class KycService {
     }
   };
 
+  /**
+   * Fetches all the kyc applications.
+   *
+   * @param {string} token - The access token of the user.
+   * @return {Promise<any>} A promise that resolves to the KYC application data.
+   */
   static fetchKycApplications: (status: string, token: string) => Promise<any> =
-    async (status: string, token: string) => {
+    async (status: string, token: string): Promise<any> => {
       const url = `${HOST_NAME}/kyc/applications?page=1&size=5&status=${status}`;
       try {
         const response = await fetch(url, {
@@ -87,6 +113,14 @@ class KycService {
       }
     };
 
+  /**
+   * Verify the KYC application.
+   *
+   * @param {string} token - The access token of the user.
+   * @param {string} userId - The user ID of the user.
+   * @param {boolean} isVerified - The verification status of the KYC application.
+   * @return {Promise<any>} A promise that resolves to the verification result.
+   */
   static verifyKycApplication: (
     token: string,
     userId: string,
@@ -95,7 +129,7 @@ class KycService {
     token: string,
     userId: string,
     isVerified: boolean
-  ) => {
+  ): Promise<any> => {
     const url = `${HOST_NAME}/kyc/verify`;
     try {
       const response = await fetch(url, {

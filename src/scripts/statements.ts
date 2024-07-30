@@ -1,8 +1,10 @@
+import html2canvas from "html2canvas";
 import { IBalanceTransferStatement } from "../interfaces/statement";
 import StatementService from "../services/statement";
 import DateUtils from "../utils/date";
 import { Toast } from "../utils/toast";
 import UserUtils from "../utils/user";
+import jsPDF from "jspdf";
 
 export class StatementsActions {
   static fetchStatements: () => Promise<void> = async () => {
@@ -50,10 +52,12 @@ export class StatementsActions {
         +statement.createdAt
       );
 
-      statementDetailProcessor.textContent =
-        user.id === statement.senderUserId
-          ? user.username
-          : statement.senderUsername;
+      if (user !== null) {
+        statementDetailProcessor.textContent =
+          user.id === statement.senderUserId
+            ? user.username
+            : statement.senderUsername;
+      }
 
       statementDetailAmount.textContent = `Rs. ${statement.amount}`;
       statementDetailSender.textContent = statement.senderUsername;
@@ -261,11 +265,13 @@ export class StatementsActions {
 
                 const user = UserUtils.getUserDetails();
 
-                balanceCell.textContent = `Rs. ${
-                  statement.senderUserId === user.id
-                    ? statement.senderTotalBalance
-                    : statement.receiverTotalBalance
-                }`;
+                if (user !== null) {
+                  balanceCell.textContent = `Rs. ${
+                    statement.senderUserId === user.id
+                      ? statement.senderTotalBalance
+                      : statement.receiverTotalBalance
+                  }`;
+                }
 
                 tableRow.appendChild(idCell);
                 tableRow.appendChild(descriptionCell);
@@ -329,7 +335,7 @@ export class StatementsActions {
                 );
 
                 remainingBalance.textContent = `Rs. ${
-                  statement.senderUserId === user.id
+                  statement.senderUserId === user!.id
                     ? statement.senderTotalBalance
                     : statement.receiverTotalBalance
                 }`;
@@ -358,14 +364,11 @@ export class StatementsActions {
                 };
               });
 
-              const maxPageButtons = 5;
-
               const pageNumbers = document.getElementById(
                 "page-numbers"
               ) as HTMLDivElement;
               const totalPages = Math.ceil(data.totalCount / pageSize);
               pageNumbers.innerHTML = "";
-              
 
               const prevPageButton = document.getElementById(
                 "prev-page"
@@ -429,5 +432,26 @@ export class StatementsActions {
     };
 
     fetchTheStatements();
+  };
+
+  static downloadPdfEventListener: () => void = () => {
+    const pdfButton = document.getElementById("pdf-button") as HTMLElement;
+
+    pdfButton.onclick = () => {
+      const element = document.getElementById(
+        "statement-modal-details"
+      ) as HTMLDivElement;
+      html2canvas(element).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+        const imgWidth = 210;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        let position = 0;
+
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        pdf.save("statement.pdf");
+      });
+    };
   };
 }

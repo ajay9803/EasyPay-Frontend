@@ -11,6 +11,12 @@ export class ForgotPasswordPage {
     return response.text();
   };
 
+
+  /**
+   * Initializes the event listeners for the forgot password page.
+   *
+   * @return {void} This function does not return anything.
+   */
   static initEventListeners: () => void = () => {
     ForgotPasswordActions.sendForgotPasswordLink();
   };

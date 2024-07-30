@@ -1,3 +1,4 @@
+import { io } from "socket.io-client";
 import { IBalanceTransferStatement } from "../interfaces/statement";
 import { IUser } from "../interfaces/user";
 import AuthService from "../services/auth";
@@ -5,11 +6,36 @@ import StatementService from "../services/statement";
 import DateUtils from "../utils/date";
 import Navigator from "../utils/navigate";
 import UserUtils from "../utils/user";
+import { Toast } from "../utils/toast";
+import SocketService from "../utils/socket_service";
+import { HOST_NAME } from "../constants/auth";
 
 let viewAmount: boolean = false;
 
+/**
+ * Class representing the actions for the home page.
+ *
+ * @class
+ */
 export class HomeActions {
   static getUpdatedUserDetails: () => Promise<void> = async () => {
+    const socket = io("http://localhost:3000", {});
+
+    socket.on("balance-transfer", (data) => {
+      Toast.showToast(data);
+    });
+
+    const dummyButton = document.getElementById("dummy") as HTMLDivElement;
+
+    dummyButton.onclick = () => {
+       const socketService = new SocketService(HOST_NAME);
+
+       socketService.connect();
+       socketService.emit("test", {
+         message: "This is test message.",
+       });
+    };
+    
     const accessToken = UserUtils.getAccessToken();
 
     if (accessToken) {

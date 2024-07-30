@@ -19,6 +19,7 @@ export class Header {
     HeaderActions.toggleSwitch();
     HeaderActions.getLoggedInState();
     HeaderActions.logoutUser();
-    HeaderActions.initUserActions();
+    HeaderActions.userProfile();
+    HeaderActions.notificationsButtonListeners();
   };
 }

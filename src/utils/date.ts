@@ -1,5 +1,14 @@
+/**
+ * A utility class for manipulating and formatting dates.
+ */
 class DateUtils {
-  static formatDate = (date: string) => {
+  /**
+   * Formats the given date string into a human-readable date format.
+   *
+   * @param {string} date - The date string to format.
+   * @return {string} The formatted date string.
+   */
+  static formatDate = (date: string): string => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
       month: "long",
@@ -10,7 +19,13 @@ class DateUtils {
     return new Date(date).toLocaleDateString(undefined, options);
   };
 
-  static formatDateFromMilliseconds = (milliseconds: number) => {
+  /**
+   * Formats the given date in milliseconds into a human-readable date format.
+   *
+   * @param {number} milliseconds - The date in milliseconds to format.
+   * @return {string} The formatted date string.
+   */
+  static formatDateFromMilliseconds = (milliseconds: number): string => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
       month: "long",
@@ -21,7 +36,13 @@ class DateUtils {
     return new Date(milliseconds).toLocaleDateString(undefined, options);
   };
 
-  static formatYearMonthDate = (date: string) => {
+  /**
+   * Formats the given date string into the format "YYYY-MM-DD".
+   *
+   * @param {string} date - The date string to format.
+   * @return {string} The formatted date string in the format "YYYY-MM-DD".
+   */
+  static formatToYYYYMMDD = (date: string): string => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
       month: "long",

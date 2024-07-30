@@ -76,3 +76,23 @@
 .user-profile-modal {
   background-color: var(--header-bg-color);
 }
+
+.notifications-scrollbar {
+  scrollbar-width: thin;
+}
+
+.notification-div {
+  @apply flex items-start mb-4  px-3 py-2 hover:bg-gray-300 hover:text-black;
+}
+
+.notification-content {
+  @apply ml-4 flex-1;
+}
+
+.notification-title {
+  @apply text-sm font-bold;
+}
+
+.notification-date {
+  @apply text-xs mt-1;
+}

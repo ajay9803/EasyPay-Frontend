@@ -1,0 +1,1 @@
+export const MAIN_LOGO_PATH = "./images/e-wallet.png";

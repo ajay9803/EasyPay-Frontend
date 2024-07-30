@@ -17,5 +17,6 @@ export class StatementsPage {
    */
   static initEventListeners: () => void = () => {
     StatementsActions.fetchStatements();
+    StatementsActions.downloadPdfEventListener();
   };
 }

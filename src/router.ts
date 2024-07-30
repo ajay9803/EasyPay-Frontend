@@ -15,6 +15,7 @@ import { StatementsPage } from "./loaders/statement";
 import { UserProfilePage } from "./loaders/user_profile";
 import { ResetPasswordPage } from "./loaders/reset_password";
 import { SetNewPasswordPage } from "./loaders/set_new_password";
+import { NotifcationsPage } from "./loaders/notifications";
 
 /**
  * A mapping of route paths to their corresponding components.
@@ -38,6 +39,7 @@ const routes: { [key: string]: { component: any } } = {
   "#/user-profile": { component: UserProfilePage },
   "#/reset-password": { component: ResetPasswordPage },
   "#/set-new-password": { component: SetNewPasswordPage },
+  "#/notifications": {component: NotifcationsPage },
 };
 
 /**

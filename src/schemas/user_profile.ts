@@ -16,7 +16,7 @@ export const resetPasswordSchema = yup.object().shape({
 
 /**
  * Schema for reset password form validation.
- * @typedef {Object} ResetPasswordSchema
+ * @typedef {Object} SetNewPasswordSchema
  * @property {string} password - The new password.
  * @property {string} confirmPassword - The confirmation of the new password.
  */
