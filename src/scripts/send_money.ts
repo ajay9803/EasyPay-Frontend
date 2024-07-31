@@ -5,8 +5,21 @@ import UserUtils from "../utils/user";
 import { Toast } from "../utils/toast";
 import { IUser } from "../interfaces/user";
 
+/**
+ * Class representing the actions for the send money page.
+ *
+ * @class
+ */
 export class SendMoneyActions {
-  static submitSendMoneyForm: () => void = () => {
+  /**
+   * Submits the send money form.
+   *
+   * @return {void}
+   */
+  static submitSendMoneyForm: () => void = (): void => {
+    /**
+     * Define elements of the send money page
+     */
     const confirmSendMoneySection = document.getElementById(
       "confirm-send-money-section"
     ) as HTMLDivElement;
@@ -68,50 +81,88 @@ export class SendMoneyActions {
       "send-money-button"
     ) as HTMLButtonElement;
 
-    sendMoneyClearButton.onclick = () => {
+    /**
+     * Clear the send money form when the clear button is clicked.
+     *
+     * @returns {void}
+     */
+    sendMoneyClearButton.onclick = (): void => {
       sendMoneyForm.reset();
     };
 
-
-    const submitSendMoneyForm = async () => {
+    /**
+     * Submit the send money form asynchronously.
+     *
+     * @returns {Promise<void>} A promise that resolves when the form is submitted.
+     */
+    const submitSendMoneyForm = async (): Promise<void> => {
       const email = emailInputElement.value;
       const amount = amountInputElement.value;
       const purpose = purposeInputElement.value;
       const remarks = remarksInputElement.value;
 
       const formData = { email, amount, purpose, remarks };
-      console.log("Initial form data is: ", formData);
 
       try {
         const accessToken = UserUtils.getAccessToken();
+        /**
+         * Clear the error messages.
+         */
         clearErrorMessages();
+
+        /**
+         * Validate the send money form using yup schema
+         *
+         * @param {Object} formData - The form data to be validated
+         * @param {Object} options - The options for validation
+         * @return {Promise<void>} - A promise that resolves when validation is successful
+         * @throws {yup.ValidationError} - Throws an error if validation fails
+         */
         await sendMoneySchema.validate(formData, { abortEarly: false });
 
+        /**
+         * Fetch user by email
+         */
         await UserService.fetchUserByEmail(accessToken, email)
           .then(async (data: IUser) => {
+            /**
+             * Display fetched user details.
+             * Display confirm send money section.
+             */
             sendMoneySection.style.display = "none";
             confirmSendMoneySection.style.display = "flex";
             confirmSendMoneyEmail.innerHTML = data.email;
             confirmSendMoneyAmount.innerHTML = amount;
-            confirmSendMoneyUsername.innerHTML = UserUtils.coverUsername(data.username);
+            confirmSendMoneyUsername.innerHTML = UserUtils.coverUsername(
+              data.username
+            );
 
             confirmSendMoneyPurpose.innerHTML = purpose;
             confirmSendMoneyRemarks.innerHTML = remarks;
 
-            sendMoneyButton.onclick = async () => {
+            /**
+             * Handles the click event of the sendMoneyButton.
+             *
+             * @return {Promise<void>} A promise that resolves when the function is complete.
+             */
+            sendMoneyButton.onclick = async (): Promise<void> => {
               await UserService.transferBalance(accessToken, {
                 receiverEmail: data.email,
                 amount: +amount,
                 purpose: purpose,
                 remarks: remarks,
-              }).then((data) => {
-                Toast.showToast(data.message);
-                history.back();
-              }).catch((e) => {
-                Toast.showToast(e.message);
-              });
+              })
+                .then((data) => {
+                  Toast.showToast(data.message);
+                  /**
+                   * Navigate back
+                   */
+                  history.back();
+                })
+                .catch((e) => {
+                  Toast.showToast(e.message);
+                });
             };
-
           })
           .catch((e) => {
             Toast.showToast(e.message);
@@ -123,7 +174,12 @@ export class SendMoneyActions {
       }
     };
 
-    const clearErrorMessages = () => {
+    /**
+     * Clears the error messages and removes the error border from the input elements.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const clearErrorMessages = (): void => {
       emailErrorElement.innerHTML = "";
       amountErrorElement.innerHTML = "";
       purposeErrorElement.innerHTML = "";
@@ -134,6 +190,10 @@ export class SendMoneyActions {
       remarksInputElement.classList.remove("error-border");
     };
 
+    /**
+     * Display error messages in the input elements.
+     * Add error border to the input fields.
+     */
     const displayErrorMessages = (err: yup.ValidationError) => {
       err.inner.forEach((error) => {
         switch (error.path) {
@@ -165,7 +225,5 @@ export class SendMoneyActions {
 
       await submitSendMoneyForm();
     });
-
-
   };
 }

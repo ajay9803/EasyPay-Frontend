@@ -15,31 +15,30 @@ import { StatementsPage } from "./loaders/statement";
 import { UserProfilePage } from "./loaders/user_profile";
 import { ResetPasswordPage } from "./loaders/reset_password";
 import { SetNewPasswordPage } from "./loaders/set_new_password";
-import { NotifcationsPage } from "./loaders/notifications";
+import { NotificationsPage } from "./loaders/notifications";
+import { ABOUT_US_PATH, ADMIN_DASHBOARD_PATH, FORGOT_PASSWORD_PATH, HOME_PATH, KYC_FORM_PATH, LOAD_BALANCE_PATH, LOGIN_PATH, NOTIFICATIONS_PATH, REGISTER_PATH, RESET_PASSWORD_PATH, SEND_MONEY_PATH, SET_NEW_PASSWORD_PATH, STATEMENTS_PATH, USER_PROFILE_PATH, VERIFY_KYC_APPLICATIONS_PATH, VERIFY_OTP_PATH } from "./constants/routes";
 
 /**
  * A mapping of route paths to their corresponding components.
  * @type {{[key: string]: {component: any}}}
  */
 const routes: { [key: string]: { component: any } } = {
-  "#/home": {
-    component: HomePage,
-  },
-  "#/about-us": { component: AboutUsPage },
-  "#/login": { component: LoginPage },
-  "#/register": { component: RegisterPage },
-  "#/verify-otp": { component: VerifyOtpPage },
-  "#/load-balance": { component: LoadBalancePage },
-  "#/fill-kyc-form": { component: KycFormPage },
-  "#/admin": { component: AdminDashboard },
-  "#/admin/verify-kyc-applications": { component: ViewKycApplications },
-  "#/send-money": { component: SendMoneyPage },
-  "#/forgot-password": { component: ForgotPasswordPage },
-  "#/statements": { component: StatementsPage },
-  "#/user-profile": { component: UserProfilePage },
-  "#/reset-password": { component: ResetPasswordPage },
-  "#/set-new-password": { component: SetNewPasswordPage },
-  "#/notifications": {component: NotifcationsPage },
+  [HOME_PATH]: { component: HomePage },
+  [ABOUT_US_PATH]: { component: AboutUsPage },
+  [LOGIN_PATH]: { component: LoginPage },
+  [REGISTER_PATH]: { component: RegisterPage },
+  [VERIFY_OTP_PATH]: { component: VerifyOtpPage },
+  [LOAD_BALANCE_PATH]: { component: LoadBalancePage },
+  [KYC_FORM_PATH]: { component: KycFormPage },
+  [ADMIN_DASHBOARD_PATH]: { component: AdminDashboard },
+  [VERIFY_KYC_APPLICATIONS_PATH]: { component: ViewKycApplications },
+  [SEND_MONEY_PATH]: { component: SendMoneyPage },
+  [FORGOT_PASSWORD_PATH]: { component: ForgotPasswordPage },
+  [STATEMENTS_PATH]: { component: StatementsPage },
+  [USER_PROFILE_PATH]: { component: UserProfilePage },
+  [RESET_PASSWORD_PATH]: { component: ResetPasswordPage },
+  [SET_NEW_PASSWORD_PATH]: { component: SetNewPasswordPage },
+  [NOTIFICATIONS_PATH]: { component: NotificationsPage },
 };
 
 /**
@@ -121,5 +120,5 @@ export class Router {
   static init: () => void = () => {
     window.addEventListener("popstate", () => this.handleRouteChange());
     this.handleRouteChange();
-  }
+  };
 }

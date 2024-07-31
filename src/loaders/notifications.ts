@@ -4,7 +4,7 @@ import { NotificationsPageActions } from "../scripts/notifications";
  * Class representing a Notifications page.
  * @class
  */
-export class NotifcationsPage {
+export class NotificationsPage {
   static load: () => Promise<string> = async () => {
     const response = await fetch("src/views/pages/notifications.html");
     return response.text();

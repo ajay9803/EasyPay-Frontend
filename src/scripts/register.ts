@@ -3,12 +3,23 @@ import { Toast } from "../utils/toast";
 import { registerSchema } from "../schemas/register";
 import AuthService from "../services/auth";
 
+/**
+ * Class representing the actions for the register page.
+ * @class
+ */
 export class RegisterActions {
-  static register: () => void = () => {
+  /**
+   * Registers a new user.
+   *
+   * @return {void} No return value.
+   */
+  static register: () => void = (): void => {
+    /**
+     * Define elements of the form
+     */
     const signupForm = document.getElementById(
       "signup-form"
     ) as HTMLFormElement;
-
     const userNameInput = document.getElementById(
       "full-name"
     ) as HTMLInputElement;
@@ -45,6 +56,13 @@ export class RegisterActions {
       "confirm-password-error"
     ) as HTMLParagraphElement;
 
+    /**
+     * Clears the error messages and removes the "error-border" class from the input fields.
+     *
+     * This function sets the innerHTML of the error elements to an empty string and removes the "error-border" class from the input fields.
+     *
+     * @return {void} This function does not return anything.
+     */
     const removeErrorMessages = () => {
       userNameError.innerHTML = "";
       mobileNumberError.innerHTML = "";
@@ -62,11 +80,17 @@ export class RegisterActions {
       confirmPasswordInput.classList.remove("error-border");
     };
 
+    /**
+     * Handles the submit event for the signup form.
+     */
     signupForm.addEventListener("submit", async (event: SubmitEvent) => {
       event.preventDefault();
 
       removeErrorMessages();
 
+      /**
+       * Convert form data to an object
+       */
       const formData = new FormData(signupForm);
       const formObject: { [key: string]: FormDataEntryValue } = {};
       formData.forEach((value, key) => {
@@ -74,8 +98,10 @@ export class RegisterActions {
       });
 
       try {
+        // Validate the form object with registerSchema
         await registerSchema.validate(formObject, { abortEarly: false });
 
+        // Send OTP
         await AuthService.sendSignupOtp({
           username: formObject.fullName as string,
           email: formObject.email as string,
@@ -84,6 +110,9 @@ export class RegisterActions {
           password: formObject.password as string,
         });
       } catch (err) {
+        /**
+         * Display error messages in the form if validation fails
+         */
         if (err instanceof yup.ValidationError) {
           Toast.showToast("Please fill in all the fields.");
           err.inner.forEach((error) => {

@@ -1,5 +1,4 @@
 import { HOST_NAME } from "../constants/auth";
-import { Toast } from "../utils/toast";
 
 /**
  * The KycService class provides methods for interacting with the KYC API.
@@ -20,10 +19,10 @@ class KycService {
   static applyForKyc: (
     token: string,
     formData: { [key: string]: FormDataEntryValue }
-  ) => Promise<void> = async (
+  ) => Promise<string> = async (
     token: string,
     formObject: { [key: string]: FormDataEntryValue }
-  ): Promise<void> => {
+  ): Promise<string> => {
     try {
       // Construct the form data
       const formData = new FormData();
@@ -45,12 +44,12 @@ class KycService {
       const jsonData = await response.json();
 
       if (response.status === 200) {
-        Toast.showToast(jsonData.message);
+        return jsonData.message;
       } else {
         throw new Error(jsonData.message);
       }
     } catch (e: any) {
-      Toast.showToast(e.message);
+      throw e;
     }
   };
 

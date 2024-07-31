@@ -6,8 +6,18 @@ import { Toast } from "../utils/toast";
 import UserUtils from "../utils/user";
 import jsPDF from "jspdf";
 
+/**
+ * Class representing the actions for the statements page.
+ */
 export class StatementsActions {
-  static fetchStatements: () => Promise<void> = async () => {
+  /**
+   * Fetches balance transfer statements from the server and updates the table
+   * with the fetched data.
+   *
+   * @return {Promise<void>} A promise that resolves when the statements are
+   * successfully fetched and the table is updated.
+   */
+  static fetchStatements: () => Promise<void> = async (): Promise<void> => {
     const accessToken = UserUtils.getAccessToken();
 
     let fetchedStatements: IBalanceTransferStatement[];
@@ -24,7 +34,17 @@ export class StatementsActions {
       "statement-modal"
     ) as HTMLDivElement;
 
-    const openStatementModal = (statement: IBalanceTransferStatement) => {
+    const paginationControls = document.getElementById(
+      "pagination-controls"
+    ) as HTMLDivElement;
+
+    /**
+     * Opens the statement modal and displays the details of a specific statement.
+     *
+     * @param {IBalanceTransferStatement} statement - The statement object containing the details to be displayed.
+     * @return {void}
+     */
+    const openStatementModal = (statement: IBalanceTransferStatement): void => {
       statementModalBackground.classList.remove("hidden");
 
       statementModal.classList.remove("translate-x-full");
@@ -116,19 +136,28 @@ export class StatementsActions {
 
     let cashFlowValue = cashFLowSelector.value;
 
-    statementFilterForm.addEventListener("submit", async (e: SubmitEvent) => {
-      e.preventDefault();
-      if (!startDateInput.value || !endDateInput.value) {
-        Toast.showToast("Please select Start and End date.");
-        return;
-      } else if (
-        new Date(startDateInput.value) > new Date(endDateInput.value)
-      ) {
-        Toast.showToast("Start date cannot be greater than end date.");
-        return;
+    /**
+     * Submit event handler for the statement filter form.
+     *
+     * @param {SubmitEvent} e - The submit event.
+     * @return {Promise<void>} Promise that resolves when the function completes.
+     */
+    statementFilterForm.addEventListener(
+      "submit",
+      async (e: SubmitEvent): Promise<void> => {
+        e.preventDefault();
+        if (!startDateInput.value || !endDateInput.value) {
+          Toast.showToast("Please select Start and End date.");
+          return;
+        } else if (
+          new Date(startDateInput.value) > new Date(endDateInput.value)
+        ) {
+          Toast.showToast("Start date cannot be greater than end date.");
+          return;
+        }
+        await fetchTheStatements();
       }
-      await fetchTheStatements();
-    });
+    );
 
     cashFLowSelector.onchange = async () => {
       cashFlowValue = cashFLowSelector.value;
@@ -138,7 +167,12 @@ export class StatementsActions {
     let currentPageNumber = 1;
     const pageSize = 10;
 
-    const fetchTheStatements = async () => {
+    /**
+     * Fetches balance transfer statements based on the selected filters.
+     *
+     * @return {Promise<void>} Promise that resolves when the function completes.
+     */
+    const fetchTheStatements = async (): Promise<void> => {
       fetchedStatements = [];
       tableBody.innerHTML = "";
       statementsErrorElement.style.display = "none";
@@ -196,7 +230,9 @@ export class StatementsActions {
                     ? `Fund received from ${statement.senderUsername}`
                     : `Fund transferred to ${statement.receiverUsername}`;
 
-                // Create table row for larger screens
+                /**
+                 * Create table row for larger screens.
+                 */
                 const tableRow = document.createElement(
                   "tr"
                 ) as HTMLTableRowElement;
@@ -287,10 +323,13 @@ export class StatementsActions {
 
                 tableBody.appendChild(tableRow);
 
-                const mobileDiv = document.createElement(
+                /**
+                 * Create statement div for mobile view.
+                 */
+                const statementDiv = document.createElement(
                   "div"
                 ) as HTMLDivElement;
-                mobileDiv.classList.add("statement-mobile-div");
+                statementDiv.classList.add("statement-mobile-div");
 
                 const iconDiv = document.createElement("div") as HTMLDivElement;
                 iconDiv.classList.add("statement-mobile-icon-div");
@@ -353,13 +392,13 @@ export class StatementsActions {
                 );
                 amountP.textContent = `Rs. ${statement.amount.toString()}`;
 
-                mobileDiv.appendChild(iconDiv);
-                mobileDiv.appendChild(detailsDiv);
-                mobileDiv.appendChild(amountP);
+                statementDiv.appendChild(iconDiv);
+                statementDiv.appendChild(detailsDiv);
+                statementDiv.appendChild(amountP);
 
-                tableBody.appendChild(mobileDiv);
+                tableBody.appendChild(statementDiv);
 
-                mobileDiv.onclick = () => {
+                statementDiv.onclick = () => {
                   openStatementModal(statement);
                 };
               });
@@ -428,6 +467,7 @@ export class StatementsActions {
           statementsErrorElement.style.display = "flex";
           statementsErrorMessage.innerHTML =
             e.message || "Something went wrong. Please try again.";
+          paginationControls.style.display = "none";
         });
     };
 

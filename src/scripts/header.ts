@@ -1,62 +1,29 @@
 import { MAIN_LOGO_PATH } from "../constants/images_path";
 import Theme from "../enums/theme";
+import { INotification } from "../interfaces/notification";
 import { Router } from "../router";
+import NotificationService from "../services/notification";
+import DateUtils from "../utils/date";
 import Navigator from "../utils/navigate";
+import UserUtils from "../utils/user";
 
 export class HeaderActions {
   /**
    * Handles user profile actions.
-   * Handles events for opening and closing user menu
+   * Handles events for navigating to user-profile
    *
    * @return {void} This function does not return anything.
    */
-  static userProfile: () => void = () => {
-    const userMenuBackground = document.getElementById(
-      "user-menu-background"
-    ) as HTMLDivElement;
-
-    const userMenu = document.getElementById("user-menu") as HTMLDivElement;
-    const userIcon = document.getElementById(
-      "user-profile-icon"
-    ) as HTMLDivElement;
-
-    // Close the user menu
-    const closeModal = () => {
-      userMenuBackground.style.display = "none";
-      userMenu.classList.remove("h-32");
-      userMenu.classList.add("h-0");
-    };
-
+  static userProfile: () => void = (): void => {
     const userProfileButton = document.getElementById(
-      "user-profile-button"
+      "user-profile"
     ) as HTMLDivElement;
 
     /**
-     * Closes the user menu
      * Navigates to user profile
      */
     userProfileButton.onclick = () => {
-      closeModal();
       Navigator.navigateTo("/#/user-profile");
-    };
-
-    userMenuBackground.onclick = () => {
-      closeModal();
-    };
-
-    /**
-     * Handles the click event on the user icon.
-     *
-     * This function sets the display style of the user menu background to "flex" to make it visible.
-     * It also removes the "h-0" class from the user menu and adds the "h-32" class to make it visible.
-     *
-     * @return {void} This function does not return anything.
-     */
-    userIcon.onclick = (): void => {
-      userMenuBackground.style.display = "flex";
-
-      userMenu.classList.remove("h-0");
-      userMenu.classList.add("h-32");
     };
   };
 
@@ -109,7 +76,7 @@ export class HeaderActions {
    *
    * @return {void} This function does not return anything.
    */
-  static logoutUser: () => void = () => {
+  static logoutUser: () => void = (): void => {
     const logoutButton = document.getElementById(
       "log-out-button"
     ) as HTMLDivElement;
@@ -144,6 +111,10 @@ export class HeaderActions {
       "tab-login-button"
     ) as HTMLDivElement;
 
+    /**
+     * If the user is logged in, display logout button
+     * If the user is not logged in, display login button
+     */
     if (user) {
       logoutButton.style.display = "flex";
       userProfile.style.display = "flex";
@@ -165,24 +136,7 @@ export class HeaderActions {
    *
    * @return {void}
    */
-  static notificationsButtonListeners: () => void = () => {
-    const notifications: {
-      message: string;
-      date: string;
-    }[] = [
-      {
-        message: "This is test message.",
-        date: "10:00",
-      },
-      {
-        message: "This is test message.",
-        date: "10:00",
-      },
-      {
-        message: "This is test message.",
-        date: "10:00",
-      },
-    ];
+  static notificationsButtonListeners: () => void = (): void => {
     const userMenuBackground = document.getElementById(
       "user-notification-background"
     ) as HTMLDivElement;
@@ -190,8 +144,8 @@ export class HeaderActions {
     const notificationModal = document.getElementById(
       "notification-modal"
     ) as HTMLDivElement;
-    const notificationsIcon = document.getElementById(
-      "notification-icon"
+    const notificationsButton = document.getElementById(
+      "notification-button"
     ) as HTMLDivElement;
 
     const closeModal = () => {
@@ -204,7 +158,7 @@ export class HeaderActions {
       closeModal();
     };
 
-    notificationsIcon.onclick = () => {
+    notificationsButton.onclick = async () => {
       userMenuBackground.style.display = "flex";
 
       const notificationsContainer = document.getElementById(
@@ -212,45 +166,65 @@ export class HeaderActions {
       ) as HTMLDivElement;
 
       notificationsContainer.innerHTML = "";
+      notificationsContainer.classList.remove("text-center", "mt-5");
 
-      notifications.forEach((notification) => {
-        const notificationDiv = document.createElement("div") as HTMLDivElement;
-        notificationDiv.className = "notification-div";
+      const token = UserUtils.getAccessToken();
 
-        const img = document.createElement("img");
-        img.src = MAIN_LOGO_PATH;
-        img.alt = "easy pay logo";
-        img.className = "w-8 h-8";
+      await NotificationService.fetchNotifications(token, 1, 5)
+        .then(
+          (data: { notifications: INotification[]; totalCount: number }) => {
+            /**
+             * Loop through the notifications and display them as cards
+             */
+            data.notifications.forEach((notification) => {
+              const notificationDiv = document.createElement(
+                "div"
+              ) as HTMLDivElement;
+              notificationDiv.className = "notification-div";
 
-        const notificationContent = document.createElement(
-          "div"
-        ) as HTMLDivElement;
-        notificationContent.classList.add("notification-content");
+              const img = document.createElement("img");
+              img.src = MAIN_LOGO_PATH;
+              img.alt = "easy pay logo";
+              img.className = "w-8 h-8";
 
-        const title = document.createElement("h3") as HTMLHeadingElement;
-        title.classList.add("notification-title");
-        title.innerText = "Easy Pay";
+              const notificationContent = document.createElement(
+                "div"
+              ) as HTMLDivElement;
+              notificationContent.classList.add("notification-content");
 
-        const message = document.createElement("p") as HTMLParagraphElement;
-        message.classList.add("text-sm");
-        message.innerText = notification.message;
+              const title = document.createElement("h3") as HTMLHeadingElement;
+              title.classList.add("notification-title");
+              title.innerText = "Easy Pay";
 
-        const date = document.createElement("p") as HTMLParagraphElement;
-        date.classList.add("notification-date");
-        date.innerText = notification.date;
+              const message = document.createElement(
+                "p"
+              ) as HTMLParagraphElement;
+              message.classList.add("text-sm");
+              message.innerText = notification.message;
 
-        notificationContent.appendChild(title);
-        notificationContent.appendChild(message);
-        notificationContent.appendChild(date);
+              const date = document.createElement("p") as HTMLParagraphElement;
+              date.classList.add("notification-date");
+              date.innerText = DateUtils.formatDate(notification.createdAt);
 
-        notificationDiv.appendChild(img);
-        notificationDiv.appendChild(notificationContent);
+              notificationContent.appendChild(title);
+              notificationContent.appendChild(message);
+              notificationContent.appendChild(date);
 
-        notificationsContainer.appendChild(notificationDiv);
-      });
+              notificationDiv.appendChild(img);
+              notificationDiv.appendChild(notificationContent);
 
-      notificationModal.classList.remove("h-0");
-      notificationModal.classList.add("h-80");
+              notificationsContainer.appendChild(notificationDiv);
+            });
+          }
+        )
+        .catch((e) => {
+          notificationsContainer.innerHTML = e.message;
+          notificationsContainer.classList.add("text-center", "mt-5");
+        })
+        .finally(() => {
+          notificationModal.classList.remove("h-0");
+          notificationModal.classList.add("h-80");
+        });
     };
 
     const viewMoreNotificationsButton = document.getElementById(

@@ -2,12 +2,22 @@ import AuthService from "../services/auth";
 import { Toast } from "../utils/toast";
 import { loginSchema } from "../schemas/login";
 import * as yup from "yup";
-import { Router } from "../router";
 import { IUser } from "../interfaces/user";
 import { isUserAdmin } from "../utils/admin_check";
+import Navigator from "../utils/navigate";
+import { HOME_PATH, VERIFY_KYC_APPLICATIONS_PATH } from "../constants/routes";
 
+/**
+ * Class representing the actions for the login page.
+ *
+ * @class
+ */
 export class LoginActions {
   static login: () => void = () => {
+    /**
+     * Define a boolean variable to check if the form is valid.
+     * Define a string variable to store the error message.
+     */
     let isFormValid: boolean = false;
     let errorMessage: string = "";
 
@@ -23,7 +33,12 @@ export class LoginActions {
       "password-error"
     ) as HTMLParagraphElement;
 
-    const removeErrorMessages: () => void = () => {
+    /**
+     * Removes the error messages from the email and password input elements.
+     *
+     * @returns {void}
+     */
+    const removeErrorMessages: () => void = (): void => {
       emailErrorMessageElement.innerHTML = "";
       passwordErrorMessageElement.innerHTML = "";
     };
@@ -36,7 +51,12 @@ export class LoginActions {
       "login-button-content"
     ) as HTMLParagraphElement;
 
-    emailInput.oninput = () => {
+    /**
+     * Handles the input event for the email input field.
+     *
+     * @return {void}
+     */
+    emailInput.oninput = (): void => {
       loginSchema
         .validateAt("email", { email: emailInput.value })
         .then(() => {
@@ -49,6 +69,11 @@ export class LoginActions {
         });
     };
 
+    /**
+     * Handles the input event for the password input field.
+     *
+     * @return {void}
+     */
     passwordInput.oninput = () => {
       loginSchema
         .validateAt("password", { password: passwordInput.value })
@@ -62,6 +87,15 @@ export class LoginActions {
         });
     };
 
+    /**<<<<<<<<<<<<<<  ✨ Codeium Command ⭐ >>>>>>>>>>>>>>>>
+     *
+     * @returns {Promise<boolean>} A promise that resolves to `true` if the form is valid,
+     * `false` otherwise.
+<<<<<<<  fd27ae4d-8972-42c9-a5f5-ca051a3d9e28  >>>>>>>
+     * Handles the click event for the login button.
+     *
+     * @returns {Promise<boolean>} A promise that resolves to a boolean value.
+     */
     const validateForm = async (): Promise<boolean> => {
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
@@ -72,6 +106,9 @@ export class LoginActions {
         await loginSchema.validate({ email, password }, { abortEarly: false });
         isFormValid = true;
       } catch (err) {
+        /**
+         * Display the error messages in the input fields
+         */
         if (err instanceof yup.ValidationError) {
           err.inner.forEach((error) => {
             if (error.path === "email") {
@@ -88,8 +125,13 @@ export class LoginActions {
         Toast.showToast(errorMessage);
       }
 
+      /**
+       * Initiate login if the form is valid
+       * Shows a loading state
+       */
       if (isFormValid) {
         loginButtonContent.innerHTML = "Loading";
+
         await AuthService.login(emailInput.value, passwordInput.value)
           .then((jsonData: any) => {
             localStorage.setItem("user", JSON.stringify(jsonData.user));
@@ -100,13 +142,16 @@ export class LoginActions {
 
             const user: IUser = jsonData.user;
 
-            if (isUserAdmin(user.roleId)) {
-              history.pushState(null, "", "/#/admin/verify-kyc-applications");
-            } else {
-              history.pushState(null, "", "/#/home");
-            }
+            /**
+             * Checks if the user is admin
+             * Navigate to the appropriate paths
+             */
 
-            Router.handleRouteChange();
+            if (isUserAdmin(user.roleId)) {
+              Navigator.navigateTo(`/${VERIFY_KYC_APPLICATIONS_PATH}`);
+            } else {
+              Navigator.navigateTo(`/${HOME_PATH}`);
+            }
           })
           .catch((e: any) => {
             Toast.showToast(e.message);
@@ -119,6 +164,11 @@ export class LoginActions {
       return isFormValid;
     };
 
+    /**
+     * Handles the click event for the login button.
+     *
+     * @returns {void}
+     */
     loginButton.onclick = (e: MouseEvent) => {
       e.preventDefault();
       validateForm();

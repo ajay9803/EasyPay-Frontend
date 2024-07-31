@@ -18,70 +18,93 @@ let viewAmount: boolean = false;
  * @class
  */
 export class HomeActions {
-  static getUpdatedUserDetails: () => Promise<void> = async () => {
-    const socket = io("http://localhost:3000", {});
+  /**
+   * Retrieves the latest user details from the server and updates the local
+   * storage with the new information.
+   *
+   * @return {Promise<void>} A promise that resolves when the user details are
+   * updated successfully.
+   */
+  static getUpdatedUserDetails: () => Promise<void> =
+    async (): Promise<void> => {
+      const socket = io(HOST_NAME, {});
 
-    socket.on("balance-transfer", (data) => {
-      Toast.showToast(data);
-    });
+      socket.on("balance-transfer", (data) => {
+        Toast.showToast(data);
+      });
 
-    const dummyButton = document.getElementById("dummy") as HTMLDivElement;
+      const dummyButton = document.getElementById("dummy") as HTMLDivElement;
 
-    dummyButton.onclick = () => {
-       const socketService = new SocketService(HOST_NAME);
+      dummyButton.onclick = () => {
+        const socketService = new SocketService(HOST_NAME);
 
-       socketService.connect();
-       socketService.emit("test", {
-         message: "This is test message.",
-       });
-    };
-    
-    const accessToken = UserUtils.getAccessToken();
+        socketService.connect();
+        socketService.emit("test", {
+          message: "This is test message.",
+        });
+      };
 
-    if (accessToken) {
-      const user: IUser = await AuthService.fetchUser(accessToken);
+      const accessToken = UserUtils.getAccessToken();
 
-      if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
+      if (accessToken) {
+        const user: IUser = await AuthService.fetchUser(accessToken);
 
-        const verifiedIcon = document.getElementById(
-          "verified-icon"
-        ) as HTMLElement;
-        const checkIcon = document.getElementById("check-icon") as HTMLElement;
+        if (user) {
+          localStorage.setItem("user", JSON.stringify(user));
 
-        if (user.isVerified) {
-          console.log("User is verified.");
-          verifiedIcon.style.display = "block";
-          checkIcon.style.display = "block";
-        } else {
-          console.log("User is not verified.");
-          verifiedIcon.style.display = "none";
-          checkIcon.style.display = "none";
+          const verifiedIcon = document.getElementById(
+            "verified-icon"
+          ) as HTMLElement;
+          const checkIcon = document.getElementById(
+            "check-icon"
+          ) as HTMLElement;
+
+          /**
+           * Checks if the user is verified or not.
+           * Display the verified icon if the user is verified.
+           */
+          if (user.isVerified) {
+            verifiedIcon.style.display = "block";
+            checkIcon.style.display = "block";
+          } else {
+            verifiedIcon.style.display = "none";
+            checkIcon.style.display = "none";
+          }
+
+          const amountElement = document.getElementById(
+            "card-amount"
+          ) as HTMLParagraphElement;
+
+          amountElement.innerHTML = viewAmount
+            ? `Rs. ${user.balance}`
+            : "Rs. XXX.XX";
         }
-
-        const amountElement = document.getElementById(
-          "card-amount"
-        ) as HTMLParagraphElement;
-
-        amountElement.innerHTML = viewAmount
-          ? `Rs. ${user.balance}`
-          : "Rs. XXX.XX";
       }
-    }
-  };
-
-  static refreshIconEventlisteners: () => Promise<void> = async () => {
-    const refreshIcon = document.getElementById(
-      "refresh-icon"
-    ) as HTMLLIElement;
-
-    refreshIcon.onclick = async () => {
-      console.log("Refresh icon is clicked.");
-      this.getUpdatedUserDetails();
     };
-  };
 
-  static updateHomeView: () => void = () => {
+  /**
+   * Adds event listeners to the refresh icon.
+   * When the icon is clicked, it retrieves the latest user details from the server and updates the UI.
+   * @returns {Promise<void>} A promise that resolves when the event listeners are added.
+   */
+  static refreshIconEventlisteners: () => Promise<void> =
+    async (): Promise<void> => {
+      const refreshIcon = document.getElementById(
+        "refresh-icon"
+      ) as HTMLLIElement;
+
+      refreshIcon.onclick = async () => {
+        this.getUpdatedUserDetails();
+      };
+    };
+
+  /**
+   * Updates the home view with the latest user details.
+   * This function retrieves the user details from the server and updates the UI accordingly.
+   *
+   * @returns {void} This function does not return anything.
+   */
+  static updateHomeView: () => void = (): void => {
     const user = UserUtils.getUserDetails();
 
     const homeSection = document.getElementById(
@@ -95,6 +118,10 @@ export class HomeActions {
       "dashboard-section"
     ) as HTMLDivElement;
 
+    /**
+     * If the user is not logged in, display the dashboard section.
+     * If the user is logged in, display the home section.
+     */
     if (user) {
       dashboardSection.style.display = "none";
       homeSection.style.display = "flex";
@@ -118,7 +145,12 @@ export class HomeActions {
         slide.style.left = `${index * 100}%`;
       });
 
-      const slideImage = () => {
+      /**
+       * Slides the images in the carousel.
+       *
+       * @returns {void}
+       */
+      const slideImage = (): void => {
         slides.forEach((slide) => {
           slide.style.transform = `translateX(-${counter * 100}%)`;
         });
@@ -138,7 +170,13 @@ export class HomeActions {
     }
   };
 
-  static toggleViewAmount: () => void = () => {
+  /**
+   * Toggles the view of the amount.
+   * Toggles between Rs. XXX.XX and Rs. Actual Amount
+   *
+   * @returns {void} This function does not return anything.
+   */
+  static toggleViewAmount: () => void = (): void => {
     let balance: number;
     const userData = UserUtils.getUserDetails();
 
@@ -149,7 +187,9 @@ export class HomeActions {
 
     const toggle = () => {
       viewAmount = !viewAmount;
-
+      /**
+       * Toggles between Rs. XXX.XX and Rs. Actual Amount
+       */
       amountElement.innerHTML = viewAmount ? `Rs. ${balance}` : "Rs. XXX.XX";
     };
 
@@ -202,7 +242,12 @@ export class HomeActions {
     });
   };
 
-  static getRecentTransactions = async () => {
+  /**
+   * Asynchronously retrieves recent transactions and updates the UI.
+   *
+   * @return {Promise<void>} A Promise that resolves when the UI has been updated.
+   */
+  static getRecentTransactions = async (): Promise<void> => {
     const recentTransactionsElement = document.getElementById(
       "recent-transactions"
     ) as HTMLDivElement;
@@ -214,8 +259,11 @@ export class HomeActions {
 
       const defaultStartDate = new Date(currentDate);
       defaultStartDate.setDate(currentDate.getDate() - 7);
-      const formattedEndDate = currentDate.toISOString().split("T")[0];
 
+      /**
+       * Get formatted start date and end date
+       */
+      const formattedEndDate = currentDate.toISOString().split("T")[0];
       const formattedStartDate = defaultStartDate.toISOString().split("T")[0];
       const accessToken = UserUtils.getAccessToken();
       await StatementService.fetchBalanceTransferStatements(

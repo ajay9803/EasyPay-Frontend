@@ -5,16 +5,39 @@ import { Toast } from "../utils/toast";
 import UserUtils from "../utils/user";
 import { HomeActions } from "./home";
 
+/**
+ * Class representing the actions for the load balance page.
+ *
+ * @class
+ */
 export class LoadBalancePageActions {
-  static loadLinkedAccounts: () => void = () => {
-    const showLoadBalanceModal = (bankAccount: any) => {
+  /**
+   * Loads the linked bank accounts and displays them on the page.
+   *
+   * @return {void} This function does not return anything.
+   */
+  static loadLinkedAccounts: () => void = (): void => {
+    /**
+     * Displays a modal to load balance from a linked bank account.
+     *
+     * @param {IBankAccount} bankAccount - The bank account to load balance from.
+     * @return {void} This function does not return anything.
+     */
+    const showLoadBalanceModal = (bankAccount: IBankAccount): void => {
       const appElement = document.getElementById("app") as HTMLDivElement;
 
       const blackBackgroundElement = document.createElement(
         "div"
       ) as HTMLDivElement;
 
-      const closeModal = () => {
+      /**
+       * Creates and appends a black background element to the 'app' element
+       * in the DOM. This element is used to display a modal and prevent user
+       * interaction with the rest of the page until the modal is dismissed.
+       *
+       * @return {void} This function does not return anything.
+       */
+      const closeModal = (): void => {
         appElement.removeChild(blackBackgroundElement);
       };
 
@@ -28,6 +51,9 @@ export class LoadBalancePageActions {
       modalContainer.classList.add("load-fund-modal-container");
       modalContainer.classList.add("body");
 
+      /**
+       * Prevents user interaction with the modal container when clicked
+       */
       modalContainer.onclick = (e: Event) => {
         e.stopPropagation();
       };
@@ -63,6 +89,13 @@ export class LoadBalancePageActions {
       ) as HTMLDivElement;
       quickAmountButtons.classList.add("quick-amount-buttons");
       const amounts = [500, 1000, 2000, 5000, 10000];
+
+      /**
+       * Generates quick amount buttons for the load balance modal.
+       * The buttons when clicked will set the amount input to the corresponding amount.
+       *
+       * @return {void} This function does not return anything.
+       */
       amounts.forEach((amount) => {
         const button = document.createElement("button");
         button.classList.add("quick-amount-button");
@@ -94,6 +127,11 @@ export class LoadBalancePageActions {
         "Family Expenses",
       ];
 
+      /**
+       * Generates options for the purpose select element in the load balance modal.
+       *
+       * @return {void} This function does not return anything.
+       */
       options.forEach((optionText) => {
         const option = document.createElement("option") as HTMLOptionElement;
         option.textContent = optionText;
@@ -124,8 +162,16 @@ export class LoadBalancePageActions {
       };
 
       buttonsSection.appendChild(proceedButton);
-      proceedButton.onclick = async () => {
-        console.log(purposeSelect.value);
+
+      /**
+       * Handles the click event for the proceed button in the load balance modal.
+       *
+       * @return {Promise<void>} This function does not return anything.
+       */
+      proceedButton.onclick = async (): Promise<void> => {
+        /**
+         * Add basic validation to the input fields.
+         */
         if (amountInput.value.length <= 0) {
           amountInput.classList.add("error-border");
           Toast.showToast("Please enter the amount.");
@@ -138,13 +184,16 @@ export class LoadBalancePageActions {
         } else {
           amountInput.classList.remove("error-border");
           const accessToken = UserUtils.getAccessToken();
-          console.log(bankAccount);
+
+          /**
+           * Call the load balance service.
+           */
           await UserService.loadBalance(
             accessToken,
             bankAccount.id,
             +amountInput.value,
             purposeSelect.value,
-            remarksInput.value,
+            remarksInput.value
           )
             .then((data: any) => {
               Toast.showToast(data.message);
@@ -170,8 +219,12 @@ export class LoadBalancePageActions {
       appElement.appendChild(blackBackgroundElement);
     };
 
-    const loadBalanceErrorElement = document.getElementById('load-balance-error') as HTMLDivElement;
-    const loadBalanceErrorMessage = document.getElementById('load-balance-error-message') as HTMLParagraphElement;
+    const loadBalanceErrorElement = document.getElementById(
+      "load-balance-error"
+    ) as HTMLDivElement;
+    const loadBalanceErrorMessage = document.getElementById(
+      "load-balance-error-message"
+    ) as HTMLParagraphElement;
 
     const linkedAccountsElement = document.getElementById(
       "linked-accounts"
@@ -179,9 +232,13 @@ export class LoadBalancePageActions {
 
     const accessToken = UserUtils.getAccessToken();
     loadBalanceErrorElement.style.display = "none";
+
+    /**
+     * Fetches all bank accounts linked to the user.
+     * Create a card for each bank account.
+     */
     BankAccountService.fetchUserBankAccounts(accessToken)
       .then((data: IBankAccount[]) => {
-        console.log("The data is: ", data);
         data.forEach((bankAccount: IBankAccount) => {
           const accountCard = document.createElement("div") as HTMLDivElement;
 
@@ -190,7 +247,6 @@ export class LoadBalancePageActions {
           linkedAccountsElement.appendChild(accountCard);
 
           accountCard.onclick = () => {
-            console.log("Show load fund modal.");
             showLoadBalanceModal(bankAccount);
           };
 
@@ -224,8 +280,9 @@ export class LoadBalancePageActions {
         });
       })
       .catch((e: any) => {
-        loadBalanceErrorElement.style.display = 'flex';
-        loadBalanceErrorMessage.innerHTML = e.message || "Something went wrong. Please try again.";
+        loadBalanceErrorElement.style.display = "flex";
+        loadBalanceErrorMessage.innerHTML =
+          e.message || "Something went wrong. Please try again.";
       })
       .finally(() => {});
   };

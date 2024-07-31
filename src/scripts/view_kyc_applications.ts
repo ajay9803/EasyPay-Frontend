@@ -2,14 +2,30 @@ import KycService from "../services/kyc";
 import { Toast } from "../utils/toast";
 import UserUtils from "../utils/user";
 
+/**
+ * Class representing the actions for the view KYC applications page.
+ */
 export class ViewKycApplicationsAction {
+  /**
+   * Fetches the KYC applications based on the given status.
+   *
+   * @param {string} status - The status of the applications to fetch.
+   * @return {Promise<void>} A promise that resolves when the applications are fetched.
+   */
   static fetchApplications: (status: string) => Promise<void> = async (
     status: string
-  ) => {
+  ): Promise<void> => {
     const selectInput = document.getElementById(
       "select-application-status"
     ) as HTMLSelectElement;
-    const fetchTheApplications = async (status: string) => {
+
+    /**
+     * Fetches the KYC applications based on the given status.
+     *
+     * @param {string} status - The status of the applications to fetch.
+     * @return {Promise<void>} A promise that resolves when the applications are fetched.
+     */
+    const fetchTheApplications = async (status: string): Promise<void> => {
       const accessToken = UserUtils.getAccessToken();
       const tableBody = document.getElementById(
         "applications-table-body"
@@ -94,6 +110,10 @@ export class ViewKycApplicationsAction {
             viewDetailsButton.innerHTML = "View Details";
             actions.appendChild(viewDetailsButton);
 
+            /**
+             * Attach a click event listener to the view details button.
+             * When clicked, it will open a modal with the user's details.
+             */
             viewDetailsButton.onclick = () => {
               const citizenshipNumber = application.citizenshipNumber;
               const issueDate = application.citizenshipIssueDate;
@@ -197,7 +217,12 @@ export class ViewKycApplicationsAction {
 
     fetchTheApplications(status);
 
-    selectInput.onchange = async () => {
+    /**
+     * Event handler for the 'onchange' event of the select input.
+     *
+     * @returns {Promise<void>} A promise that resolves when the event handler is complete.
+     */
+    selectInput.onchange = async (): Promise<void> => {
       const selectedStatus = selectInput.value;
       console.log(selectedStatus);
       await fetchTheApplications(selectedStatus);

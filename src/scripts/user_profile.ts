@@ -1,3 +1,4 @@
+import { LOAD_BALANCE_PATH, RESET_PASSWORD_PATH } from "../constants/routes";
 import { IKycApplication } from "../interfaces/kyc";
 import AuthService from "../services/auth";
 import KycService from "../services/kyc";
@@ -7,6 +8,10 @@ import Navigator from "../utils/navigate";
 import { Toast } from "../utils/toast";
 import UserUtils from "../utils/user";
 
+/**
+ * Class representing the actions for the user profile page.
+ * @class
+ */
 export class UserProfileActions {
   static fetchUserProfile: () => Promise<void> = async () => {
     const user = UserUtils.getUserDetails();
@@ -14,27 +19,32 @@ export class UserProfileActions {
     const username = document.getElementById(
       "user-profile-username"
     ) as HTMLHeadingElement;
-    username.textContent = user.username;
+    username.textContent = user!.username;
 
     const joinedAt = document.getElementById(
       "user-profile-joined-at"
     ) as HTMLParagraphElement;
-    joinedAt.textContent = DateUtils.formatDate(user.createdAt);
+    joinedAt.textContent = DateUtils.formatDate(user!.createdAt);
 
     const profileBalance = document.getElementById(
       "user-profile-balance"
     ) as HTMLParagraphElement;
-    profileBalance.textContent = `Rs. ${user.balance}`;
+    profileBalance.textContent = `Rs. ${user!.balance}`;
 
     const currentEmail = document.getElementById(
       "current-email"
     ) as HTMLParagraphElement;
-    currentEmail.textContent = user.email;
+    currentEmail.textContent = user!.email;
   };
-  static fetchUserKycDetails: () => Promise<void> = async () => {
+  /**
+   * Fetches the KYC details of the user and updates the UI accordingly.
+   *
+   * @return {Promise<void>} - A promise that resolves when the KYC details are fetched and updated.
+   */
+  static fetchUserKycDetails: () => Promise<void> = async (): Promise<void> => {
     const user = UserUtils.getUserDetails();
 
-    if (user.isVerified) {
+    if (user!.isVerified) {
       const accessToken = UserUtils.getAccessToken();
 
       const kycDetails = document.getElementById(
@@ -50,12 +60,12 @@ export class UserProfileActions {
           const kycDob = document.getElementById(
             "kyc-dob"
           ) as HTMLParagraphElement;
-          kycDob.textContent = DateUtils.formatToYYYYMMDD(user.dob);
+          kycDob.textContent = DateUtils.formatToYYYYMMDD(user!.dob);
 
           const kycGender = document.getElementById(
             "kyc-gender"
           ) as HTMLParagraphElement;
-          kycGender.textContent = user.gender;
+          kycGender.textContent = user!.gender;
 
           const kycCn = document.getElementById(
             "kyc-cn"
@@ -95,7 +105,12 @@ export class UserProfileActions {
     }
   };
 
-  static updateEmailAddress: () => Promise<void> = async () => {
+  /**
+   * Updates the email address of the user.
+   *
+   * @return {Promise<void>} A promise that resolves when the email address is updated successfully.
+   */
+  static updateEmailAddress: () => Promise<void> = async (): Promise<void> => {
     const emailInput = document.getElementById("email") as HTMLInputElement;
     const otpInput = document.getElementById("otp") as HTMLInputElement;
 
@@ -120,7 +135,7 @@ export class UserProfileActions {
       otpDiv.style.display = "none";
       otpInput.value = "";
 
-      if (emailValue === user.email) {
+      if (emailValue === user!.email) {
         Toast.showToast("Please enter a new email address.");
       } else if (emailValue.length <= 0) {
         Toast.showToast("Please enter a valid email address.");
@@ -136,12 +151,21 @@ export class UserProfileActions {
       }
     };
 
-    confirmEmailButton.onclick = async () => {
+    /**
+     * Handles the click event for the confirm email button.
+     * If the OTP input is empty, shows a toast message asking the user to enter the OTP.
+     * Otherwise, calls the UserService.confirmUpdateEmailOtp method with the user ID, access token,
+     * new email, and OTP. On success, updates the current email, clears the OTP input,
+     * hides the OTP div, and fetches the updated user information. On failure, shows a toast message with the error.
+     *
+     * @return {Promise<void>} A Promise that resolves when the function completes.
+     */
+    confirmEmailButton.onclick = async (): Promise<void> => {
       if (otpInput.value.length <= 0) {
         Toast.showToast("Please enter the otp sent to this email address.");
       } else {
         await UserService.confirmUpdateEmailOtp(
-          user.id,
+          user!.id,
           accessToken,
           emailInput.value,
           otpInput.value
@@ -161,7 +185,12 @@ export class UserProfileActions {
     };
   };
 
-  static listenForButtonEvents: () => void = () => {
+  /**
+   * Listens for button events.
+   *
+   * @return {void} No return value
+   */
+  static listenForButtonEvents: () => void = (): void => {
     const resetPasswordButton = document.getElementById(
       "reset-password-button"
     ) as HTMLButtonElement;
@@ -170,12 +199,22 @@ export class UserProfileActions {
       "load-balance-button"
     ) as HTMLButtonElement;
 
-    loadBalanceButton.onclick = () => {
-      Navigator.navigateTo("/#/load-balance");
+    /**
+     * Handles the click event of the load balance button.
+     *
+     * @return {void} This function does not return anything.
+     */
+    loadBalanceButton.onclick = (): void => {
+      Navigator.navigateTo(`/${LOAD_BALANCE_PATH}`);
     };
 
-    resetPasswordButton.onclick = () => {
-      Navigator.navigateTo("/#/reset-password");
+    /**
+     * Handles the click event of the reset password button.
+     *
+     * @return {void} This function does not return anything.
+     */
+    resetPasswordButton.onclick = (): void => {
+      Navigator.navigateTo(`/${RESET_PASSWORD_PATH}`);
     };
   };
 }

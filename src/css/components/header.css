@@ -46,7 +46,7 @@
 }
 
 .notifications-button {
-  @apply w-9 h-9 border border-solid border-gray-600 rounded-full flex flex-row justify-center items-center cursor-pointer mr-2;
+  @apply w-9 h-9 rounded-full flex flex-row justify-center items-center cursor-pointer mr-2;
 }
 
 .toggle-theme-button {

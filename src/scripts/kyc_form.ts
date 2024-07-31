@@ -4,7 +4,13 @@ import { Toast } from "../utils/toast";
 import KycService from "../services/kyc";
 import UserUtils from "../utils/user";
 
+/**
+ * Class representing the KycFormActions. It contains static methods related to KYC form actions.
+ */
 class KycFormActions {
+  /**
+   * Adds an event listener to the KYC form to handle form submission.
+   */
   static submitKycForm: () => void = () => {
     const kycForm = document.getElementById("kyc-form") as HTMLFormElement;
 
@@ -33,6 +39,10 @@ class KycFormActions {
       "citizenship-image-error"
     ) as HTMLParagraphElement;
 
+    /**
+     * Removes all error messages from the form.
+     * Removes the error border of the input fields
+     */
     const removeErrorMessages = () => {
       citizenshipImageError.innerHTML = "";
       citizenshipNumberError.innerHTML = "";
@@ -49,20 +59,36 @@ class KycFormActions {
 
       removeErrorMessages();
 
+      /**
+       * Convert form data to an object
+       */
       const formData = new FormData(kycForm);
       const formObject: { [key: string]: FormDataEntryValue } = {};
       formData.forEach((value, key) => {
         formObject[key] = value;
       });
 
+      /**
+       * Validate the form with kycSchema
+       */
       kycSchema
         .validate(formObject, { abortEarly: false })
         .then(async () => {
           console.log("Form is valid", formObject);
           const accessToken = UserUtils.getAccessToken();
-          await KycService.applyForKyc(accessToken, formObject );
+          await KycService.applyForKyc(accessToken, formObject)
+            .then((data: string) => {
+              Toast.showToast(data);
+            })
+            .catch((e: any) => {
+              Toast.showToast(e.message);
+            });
         })
         .catch((err) => {
+          /**
+           * If the form is not valid, show an error message
+           * Add the error border to the input fields
+           */
           if (err instanceof yup.ValidationError) {
             Toast.showToast("Please fill in all the fields.");
             err.inner.forEach((error: yup.ValidationError) => {
