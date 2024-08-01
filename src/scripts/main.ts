@@ -4,6 +4,25 @@ import { Router } from "../router";
 import SocketService from "../utils/socket_service";
 import UserUtils from "../utils/user";
 
+export let userSocket: SocketService;
+
+export const createUserSocket = () => {
+  if (userSocket) {
+    userSocket.disconnect();
+  }
+  if (!userSocket) {
+    console.log("Creating user socket here.");
+    userSocket = new SocketService(HOST_NAME);
+    userSocket.connect();
+  }
+};
+
+export const reconnectUserSocket = () => {
+  if (userSocket) {
+    userSocket.connect();
+  }
+};
+
 /**
  * This is the main entry point for the application.
  * It loads the Header component and sets up the router.
@@ -11,7 +30,6 @@ import UserUtils from "../utils/user";
  * @module main
  */
 document.addEventListener("DOMContentLoaded", async () => {
-
   /**
    * Load the header component.
    */
@@ -22,11 +40,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const user = UserUtils.getUserDetails();
 
-  if (user) {
-    const socketService = new SocketService(HOST_NAME);
-    socketService.connect();
-  }
-
   /**
    * Initialize the router.
    */
@@ -35,5 +48,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   /**
    * Listen for hash changes and load the content.
    */
-  window.addEventListener("hashchange", () => Router.loadContent());
+  window.addEventListener("hashchange", () => {
+    console.log("hash change");
+    Router.loadContent();
+
+    if (user) {
+      /**
+       * Initialize the socket service.
+       */
+      // createUserSocket();
+      // reconnectUserSocket();
+    }
+  });
 });

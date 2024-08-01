@@ -81,10 +81,11 @@ export class HeaderActions {
       "log-out-button"
     ) as HTMLDivElement;
 
-    logoutButton.onclick = () => {
+    logoutButton.onclick = async () => {
       localStorage.clear();
       window.history.pushState(null, "", "/#/login");
       Router.handleRouteChange();
+      
     };
   };
 
@@ -93,7 +94,9 @@ export class HeaderActions {
    * Display logout button if the user is logged in
    */
   static getLoggedInState: () => void = () => {
+    
     const user = localStorage.getItem("user");
+    console.log("The logged in state is: ", user);
 
     const logoutButton = document.getElementById(
       "log-out-button"

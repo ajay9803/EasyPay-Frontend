@@ -1,0 +1,28 @@
+<div class="flex flex-col justify-center items-start pt-16 tracking-wider px-5 py-5 md:px-20">
+    <div class=" bg-gray-400 min-h-screen w-full flex flex-col items-center relative">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/002/058/317/small_2x/retro-futuristic-80s-background-free-vector.jpg"
+            alt="quiz-background" class="min-h-screen w-full px-5 md:px-20 object-cover">
+        <div id="quiz-div"
+            class="shadow-none md:shadow-lg md:shadow-black rounded-lg p-6 max-w-md w-full flex flex-col gap-y-4 absolute top-0 left-1/2 -translate-x-1/2 mt-20">
+            <div id="quiz-content" class="flex flex-col relative h-96 overflow-hidden shadow-lg">
+                <h1 class="text-3xl font-semibold text-center mb-4 text-white">OPEN TRIVIA</h1>
+                <div id="quiz-questions" class="w-full h-full flex relative">
+                </div>
+            </div>
+            <div class="flex justify-between items-center mt-4">
+                <button id="prev-button" class="text-black hover:text-blue-700 hidden">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <span id="page-span" class="text-xl text-black"> </span>
+                <button class="text-black hover:text-blue-700">
+                    <i id="next-button" class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        <button id="quiz-submit"
+            class="absolute top-2 right-2 bg-blue-800 px-6 py-2 rounded-md text-white tracking-wider hidden"> Submit
+        </button>
+    </div>
+
+
+</div>

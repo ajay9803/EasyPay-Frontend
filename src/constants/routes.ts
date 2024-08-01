@@ -14,3 +14,4 @@ export const USER_PROFILE_PATH = "#/user-profile";
 export const RESET_PASSWORD_PATH = "#/reset-password";
 export const SET_NEW_PASSWORD_PATH = "#/set-new-password";
 export const NOTIFICATIONS_PATH = "#/notifications";
+export const QUIZ_PATH = "#/quiz";

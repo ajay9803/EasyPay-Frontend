@@ -1,29 +1,49 @@
 import { io, Socket } from "socket.io-client";
 import { Toast } from "./toast";
+import UserSocketService from "../services/user_socket";
+import UserUtils from "./user";
 
 class SocketService {
   private url: string;
-  // private userId: string;
   private socket: Socket | null;
 
   constructor(url: string) {
     this.url = url;
-    // this.userId = userId;
     this.socket = null;
   }
 
   connect() {
     if (!this.socket) {
-      this.socket = io(this.url, {
-        // query: { userId: this.userId },
-      });
+      this.socket = io(this.url);
 
-      this.socket.on("connect", () => {
+      this.socket.on("connect", async () => {
         console.log("Connected to socket server");
+
+        const accessToken = UserUtils.getAccessToken();
+        console.log("Socket ID: ", this.getSocketId());
+
+        await UserSocketService.createSocket(accessToken, this.getSocketId()!)
+          .then((data) => {
+            Toast.showToast(data.message);
+          })
+          .catch((e) => {
+            Toast.showToast(e.message);
+          });
       });
 
-      this.socket.on("disconnect", () => {
+      this.socket.on("disconnect", async () => {
         console.log("Disconnected from socket server");
+
+        const accessToken = UserUtils.getAccessToken();
+        console.log("Socket ID: ", this.getSocketId());
+
+        await UserSocketService.deleteSocket(accessToken)
+          .then((data) => {
+            Toast.showToast(data.message);
+          })
+          .catch((e) => {
+            Toast.showToast(e.message);
+          });
       });
 
       this.socket.on("test", (data: any) => {
@@ -60,6 +80,10 @@ class SocketService {
     if (this.socket) {
       this.socket.off(event, callback);
     }
+  }
+
+  getSocketId(): string | null | undefined {
+    return this.socket ? this.socket.id : null;
   }
 }
 

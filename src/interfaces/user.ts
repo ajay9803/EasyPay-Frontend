@@ -30,6 +30,7 @@ export interface INewUser {
  * @property {string} gender - The gender of the user.
  * @property {boolean} isVerified - Indicates if the user's email has been verified.
  * @property {string} roleId - The unique identifier for the user's role.
+ * @property {string} easyPayPoints = The points rewared after playing quizzes.
  */
 export interface IUser {
   id: string;
@@ -42,5 +43,6 @@ export interface IUser {
   gender: string;
   isVerified: boolean;
   roleId: string;
+  easyPayPoints: string;
   permissions: string[];
 }

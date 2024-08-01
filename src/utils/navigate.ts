@@ -4,7 +4,6 @@ import { Router } from "../router";
  * The Navigator class provides static methods for navigating to different pages.
  */
 class Navigator {
-
   /**
    * Navigates the user to the specified path.
    *
@@ -13,7 +12,7 @@ class Navigator {
    */
   static navigateTo = (path: string): void => {
     window.history.pushState(null, "", path);
-    Router.loadContent();
+    Router.handleRouteChange();
   };
 }
 

@@ -1,8 +1,10 @@
 <div class="px-8 pt-3">
     <h1 class="text-xl font-semibold tracking-wider mb-4">View KYC Applications</h1>
     <div class="flex flex-row ">
-        <input type="text" class="input w-full mb-4 p-2 border border-gray-300 rounded"
-            placeholder="Search users by email.">
+        <form id="view-kyc-applications-form" class="w-full">
+            <input id="email" type="email" autocomplete="email"
+                class="input w-full mb-4 p-2 border border-gray-300 rounded" placeholder="Search users by email.">
+        </form>
         <select id="select-application-status" class="input ml-4 mb-4 p-2 border border-gray-300 rounded">
             <option value="All">All</option>
             <option value="Pending">Pending</option>

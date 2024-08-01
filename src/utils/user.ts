@@ -61,7 +61,6 @@ class UserUtils {
       });
 
       const hashedFirstWord = hashedFirstWordArray.join("");
-      console.log(hashedFirstWord);
       const restOfUsername = usernameArray.slice(1).join(" ");
 
       if (firstWord.length > 0) {

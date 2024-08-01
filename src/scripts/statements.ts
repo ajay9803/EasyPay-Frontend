@@ -192,7 +192,6 @@ export class StatementsActions {
           }) => {
             tableBody.innerHTML = "";
             fetchedStatements = data.statements;
-            console.log(data.statements);
             if (fetchedStatements.length !== 0) {
               const tableHead = document.createElement(
                 "thead"

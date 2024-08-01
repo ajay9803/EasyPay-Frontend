@@ -19,20 +19,26 @@ export class ViewKycApplicationsAction {
       "select-application-status"
     ) as HTMLSelectElement;
 
+    const searchInput = document.getElementById("email") as HTMLInputElement;
+
     /**
      * Fetches the KYC applications based on the given status.
      *
      * @param {string} status - The status of the applications to fetch.
+     * @param {string} email - The email of the user.
      * @return {Promise<void>} A promise that resolves when the applications are fetched.
      */
-    const fetchTheApplications = async (status: string): Promise<void> => {
+    const fetchTheApplications = async (
+      status: string,
+      email: string
+    ): Promise<void> => {
       const accessToken = UserUtils.getAccessToken();
       const tableBody = document.getElementById(
         "applications-table-body"
       ) as HTMLDivElement;
 
       tableBody.classList.remove("py-5");
-      await KycService.fetchKycApplications(status, accessToken)
+      await KycService.fetchKycApplications(status, email, accessToken)
         .then((data) => {
           tableBody.innerHTML = "";
           tableBody.classList.remove("application-padding-y");
@@ -70,8 +76,10 @@ export class ViewKycApplicationsAction {
                 )
                   .then(async (data) => {
                     const selectedStatus = selectInput.value;
-                    console.log(selectedStatus);
-                    await fetchTheApplications(selectedStatus);
+                    await fetchTheApplications(
+                      selectedStatus,
+                      searchInput.value
+                    );
                     Toast.showToast(data.message);
                   })
                   .catch((e) => {
@@ -93,8 +101,10 @@ export class ViewKycApplicationsAction {
                 )
                   .then(async (data) => {
                     const selectedStatus = selectInput.value;
-                    console.log(selectedStatus);
-                    await fetchTheApplications(selectedStatus);
+                    await fetchTheApplications(
+                      selectedStatus,
+                      selectInput.value
+                    );
                     Toast.showToast(data.message);
                   })
                   .catch((e) => {
@@ -215,7 +225,7 @@ export class ViewKycApplicationsAction {
         });
     };
 
-    fetchTheApplications(status);
+    fetchTheApplications(status, searchInput.value);
 
     /**
      * Event handler for the 'onchange' event of the select input.
@@ -224,8 +234,19 @@ export class ViewKycApplicationsAction {
      */
     selectInput.onchange = async (): Promise<void> => {
       const selectedStatus = selectInput.value;
-      console.log(selectedStatus);
-      await fetchTheApplications(selectedStatus);
+      await fetchTheApplications(selectedStatus, searchInput.value);
     };
+
+    const viewKycApplicationsForm = document.getElementById(
+      "view-kyc-applications-form"
+    ) as HTMLFormElement;
+
+    viewKycApplicationsForm.addEventListener(
+      "submit",
+      async (e: SubmitEvent) => {
+        e.preventDefault();
+        await fetchTheApplications(status, searchInput.value);
+      }
+    );
   };
 }

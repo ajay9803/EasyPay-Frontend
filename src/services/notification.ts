@@ -28,7 +28,6 @@ class NotificationService {
     page: number,
     size: number
   ): Promise<{ notifications: INotification[]; totalCount: number }> => {
-    console.log(page, size);
     const url = `${HOST_NAME}/user/notifications?page=${page}&size=${size}`;
     try {
       const response = await fetch(url, {
@@ -38,7 +37,6 @@ class NotificationService {
       });
 
       const jsonData = await response.json();
-      console.log(jsonData);
 
       if (response.status === 200) {
         return jsonData;

@@ -6,6 +6,9 @@ import { IUser } from "../interfaces/user";
 import { isUserAdmin } from "../utils/admin_check";
 import Navigator from "../utils/navigate";
 import { HOME_PATH, VERIFY_KYC_APPLICATIONS_PATH } from "../constants/routes";
+import { createUserSocket, userSocket } from "./main";
+import SocketService from "../utils/socket_service";
+import { HOST_NAME } from "../constants/auth";
 
 /**
  * Class representing the actions for the login page.
@@ -87,11 +90,10 @@ export class LoginActions {
         });
     };
 
-    /**<<<<<<<<<<<<<<  ✨ Codeium Command ⭐ >>>>>>>>>>>>>>>>
+    /**
      *
      * @returns {Promise<boolean>} A promise that resolves to `true` if the form is valid,
      * `false` otherwise.
-<<<<<<<  fd27ae4d-8972-42c9-a5f5-ca051a3d9e28  >>>>>>>
      * Handles the click event for the login button.
      *
      * @returns {Promise<boolean>} A promise that resolves to a boolean value.
@@ -151,6 +153,7 @@ export class LoginActions {
               Navigator.navigateTo(`/${VERIFY_KYC_APPLICATIONS_PATH}`);
             } else {
               Navigator.navigateTo(`/${HOME_PATH}`);
+              createUserSocket();
             }
           })
           .catch((e: any) => {

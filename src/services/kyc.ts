@@ -1,4 +1,5 @@
 import { HOST_NAME } from "../constants/auth";
+import { IKycApplication } from "../interfaces/kyc";
 
 /**
  * The KycService class provides methods for interacting with the KYC API.
@@ -57,41 +58,11 @@ class KycService {
    * Fetches the KYC application associated with the given access token.
    *
    * @param {string} token - The access token of the user.
-   * @return {Promise<any>} A promise that resolves to the KYC application data.
+   * @return {Promise<IKycApplication>} A promise that resolves to the KYC application data.
    */
-  static fetchKycApplication: (token: string) => Promise<any> = async (
-    token: string
-  ): Promise<any> => {
-    const url = `${HOST_NAME}/kyc/application`;
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const jsonData = await response.json();
-
-      if (response.status === 200) {
-        return jsonData.application;
-      } else {
-        throw new Error(jsonData.message);
-      }
-    } catch (e) {
-      throw e;
-    }
-  };
-
-  /**
-   * Fetches all the kyc applications.
-   *
-   * @param {string} token - The access token of the user.
-   * @return {Promise<any>} A promise that resolves to the KYC application data.
-   */
-  static fetchKycApplications: (status: string, token: string) => Promise<any> =
-    async (status: string, token: string): Promise<any> => {
-      const url = `${HOST_NAME}/kyc/applications?page=1&size=5&status=${status}`;
+  static fetchKycApplication: (token: string) => Promise<IKycApplication> =
+    async (token: string): Promise<any> => {
+      const url = `${HOST_NAME}/kyc/application`;
       try {
         const response = await fetch(url, {
           method: "GET",
@@ -103,7 +74,7 @@ class KycService {
         const jsonData = await response.json();
 
         if (response.status === 200) {
-          return jsonData;
+          return jsonData.application;
         } else {
           throw new Error(jsonData.message);
         }
@@ -111,6 +82,43 @@ class KycService {
         throw e;
       }
     };
+
+  /**
+   * Fetches all the kyc applications.
+   *
+   * @param {string} token - The access token of the user.
+   * @param {string} email - The email of the user.
+   * @return {Promise<any>} A promise that resolves to the KYC application data.
+   */
+  static fetchKycApplications: (
+    status: string,
+    email: string,
+    token: string
+  ) => Promise<any> = async (
+    status: string,
+    email: string,
+    token: string
+  ): Promise<any> => {
+    const url = `${HOST_NAME}/kyc/applications?page=1&size=5&status=${status}&email=${email}`;
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const jsonData = await response.json();
+
+      if (response.status === 200) {
+        return jsonData;
+      } else {
+        throw new Error(jsonData.message);
+      }
+    } catch (e) {
+      throw e;
+    }
+  };
 
   /**
    * Verify the KYC application.

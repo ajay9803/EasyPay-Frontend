@@ -1,5 +1,6 @@
 import { LOAD_BALANCE_PATH, RESET_PASSWORD_PATH } from "../constants/routes";
 import { IKycApplication } from "../interfaces/kyc";
+import { IUser } from "../interfaces/user";
 import AuthService from "../services/auth";
 import KycService from "../services/kyc";
 import UserService from "../services/user";
@@ -35,26 +36,35 @@ export class UserProfileActions {
       "current-email"
     ) as HTMLParagraphElement;
     currentEmail.textContent = user!.email;
+
+    const easyPayPoints = document.getElementById(
+      "easy-pay-points"
+    ) as HTMLParagraphElement;
+    easyPayPoints.textContent = user!.easyPayPoints;
   };
+
   /**
    * Fetches the KYC details of the user and updates the UI accordingly.
    *
    * @return {Promise<void>} - A promise that resolves when the KYC details are fetched and updated.
    */
   static fetchUserKycDetails: () => Promise<void> = async (): Promise<void> => {
+    const kycDetails = document.getElementById("kyc-details") as HTMLDivElement;
     const user = UserUtils.getUserDetails();
 
+    if (!user!.isVerified) {
+      kycDetails.style.display = "none";
+    }
     if (user!.isVerified) {
       const accessToken = UserUtils.getAccessToken();
 
-      const kycDetails = document.getElementById(
-        "kyc-details"
-      ) as HTMLDivElement;
-
-      kycDetails.style.display = "none";
       await KycService.fetchKycApplication(accessToken)
         .then((application: IKycApplication) => {
-          console.log(application);
+          if (application.status !== "Verified") {
+            Toast.showToast("Your KYC application is not verified yet.");
+            return;
+          }
+
           kycDetails.style.display = "flex";
 
           const kycDob = document.getElementById(
@@ -100,7 +110,6 @@ export class UserProfileActions {
         .catch((e) => {
           kycDetails.style.display = "flex";
           kycDetails.textContent = e.message;
-          console.log(e);
         });
     }
   };
@@ -215,6 +224,37 @@ export class UserProfileActions {
      */
     resetPasswordButton.onclick = (): void => {
       Navigator.navigateTo(`/${RESET_PASSWORD_PATH}`);
+    };
+
+    const redeemPointsButton = document.getElementById(
+      "redeem-points-button"
+    ) as HTMLButtonElement;
+
+    redeemPointsButton.onclick = async (): Promise<void> => {
+      const accessToken = UserUtils.getAccessToken();
+      await UserService.redeeemEasyPayPoints(accessToken)
+        .then(async (data) => {
+          console.log(data);
+          Toast.showToast(data.message);
+          const user: IUser = await AuthService.fetchUser(accessToken);
+
+          if (user) {
+            localStorage.setItem("user", JSON.stringify(user));
+
+            const profileBalance = document.getElementById(
+              "user-profile-balance"
+            ) as HTMLParagraphElement;
+            profileBalance.textContent = `Rs. ${user!.balance}`;
+
+            const easyPayPoints = document.getElementById(
+              "easy-pay-points"
+            ) as HTMLParagraphElement;
+            easyPayPoints.textContent = user!.easyPayPoints;
+          }
+        })
+        .catch((e) => {
+          Toast.showToast(e.message);
+        });
     };
   };
 }

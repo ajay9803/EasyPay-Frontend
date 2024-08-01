@@ -221,7 +221,6 @@ export class SendMoneyActions {
 
     sendMoneyForm.addEventListener("submit", async (e: Event) => {
       e.preventDefault();
-      console.log("Submit button clicked.");
 
       await submitSendMoneyForm();
     });

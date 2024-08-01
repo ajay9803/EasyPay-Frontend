@@ -353,6 +353,59 @@ class UserService {
       throw e;
     }
   };
+
+  static updateEasyPayPoints: (token: string, points: number) => Promise<any> =
+    async (token: string, points: number) => {
+      const url = `${HOST_NAME}/easy-pay-points`;
+
+      try {
+        const response = await fetch(url, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            points: points,
+          }),
+        });
+
+        const jsonData = await response.json();
+
+        if (response.status === 200) {
+          return jsonData;
+        } else {
+          throw new Error(jsonData.message);
+        }
+      } catch (e) {
+        throw e;
+      }
+    };
+
+  static redeeemEasyPayPoints: (token: string) => Promise<any> = async (
+    token: string
+  ) => {
+    const url = `${HOST_NAME}/easy-pay-points/redeem`;
+
+    try {
+      const response = await fetch(url, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const jsonData = await response.json();
+
+      if (response.status === 200) {
+        return jsonData;
+      } else {
+        throw new Error(jsonData.message);
+      }
+    } catch (e) {
+      throw e;
+    }
+  };
 }
 
 export default UserService;

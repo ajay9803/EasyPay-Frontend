@@ -1,4 +1,3 @@
-import { io } from "socket.io-client";
 import { IBalanceTransferStatement } from "../interfaces/statement";
 import { IUser } from "../interfaces/user";
 import AuthService from "../services/auth";
@@ -7,8 +6,9 @@ import DateUtils from "../utils/date";
 import Navigator from "../utils/navigate";
 import UserUtils from "../utils/user";
 import { Toast } from "../utils/toast";
-import SocketService from "../utils/socket_service";
-import { HOST_NAME } from "../constants/auth";
+import { userSocket } from "./main";
+import QuizService from "../services/quiz";
+import { QUIZ_PATH } from "../constants/routes";
 
 let viewAmount: boolean = false;
 
@@ -27,21 +27,10 @@ export class HomeActions {
    */
   static getUpdatedUserDetails: () => Promise<void> =
     async (): Promise<void> => {
-      const socket = io(HOST_NAME, {});
-
-      socket.on("balance-transfer", (data) => {
-        Toast.showToast(data);
-      });
-
       const dummyButton = document.getElementById("dummy") as HTMLDivElement;
 
       dummyButton.onclick = () => {
-        const socketService = new SocketService(HOST_NAME);
-
-        socketService.connect();
-        socketService.emit("test", {
-          message: "This is test message.",
-        });
+        userSocket.emit("test", 4);
       };
 
       const accessToken = UserUtils.getAccessToken();
@@ -58,6 +47,9 @@ export class HomeActions {
           const checkIcon = document.getElementById(
             "check-icon"
           ) as HTMLElement;
+
+          const easyPayPoints = document.getElementById('easy-pay-points-span') as HTMLParagraphElement;
+          easyPayPoints.textContent = user.easyPayPoints;
 
           /**
            * Checks if the user is verified or not.
@@ -122,7 +114,7 @@ export class HomeActions {
      * If the user is not logged in, display the dashboard section.
      * If the user is logged in, display the home section.
      */
-    if (user) {
+    if (user && user.roleId === "2") {
       dashboardSection.style.display = "none";
       homeSection.style.display = "flex";
       if (!user.isVerified) {
@@ -140,7 +132,6 @@ export class HomeActions {
       let counter = 0;
       let direction = 1;
 
-      console.log(slides);
       slides.forEach((slide, index) => {
         slide.style.left = `${index * 100}%`;
       });
@@ -356,5 +347,22 @@ export class HomeActions {
           recentTransactionsElement.innerHTML = e.message;
         });
     }
+  };
+
+  static quizButtonEvenListener = async () => {
+    const accessToken = UserUtils.getAccessToken();
+
+    const quizButton = document.getElementById("quiz-button") as HTMLDivElement;
+
+    quizButton.onclick = async () => {
+      await QuizService.fetchExistingQuiz(accessToken)
+        .then((data) => {
+          Toast.showToast(data.message);
+          Navigator.navigateTo(`/${QUIZ_PATH}`);
+        })
+        .catch((e) => {
+          Toast.showToast(e.message);
+        });
+    };
   };
 }

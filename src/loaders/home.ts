@@ -24,5 +24,6 @@ export class HomePage {
     HomeActions.toggleViewAmount();
     HomeActions.getQuickTransactions();
     HomeActions.getRecentTransactions();
+    HomeActions.quizButtonEvenListener();
   };
 }

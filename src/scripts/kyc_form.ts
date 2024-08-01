@@ -74,7 +74,6 @@ class KycFormActions {
       kycSchema
         .validate(formObject, { abortEarly: false })
         .then(async () => {
-          console.log("Form is valid", formObject);
           const accessToken = UserUtils.getAccessToken();
           await KycService.applyForKyc(accessToken, formObject)
             .then((data: string) => {

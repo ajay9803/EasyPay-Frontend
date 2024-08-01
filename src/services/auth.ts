@@ -32,7 +32,6 @@ class AuthService {
         }),
       });
       const jsonData = await response.json();
-      console.log(jsonData);
 
       if (response.status !== 200) {
         throw new Error(jsonData.message);

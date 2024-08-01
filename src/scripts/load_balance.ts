@@ -1,4 +1,6 @@
 import { IBankAccount } from "../interfaces/bank_account";
+import { IUser } from "../interfaces/user";
+import AuthService from "../services/auth";
 import BankAccountService from "../services/bank_account";
 import UserService from "../services/user";
 import { Toast } from "../utils/toast";
@@ -195,10 +197,14 @@ export class LoadBalancePageActions {
             purposeSelect.value,
             remarksInput.value
           )
-            .then((data: any) => {
+            .then(async (data: any) => {
               Toast.showToast(data.message);
               closeModal();
-              HomeActions.getUpdatedUserDetails();
+              const user: IUser = await AuthService.fetchUser(accessToken);
+
+              if (user) {
+                localStorage.setItem("user", JSON.stringify(user));
+              }
             })
             .catch((e) => {
               Toast.showToast(e.message);
