@@ -406,6 +406,59 @@ class UserService {
       throw e;
     }
   };
+
+  static fetchUsers: (
+    token: string,
+    page: number,
+    size: number
+  ) => Promise<any> = async (token: string, page: number, size: number) => {
+    const url = `${HOST_NAME}/users/all?page=${page}&size=${size}`;
+
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const jsonData = await response.json();
+
+      if (response.status === 200) {
+        return jsonData;
+      } else {
+        throw new Error(jsonData.message);
+      }
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  static deleteUser: (token: string, userId: string) => Promise<any> = async (
+    token: string,
+    userId: string
+  ) => {
+    const url = `${HOST_NAME}/users/${userId}`;
+
+    try {
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const jsonData = await response.json();
+
+      if (response.status === 200) {
+        return jsonData;
+      } else {
+        throw new Error(jsonData.message);
+      }
+    } catch (e) {
+      throw e;
+    }
+  };
 }
 
 export default UserService;

@@ -24,6 +24,7 @@ import {
   KYC_FORM_PATH,
   LOAD_BALANCE_PATH,
   LOGIN_PATH,
+  MANAGE_USERS_PATH,
   NOTIFICATIONS_PATH,
   QUIZ_PATH,
   REGISTER_PATH,
@@ -37,6 +38,7 @@ import {
 } from "./constants/routes";
 import { QuizPage } from "./loaders/quiz";
 import UserUtils from "./utils/user";
+import { ManageUsers } from "./loaders/manage_users";
 
 /**
  * A mapping of route paths to their corresponding components.
@@ -60,6 +62,7 @@ const routes: { [key: string]: { component: any } } = {
   [SET_NEW_PASSWORD_PATH]: { component: SetNewPasswordPage },
   [NOTIFICATIONS_PATH]: { component: NotificationsPage },
   [QUIZ_PATH]: { component: QuizPage },
+  [MANAGE_USERS_PATH]: { component: ManageUsers },
 };
 
 /**
@@ -92,6 +95,7 @@ export class Router {
     if (user && user.roleId === "1") {
       const adminMarkup = await AdminDashboard.load();
       document.getElementById("body")!.innerHTML = adminMarkup;
+      AdminDashboard.initEventListeners();
       // Get the sub-route for the current hash
       const subRoute = routes[hash];
       // If a sub-route exists
@@ -123,9 +127,15 @@ export class Router {
   ): Promise<void> => {
     const user = UserUtils.getUserDetails();
 
-    let safeRoutes: boolean = hash.includes("/login") || hash.includes("/register") || hash.includes('/home');
+    let safeRoutes: boolean =
+      hash.includes("/login") ||
+      hash.includes("/register") ||
+      hash.includes("/home") ||
+      hash.includes("/verify-otp") ||
+      hash.includes("/set-new-password") ||
+      hash.includes("/forgot-password");
 
-    if (user && user.roleId === "2" || safeRoutes) {
+    if ((user && user.roleId === "2") || safeRoutes) {
       const content = await staticRoute.component.load();
       document.getElementById("body")!.innerHTML = content;
       staticRoute.component.initEventListeners();

@@ -75,6 +75,7 @@ export class SetNewPasswordActions {
         await UserService.setNewPassword(id, accessToken, data.password, otp)
           .then((data: any) => {
             Toast.showToast(data.message);
+            history.back();
           })
           .catch((e) => {
             Toast.showToast(e.message);

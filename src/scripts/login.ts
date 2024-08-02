@@ -153,7 +153,6 @@ export class LoginActions {
               Navigator.navigateTo(`/${VERIFY_KYC_APPLICATIONS_PATH}`);
             } else {
               Navigator.navigateTo(`/${HOME_PATH}`);
-              createUserSocket();
             }
           })
           .catch((e: any) => {

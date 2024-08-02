@@ -1,4 +1,5 @@
 import { MAIN_LOGO_PATH } from "../constants/images_path";
+import { HOME_PATH, STATEMENTS_PATH } from "../constants/routes";
 import Theme from "../enums/theme";
 import { INotification } from "../interfaces/notification";
 import { Router } from "../router";
@@ -85,7 +86,6 @@ export class HeaderActions {
       localStorage.clear();
       window.history.pushState(null, "", "/#/login");
       Router.handleRouteChange();
-      
     };
   };
 
@@ -94,7 +94,6 @@ export class HeaderActions {
    * Display logout button if the user is logged in
    */
   static getLoggedInState: () => void = () => {
-    
     const user = localStorage.getItem("user");
     console.log("The logged in state is: ", user);
 
@@ -242,6 +241,53 @@ export class HeaderActions {
     viewMoreNotificationsButton.onclick = (): void => {
       closeModal();
       Navigator.navigateTo("/#/notifications");
+    };
+  };
+
+  static menuListener = async () => {
+    const userMenuBackground = document.getElementById(
+      "user-menu-background"
+    ) as HTMLDivElement;
+    const menuButton = document.getElementById("menu-button") as HTMLDivElement;
+    const menu = document.getElementById("sliding-menu") as HTMLDivElement;
+    menuButton.onclick = () => {
+      userMenuBackground.style.display = "block";
+      menu.classList.toggle("-translate-x-full");
+    };
+
+    userMenuBackground.onclick = () => {
+      console.log("background clicked");
+      userMenuBackground.style.display = "none";
+      menu.classList.toggle("-translate-x-full");
+    };
+
+    const closeMenuButton = document.getElementById(
+      "close-menu"
+    ) as HTMLButtonElement;
+
+    const closeSideMenu = () => {
+      userMenuBackground.style.display = "none";
+      menu.classList.toggle("-translate-x-full");
+    };
+    closeMenuButton.onclick = () => {
+      closeSideMenu();
+    };
+
+    const sideMenuHomeButton = document.getElementById(
+      "side-menu-home"
+    ) as HTMLButtonElement;
+    sideMenuHomeButton.onclick = () => {
+      closeSideMenu();
+      Navigator.navigateTo(`/${HOME_PATH}`);
+    };
+
+    const sideMenuTransactionButton = document.getElementById(
+      "side-menu-transaction"
+    ) as HTMLButtonElement;
+
+    sideMenuTransactionButton.onclick = () => {
+      closeSideMenu();
+      Navigator.navigateTo(`/${STATEMENTS_PATH}`);
     };
   };
 }

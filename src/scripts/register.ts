@@ -26,12 +26,6 @@ export class RegisterActions {
     const userNameError = document.getElementById(
       "username-error"
     ) as HTMLParagraphElement;
-    const mobileNumberInput = document.getElementById(
-      "mobile-number"
-    ) as HTMLInputElement;
-    const mobileNumberError = document.getElementById(
-      "mobile-error"
-    ) as HTMLParagraphElement;
     const emailInput = document.getElementById("email") as HTMLInputElement;
     const emailError = document.getElementById(
       "email-error"
@@ -65,7 +59,6 @@ export class RegisterActions {
      */
     const removeErrorMessages = () => {
       userNameError.innerHTML = "";
-      mobileNumberError.innerHTML = "";
       emailError.innerHTML = "";
       dobError.innerHTML = "";
       genderError.innerHTML = "";
@@ -73,7 +66,6 @@ export class RegisterActions {
       confirmPasswordError.innerHTML = "";
 
       userNameInput.classList.remove("error-border");
-      mobileNumberInput.classList.remove("error-border");
       emailInput.classList.remove("error-border");
       dobInput.classList.remove("error-border");
       passwordInput.classList.remove("error-border");
@@ -120,10 +112,6 @@ export class RegisterActions {
               case "fullName":
                 userNameInput.classList.add("error-border");
                 userNameError.innerHTML = error.message;
-                break;
-              case "mobileNumber":
-                mobileNumberInput.classList.add("error-border");
-                mobileNumberError.innerHTML = error.message;
                 break;
               case "email":
                 emailInput.classList.add("error-border");

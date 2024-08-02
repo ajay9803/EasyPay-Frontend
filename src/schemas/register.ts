@@ -11,10 +11,7 @@ import * as yup from "yup";
  */
 export const registerSchema = yup.object().shape({
   fullName: yup.string().required("Full name is required."),
-  mobileNumber: yup
-    .string()
-    .matches(/^\d{10}$/, "Mobile number must be 10 digits.")
-    .required("Mobile number is required."),
+
   email: yup
     .string()
     .email("Invalid email address.")

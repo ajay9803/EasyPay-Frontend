@@ -21,5 +21,6 @@ export class Header {
     HeaderActions.logoutUser();
     HeaderActions.userProfile();
     HeaderActions.notificationsButtonListeners();
+    HeaderActions.menuListener();
   };
 }

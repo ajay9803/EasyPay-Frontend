@@ -1,5 +1,26 @@
 <div class="header-items">
-    <div class="menu-button">
+    <div id="user-menu-background"
+        class="fixed hidden md:hidden h-full w-full bg-black bg-opacity-25 top-0 right-0 z-10">
+    </div>
+    <div id="sliding-menu"
+        class="side-menu md:hidden fixed tracking-wider z-20 top-0 left-0 h-full w-64 transform -translate-x-full transition-transform duration-300">
+        <div class="flex items-center justify-between p-4 border-b border-gray-700">
+            <p class="text-xl">Menu</p>
+            <button id="close-menu" class=" focus:outline-none">
+                <i class="fa-solid fa-x"></i>
+            </button>
+        </div>
+        <div class="p-4 flex flex-col gap-y-3 w-full">
+            <button id="side-menu-home"
+                class="w-full text-start block py-2 px-2 hover:bg-blue-700 hover:text-white rounded">
+                <span><i class="fa-solid fa-house mr-2"></i></span> Home</button>
+            <button id="side-menu-transaction"
+                class="w-full text-start block py-2 px-2 hover:bg-blue-700 hover:text-white rounded"> <span>
+                    <i class="fa-solid fa-wallet mr-3"></i>
+                </span> Transactions</button>
+        </div>
+    </div>
+    <div id="menu-button" class="menu-button">
         <i class="fa-solid fa-bars"></i>
     </div>
     <div id="menus" class="header-tabs">
@@ -11,14 +32,11 @@
             <i class="fa-solid fa-wallet"></i>
             <p> Transactions </p>
         </a>
-        <a class="header-tab-item">
-            <i class="fa-solid fa-gear"></i>
-            <p> Settings </p>
-        </a>
+
     </div>
     <div id="side-icons" class="header-side-tabs-side-icons">
         <div class="user-settings-buttons">
-            <div id="user-profile" class="user-profile-item">
+            <div id="user-profile" class="user-profile-item hidden">
                 <i id="user-profile-icon" class="fa-regular fa-user"></i>
             </div>
             <div id="notifications-button" class="notifications-button relative tracking-wider">

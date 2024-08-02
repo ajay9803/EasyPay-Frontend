@@ -1,0 +1,8 @@
+.users-table-head {
+  @apply text-white;
+  background-color: var(--shadow-color);
+}
+
+.users-cell {
+  @apply px-6 py-3 border-b border-gray-200 text-left text-xs font-medium tracking-wider;
+}

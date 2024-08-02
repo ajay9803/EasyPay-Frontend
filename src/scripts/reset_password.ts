@@ -4,7 +4,6 @@ import { Toast } from "../utils/toast";
 import UserService from "../services/user";
 import UserUtils from "../utils/user";
 
-
 /**
  * Class representing the actions for the reset password page.
  *
@@ -69,6 +68,7 @@ export class ResetPasswordAction {
           )
             .then((data: any) => {
               Toast.showToast(data.message);
+              history.back();
             })
             .catch((e) => {
               Toast.showToast(e.message);

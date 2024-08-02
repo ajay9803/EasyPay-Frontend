@@ -1,4 +1,6 @@
+import { LOGIN_PATH } from "../constants/routes";
 import UserService from "../services/user";
+import Navigator from "../utils/navigate";
 import { Toast } from "../utils/toast";
 
 export class ForgotPasswordActions {
@@ -28,6 +30,7 @@ export class ForgotPasswordActions {
           await UserService.sendForgotPasswordLink(email)
             .then((data) => {
               Toast.showToast(data.message);
+              Navigator.navigateTo(`/${LOGIN_PATH}`);
             })
             .catch((e) => {
               Toast.showToast(e.message);

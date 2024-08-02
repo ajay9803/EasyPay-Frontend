@@ -96,3 +96,8 @@
 .notification-date {
   @apply text-xs mt-1;
 }
+
+.side-menu {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
