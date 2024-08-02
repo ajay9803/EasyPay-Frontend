@@ -1,7 +1,15 @@
 import { HOST_NAME } from "../constants/auth";
 
+/**
+ * Service class for handling quiz related operations.
+ */
 class QuizService {
-  static fetchQuizzesForTheDay = async () => {
+  /**
+   * Fetches quizzes for the day.
+   *
+   * @return {Promise<any>} A promise that resolves when the quizzes are fetched.
+   */
+  static fetchQuizzesForTheDay = async (): Promise<any> => {
     const url = `https://opentdb.com/api.php?amount=3&type=multiple`;
 
     try {
@@ -21,7 +29,13 @@ class QuizService {
     }
   };
 
-  static fetchExistingQuiz = async (token: string) => {
+  /**
+   * Fetches existing quiz data.
+   *
+   * @param {string} token - The access token.
+   * @return {Promise<any>} A promise that resolves with the existing quiz data.
+   */
+  static fetchExistingQuiz = async (token: string): Promise<any> => {
     const url = `${HOST_NAME}/quiz-data`;
 
     try {
@@ -44,6 +58,13 @@ class QuizService {
     }
   };
 
+  /**
+   * Creates quiz data.
+   *
+   * @param {string} token - The access token.
+   * @param {number} points - The points to be stored in the quiz data.
+   * @return {Promise<void>} A promise that resolves with the created quiz data.
+   */
   static createQuizData = async (token: string, points: number) => {
     const url = `${HOST_NAME}/quiz-data`;
 

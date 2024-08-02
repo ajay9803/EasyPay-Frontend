@@ -6,9 +6,6 @@ import { IUser } from "../interfaces/user";
 import { isUserAdmin } from "../utils/admin_check";
 import Navigator from "../utils/navigate";
 import { HOME_PATH, VERIFY_KYC_APPLICATIONS_PATH } from "../constants/routes";
-import { createUserSocket, userSocket } from "./main";
-import SocketService from "../utils/socket_service";
-import { HOST_NAME } from "../constants/auth";
 
 /**
  * Class representing the actions for the login page.

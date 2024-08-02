@@ -3,6 +3,8 @@ import { setNewPasswordSchema } from "../schemas/user_profile";
 import { Toast } from "../utils/toast";
 import UserService from "../services/user";
 import UserUtils from "../utils/user";
+import Navigator from "../utils/navigate";
+import { LOGIN_PATH } from "../constants/routes";
 
 /**
  * Class representing the actions for the set new password page.
@@ -75,7 +77,7 @@ export class SetNewPasswordActions {
         await UserService.setNewPassword(id, accessToken, data.password, otp)
           .then((data: any) => {
             Toast.showToast(data.message);
-            history.back();
+            Navigator.navigateTo(`/${LOGIN_PATH}`);
           })
           .catch((e) => {
             Toast.showToast(e.message);

@@ -5,6 +5,9 @@ import { processQuizData } from "../utils/html_decode";
 import { Toast } from "../utils/toast";
 import UserUtils from "../utils/user";
 
+/**
+ * Class representing the actions for the quiz page.
+ */
 export class QuizPageActions {
   /**
    * Fetches quizzes for the day asynchronously.

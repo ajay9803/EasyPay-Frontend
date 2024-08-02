@@ -9,11 +9,10 @@ export class QuizPage {
     const response = await fetch("src/views/pages/quiz.html");
     return response.text();
   };
-  
 
   /**
    * Initializes the event listeners for the QuizPage.
-   * 
+   *
    * @return {void} This function does not return anything.
    */
   static initEventListeners: () => void = (): void => {

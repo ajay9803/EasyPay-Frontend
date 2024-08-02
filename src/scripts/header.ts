@@ -244,7 +244,12 @@ export class HeaderActions {
     };
   };
 
-  static menuListener = async () => {
+  /**
+   * Initializes the event listener for the menu button.
+   *
+   * @return {Promise<void>} Promise that resolves when the event listener is initialized.
+   */
+  static menuListener = async (): Promise<void> => {
     const userMenuBackground = document.getElementById(
       "user-menu-background"
     ) as HTMLDivElement;
@@ -265,7 +270,12 @@ export class HeaderActions {
       "close-menu"
     ) as HTMLButtonElement;
 
-    const closeSideMenu = () => {
+    /**
+     * Closes the side menu.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const closeSideMenu = (): void => {
       userMenuBackground.style.display = "none";
       menu.classList.toggle("-translate-x-full");
     };
@@ -276,7 +286,12 @@ export class HeaderActions {
     const sideMenuHomeButton = document.getElementById(
       "side-menu-home"
     ) as HTMLButtonElement;
-    sideMenuHomeButton.onclick = () => {
+    /**
+     * Event listener for the "side-menu-home" button. Closes the side menu and navigates to the home page.
+     *
+     * @return {void} This function does not return anything.
+     */
+    sideMenuHomeButton.onclick = (): void => {
       closeSideMenu();
       Navigator.navigateTo(`/${HOME_PATH}`);
     };
