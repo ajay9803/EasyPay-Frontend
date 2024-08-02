@@ -4,6 +4,7 @@ import UserService from "../services/user";
 import UserUtils from "../utils/user";
 import { Toast } from "../utils/toast";
 import { IUser } from "../interfaces/user";
+import { userSocket } from "./main";
 
 /**
  * Class representing the actions for the send money page.
@@ -124,17 +125,17 @@ export class SendMoneyActions {
          * Fetch user by email
          */
         await UserService.fetchUserByEmail(accessToken, email)
-          .then(async (data: IUser) => {
+          .then(async (fetchedUser: IUser) => {
             /**
              * Display fetched user details.
              * Display confirm send money section.
              */
             sendMoneySection.style.display = "none";
             confirmSendMoneySection.style.display = "flex";
-            confirmSendMoneyEmail.innerHTML = data.email;
+            confirmSendMoneyEmail.innerHTML = fetchedUser.email;
             confirmSendMoneyAmount.innerHTML = amount;
             confirmSendMoneyUsername.innerHTML = UserUtils.coverUsername(
-              data.username
+              fetchedUser.username
             );
 
             confirmSendMoneyPurpose.innerHTML = purpose;
@@ -147,16 +148,22 @@ export class SendMoneyActions {
              */
             sendMoneyButton.onclick = async (): Promise<void> => {
               await UserService.transferBalance(accessToken, {
-                receiverEmail: data.email,
+                receiverEmail: fetchedUser.email,
                 amount: +amount,
                 purpose: purpose,
                 remarks: remarks,
               })
                 .then((data) => {
                   Toast.showToast(data.message);
-                  /**
-                   * Navigate back
-                   */
+
+                  const user = UserUtils.getUserDetails();
+                  userSocket.emit("balance-transfer", {
+                    userId: fetchedUser.id,
+                    amount: amount,
+                    message: `${
+                      user!.username
+                    } has transferred Rs.${amount} to you.`,
+                  });
                   history.back();
                 })
                 .catch((e) => {

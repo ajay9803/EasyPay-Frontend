@@ -6,7 +6,6 @@ import DateUtils from "../utils/date";
 import Navigator from "../utils/navigate";
 import UserUtils from "../utils/user";
 import { Toast } from "../utils/toast";
-import { userSocket } from "./main";
 import QuizService from "../services/quiz";
 import { QUIZ_PATH } from "../constants/routes";
 
@@ -18,6 +17,17 @@ let viewAmount: boolean = false;
  * @class
  */
 export class HomeActions {
+  static getUpdatedBalance = (amount: string) => {
+    const user = UserUtils.getUserDetails();
+    const amountElement = document.getElementById(
+      "card-amount"
+    ) as HTMLParagraphElement;
+
+    amountElement.innerHTML = viewAmount
+      ? `Rs. ${+user!.balance + +amount}`
+      : "Rs. XXX.XX";
+  };
+
   /**
    * Retrieves the latest user details from the server and updates the local
    * storage with the new information.
@@ -27,12 +37,6 @@ export class HomeActions {
    */
   static getUpdatedUserDetails: () => Promise<void> =
     async (): Promise<void> => {
-      const dummyButton = document.getElementById("dummy") as HTMLDivElement;
-
-      dummyButton.onclick = () => {
-        userSocket.emit("test", 4);
-      };
-
       const accessToken = UserUtils.getAccessToken();
 
       if (accessToken) {
@@ -48,7 +52,9 @@ export class HomeActions {
             "check-icon"
           ) as HTMLElement;
 
-          const easyPayPoints = document.getElementById('easy-pay-points-span') as HTMLParagraphElement;
+          const easyPayPoints = document.getElementById(
+            "easy-pay-points-span"
+          ) as HTMLParagraphElement;
           easyPayPoints.textContent = user.easyPayPoints;
 
           /**

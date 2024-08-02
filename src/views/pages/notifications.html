@@ -1,4 +1,4 @@
-<div class="body px-5 py-5 md:px-20 w-full shadow-md rounded-lg overflow-hidden">
+<div class="body px-5 py-5 md:px-20 w-full shadow-md overflow-hidden">
     <div class="p-4 border-b flex flex-row items-center gap-x-3 tracking-wider ">
         <i class="fa-bell fa-regular"></i>
         <p class="text-lg font-semibold">Notifications</p>
@@ -24,5 +24,68 @@
         <button id="next-page"
             class="px-4 py-2 text-blue-500 border border-solid border-blue-500 hover:text-white hover:bg-blue-500 rounded cursor-pointer transition-all duration-300 ease-in"
             disabled>Next</button>
+    </div>
+</div>
+
+<div id="notifications-background"
+    class="fixed hidden h-full w-full bg-black bg-opacity-25 top-0 right-0 z-10">
+</div>
+
+<div id="load-fund-statement-modal"
+    class="load-fund-statement-modal fixed z-10 inset-y-0 right-0 translate-x-full shadow-lg transition-all ease-in duration-300 w-full md:w-1/2">
+    <div class="p-4 border-b">
+        <div class="flex items-center justify-between gap-x-5">
+            <div class="flex items-start">
+                <img src="./images/e-wallet.png" alt="Bank Logo" class="w-8 h-8 rounded-full mr-4">
+                <div>
+                    <h2 class="text-xl font-semibold">Easy Pay load from <span id="load-bank-name"></span> </h2>
+                </div>
+            </div>
+            <i id="close-load-fund-statement-modal" class="fa-solid fa-x cursor-pointer"></i>
+        </div>
+    </div>
+    <div class="p-4">
+        <h3 class="font-semibold border-b pb-2 mb-4">Transaction Details</h3>
+        <div id="load-fund-transaction-details-section" class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+                <p class="">Processed By</p>
+                <p id="processed-by" class="font-semibold"></p>
+            </div>
+            <div>
+                <p class="">Date/Time</p>
+                <p id="date-time" class="font-semibold"></p>
+            </div>
+
+            <div>
+                <p class="">Amount (NPR)</p>
+                <p id="amount" class="font-semibold text-blue-600"></p>
+            </div>
+            <div>
+                <p class="">Channel</p>
+                <p class="font-semibold">WEB</p>
+            </div>
+            <div>
+                <p class="">Status</p>
+                <p class="font-semibold">COMPLETE </p>
+            </div>
+            <div>
+                <p class="">Payment Method</p>
+                <p class="font-semibold">Easy Pay Wallet</p>
+            </div>
+            <div>
+                <p class="">Source Bank Name</p>
+                <p id="source-bank-name" class="font-semibold"></p>
+            </div>
+            <div>
+                <p class="">Purpose</p>
+                <p id="purpose" class="font-semibold"></p>
+            </div>
+            <div>
+                <p class="">Remarks</p>
+                <p id="remarks" class="font-semibold"></p>
+            </div>
+        </div>
+    </div>
+    <div class="p-4 border-t flex justify-between items-center">
     </div>
 </div>

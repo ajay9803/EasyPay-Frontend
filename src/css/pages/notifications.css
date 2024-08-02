@@ -21,3 +21,8 @@
 .notification-item-date {
   @apply text-xs mt-1;
 }
+
+.load-fund-statement-modal {
+  background-color: var(--modal-color);
+  color: var(--text-color);
+}

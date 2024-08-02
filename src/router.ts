@@ -39,6 +39,7 @@ import {
 import { QuizPage } from "./loaders/quiz";
 import UserUtils from "./utils/user";
 import { ManageUsers } from "./loaders/manage_users";
+import { createUserSocket } from "./scripts/main";
 
 /**
  * A mapping of route paths to their corresponding components.
@@ -151,6 +152,20 @@ export class Router {
    * @return {Promise<void>} A Promise that resolves when the content is loaded.
    */
   static loadContent: () => Promise<void> = async (): Promise<void> => {
+    /**
+     * Scrolls the window to the top of the page.
+     *
+     * @return {void} This function does not return anything.
+     */
+    window.scrollTo(0, 0);
+
+    /**
+     * Sets up the socket connection.
+     *
+     * @return {void} This function does not return anything.
+     */
+    createUserSocket();
+
     const hash = window.location.hash || "#/home";
     const staticRoute = routes[hash];
 
@@ -188,7 +203,6 @@ export class Router {
    * @return {void} Promise that resolves when the content is updated.
    */
   static handleRouteChange(): void {
-    console.log("handle route change");
     Header.initEventListeners();
     Router.loadContent();
   }

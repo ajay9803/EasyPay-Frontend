@@ -43,7 +43,6 @@ class UserSocketService {
 
       console.log("Deleting the socket.");
 
-
       console.log("The json data on deletion is: ", jsonData);
       if (response.status === 200) {
         return jsonData;

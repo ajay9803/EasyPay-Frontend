@@ -2,6 +2,7 @@ import { io, Socket } from "socket.io-client";
 import { Toast } from "./toast";
 import UserSocketService from "../services/user_socket";
 import UserUtils from "./user";
+import { HomeActions } from "../scripts/home";
 
 class SocketService {
   private url: string;
@@ -17,17 +18,14 @@ class SocketService {
       this.socket = io(this.url);
 
       this.socket.on("connect", async () => {
-        console.log("Connected to socket server");
-
         const accessToken = UserUtils.getAccessToken();
-        console.log("Socket ID: ", this.getSocketId());
 
         await UserSocketService.createSocket(accessToken, this.getSocketId()!)
           .then((data) => {
-            Toast.showToast(data.message);
+            console.log(data.message);
           })
           .catch((e) => {
-            Toast.showToast(e.message);
+            console.log(e.message);
           });
       });
 
@@ -39,15 +37,14 @@ class SocketService {
 
         await UserSocketService.deleteSocket(accessToken)
           .then((data) => {
-            Toast.showToast(data.message);
+            console.log(data.message);
           })
           .catch((e) => {
-            Toast.showToast(e.message);
+            console.log(e.message);
           });
       });
 
-      this.socket.on("test", (data: any) => {
-        console.log("GOT TEST MESSAGE FROM SERVER.");
+      this.socket.on("balance-transfer", (data: any) => {
         this.handleBalanceTransfer(data);
       });
     }
@@ -60,8 +57,16 @@ class SocketService {
     }
   }
 
-  private handleBalanceTransfer(data: any) {
-    Toast.showToast(data);
+  private async handleBalanceTransfer(data: {
+    amount: number;
+    message: string;
+  }) {
+    Toast.showToast(data.message);
+    const hash = window.location.hash || "#/home";
+
+    if (hash.includes("/home")) {
+      HomeActions.getUpdatedBalance(`${data.amount}`);
+    }
   }
 
   emit(event: string, data: any) {

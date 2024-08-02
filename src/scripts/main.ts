@@ -6,20 +6,24 @@ import UserUtils from "../utils/user";
 
 export let userSocket: SocketService;
 
-export const createUserSocket = () => {
-  if (userSocket) {
-    userSocket.disconnect();
-  }
-  if (!userSocket) {
-    console.log("Creating user socket here.");
-    userSocket = new SocketService(HOST_NAME);
-    userSocket.connect();
-  }
-};
+/**
+ * Creates a new SocketService instance for the user and connects it to the server.
+ * If a SocketService instance already exists, it disconnects and reconnects.
+ *
+ * @return {void}
+ */
+export const createUserSocket = (): void => {
+  const user = UserUtils.getUserDetails();
 
-export const reconnectUserSocket = () => {
-  if (userSocket) {
-    userSocket.connect();
+  if (user) {
+    if (userSocket) {
+      userSocket.disconnect();
+      userSocket.connect();
+    }
+    if (!userSocket) {
+      userSocket = new SocketService(HOST_NAME);
+      userSocket.connect();
+    }
   }
 };
 
@@ -38,8 +42,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const appHeader = document.getElementById("header") as HTMLHeadElement;
   appHeader.innerHTML = header;
 
-  const user = UserUtils.getUserDetails();
-
   /**
    * Initialize the router.
    */
@@ -49,15 +51,6 @@ document.addEventListener("DOMContentLoaded", async () => {
    * Listen for hash changes and load the content.
    */
   window.addEventListener("hashchange", () => {
-    console.log("hash change");
     Router.loadContent();
-
-    if (user) {
-      /**
-       * Initialize the socket service.
-       */
-      // createUserSocket();
-      // reconnectUserSocket();
-    }
   });
 });

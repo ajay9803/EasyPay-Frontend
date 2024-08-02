@@ -1,4 +1,5 @@
 import { HOST_NAME } from "../constants/auth";
+import { ILoadFundStatement } from "../interfaces/statement";
 
 /**
  * The StatementService class provides methods for fetching balance transfer statements.
@@ -62,6 +63,39 @@ class StatementService {
 
       if (response.status === 200) {
         return jsonData;
+      } else {
+        throw new Error(jsonData.message);
+      }
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  /**
+   * Fetches a load fund statement by its ID.
+   *
+   * @param {string} token - The access token for authentication.
+   * @param {string} statementId - The ID of the statement.
+   * @return {Promise<ILoadFundStatement>} A promise that resolves to the load fund statement.
+   * @throws {Error} If the request fails or the response status is not 200.
+   */
+  static fetchLoadFundStatement = async (
+    token: string,
+    statementId: string
+  ): Promise<ILoadFundStatement> => {
+    const url = `${HOST_NAME}/statements/load-fund/${statementId}`;
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const jsonData = await response.json();
+
+      if (response.status === 200) {
+        return jsonData.transaction;
       } else {
         throw new Error(jsonData.message);
       }

@@ -1,7 +1,10 @@
 import { MAIN_LOGO_PATH } from "../constants/images_path";
 import { INotification } from "../interfaces/notification";
+import { ILoadFundStatement } from "../interfaces/statement";
 import NotificationService from "../services/notification";
+import StatementService from "../services/statement";
 import DateUtils from "../utils/date";
+import { Toast } from "../utils/toast";
 import UserUtils from "../utils/user";
 
 /**
@@ -39,6 +42,14 @@ export class NotificationsPageActions {
     const notificationsErrorMessage = document.getElementById(
       "notifications-error-message"
     ) as HTMLParagraphElement;
+
+    const loadBalanceModal = document.getElementById(
+      "load-fund-statement-modal"
+    ) as HTMLDivElement;
+
+    const notificationsBackground = document.getElementById(
+      "notifications-background"
+    ) as HTMLDivElement;
 
     /**
      * Fetches the notifications for the user and populates the notifications section of the page.
@@ -84,7 +95,7 @@ export class NotificationsPageActions {
               // Create the title element
               const title = document.createElement("h3");
               title.className = "notification-item-title";
-              title.innerText = "Easy Pay";
+              title.innerText = `Easy Pay  [ ${notification.type} ]`;
 
               // Create the message element
               const message = document.createElement("p");
@@ -107,6 +118,67 @@ export class NotificationsPageActions {
 
               // Append the main notification container to the notifications section
               notificationsSection.appendChild(notificationDiv);
+
+              notificationDiv.onclick = () => {
+                switch (notification.type) {
+                  case "Load Balance":
+                    const showStatement = async () => {
+                      notificationsBackground.onclick = () => {
+                        notificationsBackground.classList.toggle("hidden");
+                        notificationsBackground.classList.toggle("block");
+                        loadBalanceModal.classList.toggle("translate-x-full");
+                      };
+
+                      const accessToken = UserUtils.getAccessToken();
+                      await StatementService.fetchLoadFundStatement(
+                        accessToken,
+                        notification.dataId
+                      )
+                        .then((transaction: ILoadFundStatement) => {
+                          console.log(transaction);
+                          notificationsBackground.classList.toggle("hidden");
+                          notificationsBackground.classList.toggle("block");
+
+                          loadBalanceModal.classList.toggle("translate-x-full");
+
+                          const user = UserUtils.getUserDetails();
+
+                          // Update the HTML elements with the data from the transaction
+                          document.getElementById(
+                            "load-bank-name"
+                          )!.textContent = transaction.name;
+                          document.getElementById("processed-by")!.textContent =
+                            user?.username ?? "N/A";
+                          document.getElementById("date-time")!.textContent =
+                            DateUtils.formatDate(transaction.createdAt);
+                          document.getElementById(
+                            "amount"
+                          )!.textContent = `NPR ${parseFloat(
+                            transaction.amount
+                          ).toFixed(2)}`;
+
+                          document.getElementById(
+                            "source-bank-name"
+                          )!.textContent = transaction.name;
+                          document.getElementById("purpose")!.textContent =
+                            transaction.purpose;
+                          document.getElementById("remarks")!.textContent =
+                            transaction.remarks;
+                        })
+                        .catch((e) => {
+                          Toast.showToast(e.message);
+                        });
+                    };
+
+                    showStatement();
+                    break;
+                  case "Balance Transfer":
+                    console.log("balance transfer");
+                    break;
+                  default:
+                    break;
+                }
+              };
             });
 
             const pageNumbers = document.getElementById(
@@ -183,5 +255,14 @@ export class NotificationsPageActions {
     };
 
     fetchTheNotifications(token, 1, pageSize);
+
+    const closeModalButton = document.getElementById(
+      "close-load-fund-statement-modal"
+    ) as HTMLElement;
+    closeModalButton.onclick = () => {
+      notificationsBackground.classList.toggle("hidden");
+      notificationsBackground.classList.toggle("block");
+      loadBalanceModal.classList.toggle("translate-x-full");
+    };
   };
 }
