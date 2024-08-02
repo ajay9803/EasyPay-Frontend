@@ -48,11 +48,11 @@ Make sure you have Node.js and npm installed on your machine.
 ### Steps
 1. Clone the repository:
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/ajay9803/EasyPay-Frontend
     ```
 2. Navigate to the project directory:
     ```bash
-    cd <project_directory>
+    cd EasyPay-Frontend
     ```
 3. Install dependencies:
     ```bash
