@@ -12,7 +12,7 @@
 }
 
 .load-balance-card {
-  @apply mt-10 px-5 py-5 ;
+  @apply mt-10 px-5 py-5;
 }
 
 .load-balance-card-head {
@@ -71,3 +71,4 @@
 .bank-account-number {
   @apply text-white font-semibold tracking-widest;
 }
+

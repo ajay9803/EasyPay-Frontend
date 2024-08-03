@@ -62,8 +62,6 @@ export class QuizPageActions {
 
       const accessToken = UserUtils.getAccessToken();
 
-      console.log("The points scored is: ", points);
-
       /**
        * Initiate create quiz data to store today's points
        */
@@ -172,10 +170,14 @@ export class QuizPageActions {
          *
          * @return {void}
          */
-        nextButton.onclick = () => {
+        nextButton.onclick = (): void => {
           if (counter === slides.length - 1) {
             return;
           } else {
+            if (counter !== userAnswers.length - 1) {
+              Toast.showToast("Please answer the question to continue.");
+              return;
+            }
             counter++;
             if (counter === slides.length - 1) {
               nextButton.style.display = "none";

@@ -7,7 +7,9 @@ import Navigator from "../utils/navigate";
 import UserUtils from "../utils/user";
 import { Toast } from "../utils/toast";
 import QuizService from "../services/quiz";
-import { QUIZ_PATH } from "../constants/routes";
+import { LOGIN_PATH, QUIZ_PATH } from "../constants/routes";
+import { MAIN_LOGO_PATH } from "../constants/images_path";
+import { Slides } from "../utils/ui/slides";
 
 let viewAmount: boolean = false;
 
@@ -132,38 +134,16 @@ export class HomeActions {
       homeSection.style.display = "none";
       dashboardSection.style.display = "flex flex-col";
 
-      const slides = document.querySelectorAll(
-        ".carousel-inner-img"
-      ) as NodeListOf<HTMLImageElement>;
-      let counter = 0;
-      let direction = 1;
+      const sliderSection = document.getElementById(
+        "dashboard-slider"
+      ) as HTMLDivElement;
 
-      slides.forEach((slide, index) => {
-        slide.style.left = `${index * 100}%`;
-      });
-
-      /**
-       * Slides the images in the carousel.
-       *
-       * @returns {void}
-       */
-      const slideImage = (): void => {
-        slides.forEach((slide) => {
-          slide.style.transform = `translateX(-${counter * 100}%)`;
-        });
-      };
-
-      setInterval(() => {
-        counter += direction;
-
-        if (counter === slides.length - 1) {
-          direction = -1;
-        } else if (counter === 0) {
-          direction = 1;
-        }
-
-        slideImage();
-      }, 2000);
+      const images = [
+        "https://www.forbes.com/advisor/wp-content/uploads/2023/08/image1-25.png",
+        "https://adyen.getbynder.com/transform/4298074a-0912-4f9d-972c-7ba9270df075/blog-header-digital-wallets",
+        "https://www.forbes.com/advisor/wp-content/uploads/2023/08/image1-25.png",
+      ];
+      new Slides(sliderSection, images);
     }
   };
 
@@ -195,48 +175,22 @@ export class HomeActions {
     };
   };
 
-  static getQuickTransactions: () => void = () => {
-    const quickTransactions: { name: string; imageUrl: string }[] = [
-      {
-        name: "Test1",
-        imageUrl:
-          "https://plus.unsplash.com/premium_photo-1683121366070-5ceb7e007a97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
-      },
-      {
-        name: "Test2",
-        imageUrl:
-          "https://plus.unsplash.com/premium_photo-1683121366070-5ceb7e007a97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
-      },
-      {
-        name: "Test3",
-        imageUrl:
-          "https://plus.unsplash.com/premium_photo-1683121366070-5ceb7e007a97?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
-      },
+  /**
+   * Loads the slider with the given images.
+   *
+   * @returns {void} This function does not return anything.
+   */
+  static loadSlider: () => void = (): void => {
+    const sliderSection = document.getElementById(
+      "slider-section"
+    ) as HTMLDivElement;
+
+    const images = [
+      "https://www.cognyte.com/wp-content/uploads/2022/03/Digital_wallet_02_1920X960-01.jpg",
+      "https://www.cuinsight.com/wp-content/uploads/2022/12/bigstock-Smartphone-And-Internet-Bankin-426663185.jpg",
+      "https://cdn.aarp.net/content/dam/aarp/home-and-family/personal-technology/2021/12/1140-smartphone-digital-wallet.jpg",
     ];
-
-    const quickTransactionsElement =
-      document.getElementById("quick-transactions");
-
-    quickTransactions.forEach((transaction) => {
-      const quickTransaction = document.createElement("div") as HTMLDivElement;
-      quickTransaction.classList.add("quick-transaction");
-
-      const quickTransactionImage = document.createElement(
-        "div"
-      ) as HTMLDivElement;
-      quickTransactionImage.style.backgroundImage = `URL(${transaction.imageUrl})`;
-      quickTransactionImage.classList.add("quick-transaction-image");
-      quickTransaction.appendChild(quickTransactionImage);
-
-      const quickTransactionTitle = document.createElement(
-        "p"
-      ) as HTMLParagraphElement;
-      quickTransactionTitle.innerHTML = transaction.name;
-      quickTransactionTitle.classList.add("quick-transaction-title");
-      quickTransaction.appendChild(quickTransactionTitle);
-
-      quickTransactionsElement?.appendChild(quickTransaction);
-    });
+    new Slides(sliderSection, images);
   };
 
   /**
@@ -370,5 +324,17 @@ export class HomeActions {
           Toast.showToast(e.message);
         });
     };
+  };
+
+  static homeDashboardEvents = async () => {
+    const dummyElements = document.querySelectorAll(
+      ".dummy-feature"
+    ) as NodeListOf<HTMLParagraphElement>;
+
+    dummyElements.forEach((element) => {
+      element.onclick = () => {
+        Navigator.navigateTo(`/${LOGIN_PATH}`);
+      };
+    });
   };
 }

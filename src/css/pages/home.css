@@ -105,11 +105,11 @@
 }
 
 .transaction-amount-debit {
-  @apply text-sm font-semibold text-green-600;
+  @apply text-sm font-semibold text-green-800 ;
 }
 
 .transaction-amount-credit {
-  @apply text-sm font-semibold text-red-600;
+  @apply text-sm font-semibold text-red-600 hover:text-black;
 }
 
 .transaction-icon-debit {

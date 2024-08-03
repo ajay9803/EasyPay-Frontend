@@ -173,7 +173,6 @@ export class ManageUsersActions {
 
     cancelButton.onclick = () => {
       deleteModal.style.display = 'none';
-      console.log('cancel button clicked');
     };
 
     confirmDeleteButton.onclick = async () => {
@@ -181,7 +180,6 @@ export class ManageUsersActions {
       await UserService.deleteUser(accessToken, userId).then(async (data) => {
         Toast.showToast(data.message);
         await fetchTheUsers(currentPageNumber, pageSize);
-        
       }).catch((e) => {
         Toast.showToast(e.message);
       }).finally(() => {

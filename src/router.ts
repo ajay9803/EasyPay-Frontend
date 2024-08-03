@@ -132,6 +132,7 @@ export class Router {
       hash.includes("/login") ||
       hash.includes("/register") ||
       hash.includes("/home") ||
+      hash.includes("/about-us") ||
       hash.includes("/verify-otp") ||
       hash.includes("/set-new-password") ||
       hash.includes("/forgot-password");
@@ -140,7 +141,6 @@ export class Router {
       const content = await staticRoute.component.load();
       document.getElementById("body")!.innerHTML = content;
       staticRoute.component.initEventListeners();
-      console.log("route normal");
     } else {
       document.getElementById("body")!.innerHTML = await NotFoundPage.load();
     }
@@ -191,7 +191,6 @@ export class Router {
           // If no static route exists for the current hash, load and display the 404 page
           document.getElementById("body")!.innerHTML =
             await NotFoundPage.load();
-          console.log("route not found");
         }
       }
     }
@@ -203,6 +202,7 @@ export class Router {
    * @return {void} Promise that resolves when the content is updated.
    */
   static handleRouteChange(): void {
+    console.log("Route change detected");
     Header.initEventListeners();
     Router.loadContent();
   }

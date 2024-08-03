@@ -39,6 +39,13 @@ class KycFormActions {
       "citizenship-image-error"
     ) as HTMLParagraphElement;
 
+    const loadingStatus = document.getElementById(
+      "loading-status"
+    ) as HTMLDivElement;
+    const kycButtonContent = document.getElementById(
+      "kyc-button-content"
+    ) as HTMLParagraphElement;
+
     /**
      * Removes all error messages from the form.
      * Removes the error border of the input fields
@@ -75,12 +82,22 @@ class KycFormActions {
         .validate(formObject, { abortEarly: false })
         .then(async () => {
           const accessToken = UserUtils.getAccessToken();
+
+          loadingStatus.style.display = "block";
+
+          kycButtonContent.innerHTML = "";
+
           await KycService.applyForKyc(accessToken, formObject)
             .then((data: string) => {
               Toast.showToast(data);
             })
             .catch((e: any) => {
               Toast.showToast(e.message);
+            })
+            .finally(() => {
+              loadingStatus.style.display = "none";
+              kycButtonContent.innerHTML = "Continue";
+              // kycForm.reset();
             });
         })
         .catch((err) => {

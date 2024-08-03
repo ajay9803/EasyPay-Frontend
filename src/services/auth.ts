@@ -1,6 +1,7 @@
 import { HOST_NAME } from "../constants/auth";
 import { INewUser, IUser } from "../interfaces/user";
 import { Router } from "../router";
+import { handleError } from "../utils/error_handler";
 import { Toast } from "../utils/toast";
 
 /**
@@ -39,7 +40,8 @@ class AuthService {
         return jsonData;
       }
     } catch (e: any) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -189,7 +191,8 @@ class AuthService {
         return jsonData.user;
       }
     } catch (e: any) {
-      Toast.showToast(e.message);
+      const error = handleError(e);
+      throw error;
     }
   };
 }

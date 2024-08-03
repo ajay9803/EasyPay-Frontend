@@ -1,4 +1,5 @@
 import { HOST_NAME } from "../constants/auth";
+import { handleError } from "../utils/error_handler";
 
 class UserSocketService {
   static createSocket = async (token: string, socketId: string) => {
@@ -23,8 +24,9 @@ class UserSocketService {
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -41,16 +43,15 @@ class UserSocketService {
 
       const jsonData = await response.json();
 
-      console.log("Deleting the socket.");
 
-      console.log("The json data on deletion is: ", jsonData);
       if (response.status === 200) {
         return jsonData;
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 }

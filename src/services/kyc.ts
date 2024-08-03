@@ -1,5 +1,6 @@
 import { HOST_NAME } from "../constants/auth";
 import { IKycApplication } from "../interfaces/kyc";
+import { handleError } from "../utils/error_handler";
 
 /**
  * The KycService class provides methods for interacting with the KYC API.
@@ -50,7 +51,8 @@ class KycService {
         throw new Error(jsonData.message);
       }
     } catch (e: any) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -79,7 +81,8 @@ class KycService {
           throw new Error(jsonData.message);
         }
       } catch (e) {
-        throw e;
+        const error = handleError(e);
+      throw error;
       }
     };
 
@@ -116,7 +119,8 @@ class KycService {
         throw new Error(jsonData.message);
       }
     } catch (e) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -159,7 +163,8 @@ class KycService {
         throw new Error(jsonData.message);
       }
     } catch (e) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 }

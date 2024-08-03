@@ -1,5 +1,5 @@
 import { MAIN_LOGO_PATH } from "../constants/images_path";
-import { HOME_PATH, STATEMENTS_PATH } from "../constants/routes";
+import { HOME_PATH, LOGIN_PATH, STATEMENTS_PATH } from "../constants/routes";
 import Theme from "../enums/theme";
 import { INotification } from "../interfaces/notification";
 import { Router } from "../router";
@@ -7,6 +7,7 @@ import NotificationService from "../services/notification";
 import DateUtils from "../utils/date";
 import Navigator from "../utils/navigate";
 import UserUtils from "../utils/user";
+import { userSocket } from "./main";
 
 export class HeaderActions {
   /**
@@ -83,8 +84,10 @@ export class HeaderActions {
     ) as HTMLDivElement;
 
     logoutButton.onclick = async () => {
+      userSocket.disconnect();
       localStorage.clear();
-      window.history.pushState(null, "", "/#/login");
+
+      Navigator.navigateTo(`/${LOGIN_PATH}`);
       Router.handleRouteChange();
     };
   };
@@ -95,7 +98,6 @@ export class HeaderActions {
    */
   static getLoggedInState: () => void = () => {
     const user = localStorage.getItem("user");
-    console.log("The logged in state is: ", user);
 
     const logoutButton = document.getElementById(
       "log-out-button"
@@ -261,7 +263,6 @@ export class HeaderActions {
     };
 
     userMenuBackground.onclick = () => {
-      console.log("background clicked");
       userMenuBackground.style.display = "none";
       menu.classList.toggle("-translate-x-full");
     };
@@ -304,5 +305,28 @@ export class HeaderActions {
       closeSideMenu();
       Navigator.navigateTo(`/${STATEMENTS_PATH}`);
     };
+  };
+
+  static updateHeaderTabs = () => {
+    const hash = window.location.hash;
+
+    const route = hash.split("#")[1];
+
+    console.log(route);
+
+    const headerTabs = document.querySelectorAll(
+      ".header-tab-item"
+    ) as NodeListOf<HTMLAnchorElement>;
+
+    console.log(headerTabs);
+    headerTabs.forEach((item) => {
+      item.classList.remove("header-tab-item-active");
+
+      if (item.href.includes(route)) {
+        item.classList.add("header-tab-item-active");
+      } else {
+        item.classList.add("header-tab-item");
+      }
+    });
   };
 }

@@ -43,13 +43,13 @@ export class LoginActions {
       passwordErrorMessageElement.innerHTML = "";
     };
 
-    const loginButton = document.getElementById(
-      "login-button"
-    ) as HTMLButtonElement;
-
     const loginButtonContent = document.getElementById(
       "login-button-content"
     ) as HTMLParagraphElement;
+
+    const loadingStatus = document.getElementById(
+      "loading-status"
+    ) as HTMLDivElement;
 
     /**
      * Handles the input event for the email input field.
@@ -129,7 +129,8 @@ export class LoginActions {
        * Shows a loading state
        */
       if (isFormValid) {
-        loginButtonContent.innerHTML = "Loading";
+        loginButtonContent.innerHTML = "";
+        loadingStatus.style.display = "block";
 
         await AuthService.login(emailInput.value, passwordInput.value)
           .then((jsonData: any) => {
@@ -157,20 +158,23 @@ export class LoginActions {
           })
           .finally(() => {
             loginButtonContent.innerHTML = "login";
+            loadingStatus.style.display = "none";
           });
       }
 
       return isFormValid;
     };
 
+    const loginForm = document.getElementById("login-form") as HTMLFormElement;
+
     /**
-     * Handles the click event for the login button.
+     * Adds a submit event listener to the login form.
      *
-     * @returns {void}
+     * @param {SubmitEvent} e - The submit event object.
      */
-    loginButton.onclick = (e: MouseEvent) => {
+    loginForm.addEventListener("submit", (e: SubmitEvent) => {
       e.preventDefault();
       validateForm();
-    };
+    });
   };
 }

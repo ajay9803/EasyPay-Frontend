@@ -1,5 +1,6 @@
 import { HOST_NAME } from "../constants/auth";
 import { INotification } from "../interfaces/notification";
+import { handleError } from "../utils/error_handler";
 
 /**
  * Class representing the Notification Service.
@@ -44,7 +45,8 @@ class NotificationService {
         throw new Error(jsonData.message);
       }
     } catch (e) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 }

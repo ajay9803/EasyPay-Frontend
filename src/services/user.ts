@@ -1,6 +1,7 @@
 import { HOST_NAME } from "../constants/auth";
 import { IBalanceTransfer } from "../interfaces/balance";
 import { IUser } from "../interfaces/user";
+import { handleError } from "../utils/error_handler";
 
 /**
  * Represents a service class for interacting with the user API.
@@ -37,7 +38,8 @@ class UserService {
         throw new Error(jsonData.message);
       }
     } catch (e: any) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -89,7 +91,8 @@ class UserService {
         throw new Error(jsonData.message);
       }
     } catch (e: any) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -132,7 +135,8 @@ class UserService {
         throw new Error(jsonData.message);
       }
     } catch (e: any) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -167,8 +171,9 @@ class UserService {
         } else {
           throw new Error(jsonData.message);
         }
-      } catch (e) {
-        throw e;
+      } catch (e: any) {
+        const error = handleError(e);
+      throw error;
       }
     };
 
@@ -215,8 +220,9 @@ class UserService {
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -266,8 +272,9 @@ class UserService {
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -314,8 +321,9 @@ class UserService {
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -349,8 +357,9 @@ class UserService {
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -377,8 +386,9 @@ class UserService {
         } else {
           throw new Error(jsonData.message);
         }
-      } catch (e) {
-        throw e;
+      } catch (e: any) {
+        const error = handleError(e);
+      throw error;
       }
     };
 
@@ -402,8 +412,9 @@ class UserService {
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -429,8 +440,9 @@ class UserService {
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -455,8 +467,9 @@ class UserService {
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 }

@@ -1,5 +1,6 @@
 import { HOST_NAME } from "../constants/auth";
 import { ILoadFundStatement } from "../interfaces/statement";
+import { handleError } from "../utils/error_handler";
 
 /**
  * The StatementService class provides methods for fetching balance transfer statements.
@@ -66,8 +67,9 @@ class StatementService {
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -99,8 +101,9 @@ class StatementService {
       } else {
         throw new Error(jsonData.message);
       }
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const error = handleError(e);
+      throw error;
     }
   };
 }

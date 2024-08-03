@@ -51,7 +51,7 @@ export class LoadBalancePageActions {
 
       const modalContainer = document.createElement("div");
       modalContainer.classList.add("load-fund-modal-container");
-      modalContainer.classList.add("body");
+      modalContainer.classList.add("load-fund-modal-container");
 
       /**
        * Prevents user interaction with the modal container when clicked

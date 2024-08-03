@@ -1,9 +1,13 @@
 .load-fund-modal {
-  @apply bg-black bg-opacity-55 h-fit w-full fixed top-0 left-0 flex flex-col items-center justify-center;
+  @apply bg-black bg-opacity-55 min-h-screen w-full fixed top-0 left-0 flex flex-col items-center justify-center;
 }
 
 .load-fund-modal-container {
   @apply shadow-white shadow-sm rounded-lg p-6 w-full flex flex-col  max-w-sm;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+  transition: color 0.5s ease-in;
 }
 
 .load-fund-modal-header {
@@ -34,7 +38,7 @@
   @apply bg-gray-500 text-white py-1.5 px-2 rounded hover:bg-gray-700 tracking-wider text-sm;
 }
 
-.buttons-section { 
+.buttons-section {
   @apply flex justify-between;
 }
 

@@ -1,4 +1,5 @@
 import { HOST_NAME } from "../constants/auth";
+import { handleError } from "../utils/error_handler";
 
 /**
  * Service class for handling quiz related operations.
@@ -25,7 +26,8 @@ class QuizService {
         throw new Error("Something went wrong.");
       }
     } catch (e: any) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -54,7 +56,8 @@ class QuizService {
         throw new Error(jsonData.message);
       }
     } catch (e: any) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 
@@ -88,7 +91,8 @@ class QuizService {
         throw new Error(jsonData.message);
       }
     } catch (e: any) {
-      throw e;
+      const error = handleError(e);
+      throw error;
     }
   };
 }

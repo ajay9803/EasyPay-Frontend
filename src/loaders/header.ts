@@ -22,5 +22,6 @@ export class Header {
     HeaderActions.userProfile();
     HeaderActions.notificationsButtonListeners();
     HeaderActions.menuListener();
+    HeaderActions.updateHeaderTabs();
   };
 }

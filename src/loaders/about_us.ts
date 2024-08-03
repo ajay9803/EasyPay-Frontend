@@ -1,3 +1,5 @@
+import { AboutUsPageActions } from "../scripts/about_us";
+
 /**
  * The class for About Us page.
  * @class
@@ -8,5 +10,7 @@ export class AboutUsPage {
     return response.text();
   };
 
-  static initEventListeners: () => void = () => {};
+  static initEventListeners: () => void = () => {
+    AboutUsPageActions.loadDots();
+  };
 }

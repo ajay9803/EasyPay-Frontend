@@ -50,6 +50,13 @@ export class RegisterActions {
       "confirm-password-error"
     ) as HTMLParagraphElement;
 
+    const loadingStatus = document.getElementById(
+      "loading-status"
+    ) as HTMLDivElement;
+    const registerButtonContent = document.getElementById(
+      "register-button-content"
+    ) as HTMLParagraphElement;
+
     /**
      * Clears the error messages and removes the "error-border" class from the input fields.
      *
@@ -93,6 +100,9 @@ export class RegisterActions {
         // Validate the form object with registerSchema
         await registerSchema.validate(formObject, { abortEarly: false });
 
+        registerButtonContent.innerHTML = "";
+        loadingStatus.style.display = "block";
+
         // Send OTP
         await AuthService.sendSignupOtp({
           username: formObject.fullName as string,
@@ -100,7 +110,16 @@ export class RegisterActions {
           dob: formObject.dob as string,
           gender: formObject.gender as string,
           password: formObject.password as string,
-        });
+        })
+          .then((_) => {})
+          .catch((e) => {
+            Toast.showToast(e.message);
+          })
+          .finally(() => {
+            loadingStatus.style.display = "none";
+            registerButtonContent.innerHTML = "Register";
+            signupForm.reset();
+          });
       } catch (err) {
         /**
          * Display error messages in the form if validation fails

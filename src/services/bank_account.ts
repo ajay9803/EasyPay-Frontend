@@ -1,5 +1,6 @@
 import { HOST_NAME } from "../constants/auth";
 import { IBankAccount } from "../interfaces/bank_account";
+import { handleError } from "../utils/error_handler";
 
 /**
  * Class representing the bank account service.
@@ -27,7 +28,8 @@ class BankAccountService {
         }
         return jsonData.accounts;
       } catch (e: any) {
-        throw e;
+        const error = handleError(e);
+      throw error;
       }
     };
 }

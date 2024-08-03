@@ -22,8 +22,9 @@ export class HomePage {
     HomeActions.refreshIconEventlisteners();
     HomeActions.updateHomeView();
     HomeActions.toggleViewAmount();
-    HomeActions.getQuickTransactions();
+    HomeActions.loadSlider();
     HomeActions.getRecentTransactions();
     HomeActions.quizButtonEvenListener();
+    HomeActions.homeDashboardEvents();
   };
 }

@@ -135,7 +135,6 @@ export class NotificationsPageActions {
                         notification.dataId
                       )
                         .then((transaction: ILoadFundStatement) => {
-                          console.log(transaction);
                           notificationsBackground.classList.toggle("hidden");
                           notificationsBackground.classList.toggle("block");
 
@@ -173,7 +172,6 @@ export class NotificationsPageActions {
                     showStatement();
                     break;
                   case "Balance Transfer":
-                    console.log("balance transfer");
                     break;
                   default:
                     break;

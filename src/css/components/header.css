@@ -18,7 +18,13 @@
 }
 
 .header-tab-item {
-  @apply bg-gradient-to-tr from-blue-700 to-blue-500 rounded-3xl px-2 md:px-6 py-2 text-white text-sm font-semibold cursor-pointer flex flex-row justify-center gap-x-2 items-center flex-1;
+  @apply rounded-3xl px-2 md:px-6 py-2 border border-solid text-sm font-semibold cursor-pointer flex flex-row justify-center gap-x-2 items-center flex-1 hover:bg-gradient-to-tr hover:from-blue-700 hover:to-blue-500 hover:text-white;
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.header-tab-item-active {
+  @apply rounded-3xl px-2 md:px-6 py-2 border border-solid border-black text-sm font-semibold cursor-pointer flex flex-row justify-center gap-x-2 items-center flex-1 hover:bg-gradient-to-tr hover:from-blue-700 hover:to-blue-500 hover:text-white bg-gradient-to-tr from-blue-700 to-blue-500 text-white;
 }
 
 .user-profile-item {

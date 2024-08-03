@@ -234,7 +234,6 @@ export class UserProfileActions {
       const accessToken = UserUtils.getAccessToken();
       await UserService.redeeemEasyPayPoints(accessToken)
         .then(async (data) => {
-          console.log(data);
           Toast.showToast(data.message);
           const user: IUser = await AuthService.fetchUser(accessToken);
 
