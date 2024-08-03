@@ -10,11 +10,5 @@ export class Toast {
     messageElement.innerHTML = errorMessage;
 
     app.appendChild(messageElement);
-
-    setTimeout(() => {
-      if (messageElement.parentElement) {
-        messageElement.parentElement.removeChild(messageElement);
-      }
-    }, 3000);
   };
 }

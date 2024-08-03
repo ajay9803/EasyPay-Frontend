@@ -20,12 +20,8 @@ export class AdminDashboardActions {
     if (subRoute === "manage-users") {
       manageUsers.classList.add("bg-sky-600");
       manageUsers.classList.add("text-white");
-      kycApplications.classList.add("bg-white");
-      kycApplications.classList.add("text-black");
     } else {
       kycApplications.classList.add("bg-sky-600");
-      manageUsers.classList.add("text-black");
-      manageUsers.classList.add("bg-white");
       kycApplications.classList.add("text-white");
     }
 
