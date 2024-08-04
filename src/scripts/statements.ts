@@ -145,6 +145,7 @@ export class StatementsActions {
     statementFilterForm.addEventListener(
       "submit",
       async (e: SubmitEvent): Promise<void> => {
+        currentPageNumber = 1;
         e.preventDefault();
         if (!startDateInput.value || !endDateInput.value) {
           Toast.showToast("Please select Start and End date.");
@@ -164,7 +165,7 @@ export class StatementsActions {
     };
 
     let currentPageNumber = 1;
-    const pageSize = 10;
+    const pageSize = 1;
 
     /**
      * Fetches balance transfer statements based on the selected filters.

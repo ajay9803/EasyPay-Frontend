@@ -60,11 +60,11 @@
 }
 
 .toggle-button-switcher-left {
-  @apply w-6 h-6 rounded-full bg-blue-900 absolute top-1/2 transform -translate-y-1/2 -left-3 cursor-pointer transition-all ease-in;
+  @apply w-6 h-6 rounded-full bg-blue-900 absolute top-1/2 transform -translate-y-1/2 -left-3 cursor-pointer;
 }
 
 .toggle-button-switcher-right {
-  @apply w-6 h-6 rounded-full bg-blue-900 absolute top-1/2 transform -translate-y-1/2 -right-3 cursor-pointer transition-all ease-in;
+  @apply w-6 h-6 rounded-full bg-blue-900 absolute top-1/2 transform -translate-y-1/2 -right-3 cursor-pointer;
 }
 
 .login-button {

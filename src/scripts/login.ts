@@ -136,7 +136,6 @@ export class LoginActions {
           .then((jsonData: any) => {
             localStorage.setItem("user", JSON.stringify(jsonData.user));
             localStorage.setItem("access-token", jsonData.accessToken);
-            localStorage.setItem("refresh-token", jsonData.refreshToken);
 
             Toast.showToast(jsonData.message);
 

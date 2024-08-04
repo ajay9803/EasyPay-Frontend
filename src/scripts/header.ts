@@ -1,5 +1,10 @@
 import { MAIN_LOGO_PATH } from "../constants/images_path";
-import { HOME_PATH, LOGIN_PATH, STATEMENTS_PATH } from "../constants/routes";
+import {
+  ABOUT_US_PATH,
+  HOME_PATH,
+  LOGIN_PATH,
+  STATEMENTS_PATH,
+} from "../constants/routes";
 import Theme from "../enums/theme";
 import { INotification } from "../interfaces/notification";
 import { Router } from "../router";
@@ -304,6 +309,15 @@ export class HeaderActions {
     sideMenuTransactionButton.onclick = () => {
       closeSideMenu();
       Navigator.navigateTo(`/${STATEMENTS_PATH}`);
+    };
+
+    const sideMenuAboutUsButton = document.getElementById(
+      "side-menu-about-us"
+    ) as HTMLButtonElement;
+
+    sideMenuAboutUsButton.onclick = () => {
+      closeSideMenu();
+      Navigator.navigateTo(`/${ABOUT_US_PATH}`);
     };
   };
 

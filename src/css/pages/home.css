@@ -44,7 +44,7 @@
 }
 
 .add-icon {
-  @apply h-9 w-9 rounded-full border border-dotted border-purple-700;
+  @apply h-9 w-9 rounded-full border border-dotted border-blue-700;
 }
 
 .add-icon-title {
@@ -56,7 +56,7 @@
 }
 
 .quick-transaction-image {
-  @apply h-9 w-9 rounded-full border border-dotted border-purple-700;
+  @apply h-9 w-9 rounded-full border border-dotted border-blue-700;
 }
 
 .quick-transaction-title {
