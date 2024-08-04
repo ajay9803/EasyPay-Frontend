@@ -159,4 +159,42 @@ export class RegisterActions {
       }
     });
   };
+
+  /**
+   * Toggles the visibility of the password input field.
+   *
+   * @return {void} This function does not return anything.
+   */
+  static togglePasswordView = (): void => {
+    const viewPassword = document.getElementById(
+      "view-password"
+    ) as HTMLElement;
+    const hidePassword = document.getElementById(
+      "hide-password"
+    ) as HTMLElement;
+
+    const passwordInput = document.getElementById(
+      "password"
+    ) as HTMLInputElement;
+
+    if (passwordInput.type === "text") {
+      viewPassword.style.display = "none";
+      hidePassword.style.display = "block";
+    } else {
+      viewPassword.style.display = "block";
+      hidePassword.style.display = "none";
+    }
+
+    viewPassword.onclick = () => {
+      passwordInput.type = "text";
+      viewPassword.style.display = "none";
+      hidePassword.style.display = "block";
+    };
+
+    hidePassword.onclick = () => {
+      passwordInput.type = "password";
+      viewPassword.style.display = "block";
+      hidePassword.style.display = "none";
+    };
+  };
 }

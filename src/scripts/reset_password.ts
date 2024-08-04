@@ -99,4 +99,68 @@ export class ResetPasswordAction {
       }
     });
   };
+
+  static togglePasswordView = (): void => {
+    const viewPassword = document.getElementById(
+      "view-password"
+    ) as HTMLElement;
+    const hidePassword = document.getElementById(
+      "hide-password"
+    ) as HTMLElement;
+
+    const passwordInput = document.getElementById(
+      "old-password"
+    ) as HTMLInputElement;
+
+    const viewNewPassword = document.getElementById(
+      "view-new-password"
+    ) as HTMLElement;
+    const hideNewPassword = document.getElementById(
+      "hide-new-password"
+    ) as HTMLElement;
+
+    const newPasswordInput = document.getElementById(
+      "new-password"
+    ) as HTMLInputElement;
+
+    if (passwordInput.type === "text") {
+      viewPassword.style.display = "none";
+      hidePassword.style.display = "block";
+    } else {
+      viewPassword.style.display = "block";
+      hidePassword.style.display = "none";
+    }
+
+    viewPassword.onclick = () => {
+      passwordInput.type = "text";
+      viewPassword.style.display = "none";
+      hidePassword.style.display = "block";
+    };
+
+    hidePassword.onclick = () => {
+      passwordInput.type = "password";
+      viewPassword.style.display = "block";
+      hidePassword.style.display = "none";
+    };
+
+    if (newPasswordInput.type === "text") {
+      viewNewPassword.style.display = "none";
+      hideNewPassword.style.display = "block";
+    } else {
+      viewNewPassword.style.display = "block";
+      hideNewPassword.style.display = "none";
+    }
+
+    viewNewPassword.onclick = () => {
+      newPasswordInput.type = "text";
+      viewNewPassword.style.display = "none";
+      hideNewPassword.style.display = "block";
+    };
+
+    hideNewPassword.onclick = () => {
+      newPasswordInput.type = "password";
+      viewNewPassword.style.display = "block";
+      hideNewPassword.style.display = "none";
+    };
+  };
 }

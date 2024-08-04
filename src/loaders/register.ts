@@ -17,5 +17,6 @@ export class RegisterPage {
    */
   static initEventListeners: () => void = () => {
     RegisterActions.register();
+    RegisterActions.togglePasswordView();
   };
 }

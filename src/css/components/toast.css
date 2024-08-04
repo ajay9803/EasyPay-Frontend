@@ -17,6 +17,6 @@
 }
 
 .toast {
-  @apply fixed top-0 right-0 px-5 py-2 bg-gradient-to-br from-violet-800 to-sky-500 text-white font-semibold rounded-sm w-full md:w-80;
+  @apply fixed top-0 right-0 px-5 py-3 bg-gradient-to-br from-violet-800 to-sky-500 text-white font-semibold rounded-sm w-full md:w-80;
   animation: slideIn 0.5s ease-out forwards, slideOut 0.5s ease-in forwards 3s;
 }

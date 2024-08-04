@@ -1,7 +1,9 @@
 import { HOST_NAME } from "../constants/auth";
+import { LOGIN_PATH, VERIFY_OTP_PATH } from "../constants/routes";
 import { INewUser, IUser } from "../interfaces/user";
 import { Router } from "../router";
 import { handleError } from "../utils/error_handler";
+import Navigator from "../utils/navigate";
 import { Toast } from "../utils/toast";
 
 /**
@@ -82,8 +84,7 @@ class AuthService {
         Toast.showToast(jsonData.message);
 
         // Redirect to login page
-        history.pushState(null, "", "/#/login");
-        Router.handleRouteChange();
+        Navigator.navigateTo(`/${LOGIN_PATH}`);
 
         // Remove new user data from local storage
         localStorage.removeItem("new-user-data");
@@ -122,8 +123,8 @@ class AuthService {
       } else {
         Toast.showToast(jsonData.message);
         localStorage.setItem("new-user-data", JSON.stringify(user));
-        history.pushState(null, "", "/#/verify-otp");
-        Router.handleRouteChange();
+
+        Navigator.navigateTo(`/${VERIFY_OTP_PATH}`);
       }
     } catch (e: any) {
       Toast.showToast(e.message);

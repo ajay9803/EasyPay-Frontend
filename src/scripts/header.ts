@@ -312,13 +312,10 @@ export class HeaderActions {
 
     const route = hash.split("#")[1];
 
-    console.log(route);
-
     const headerTabs = document.querySelectorAll(
       ".header-tab-item"
     ) as NodeListOf<HTMLAnchorElement>;
 
-    console.log(headerTabs);
     headerTabs.forEach((item) => {
       item.classList.remove("header-tab-item-active");
 

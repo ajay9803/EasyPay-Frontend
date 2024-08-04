@@ -202,7 +202,6 @@ export class Router {
    * @return {void} Promise that resolves when the content is updated.
    */
   static handleRouteChange(): void {
-    console.log("Route change detected");
     Header.initEventListeners();
     Router.loadContent();
   }

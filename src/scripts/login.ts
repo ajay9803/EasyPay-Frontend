@@ -74,7 +74,7 @@ export class LoginActions {
      *
      * @return {void}
      */
-    passwordInput.oninput = () => {
+    passwordInput.oninput = (): void => {
       loginSchema
         .validateAt("password", { password: passwordInput.value })
         .then(() => {
@@ -176,5 +176,43 @@ export class LoginActions {
       e.preventDefault();
       validateForm();
     });
+  };
+
+  /**
+   * Toggles the visibility of the password field.
+   *
+   * @return {void}
+   */
+  static togglePasswordView = (): void => {
+    const viewPassword = document.getElementById(
+      "view-password"
+    ) as HTMLElement;
+    const hidePassword = document.getElementById(
+      "hide-password"
+    ) as HTMLElement;
+
+    const passwordInput = document.getElementById(
+      "password"
+    ) as HTMLInputElement;
+
+    if (passwordInput.type === "text") {
+      viewPassword.style.display = "none";
+      hidePassword.style.display = "block";
+    } else {
+      viewPassword.style.display = "block";
+      hidePassword.style.display = "none";
+    }
+
+    viewPassword.onclick = () => {
+      passwordInput.type = "text";
+      viewPassword.style.display = "none";
+      hidePassword.style.display = "block";
+    };
+
+    hidePassword.onclick = () => {
+      passwordInput.type = "password";
+      viewPassword.style.display = "block";
+      hidePassword.style.display = "none";
+    };
   };
 }

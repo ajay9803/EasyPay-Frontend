@@ -60,6 +60,10 @@ export class UserProfileActions {
 
       await KycService.fetchKycApplication(accessToken)
         .then((application: IKycApplication) => {
+          const kycImages = document.getElementById(
+            "kyc-images"
+          ) as HTMLDivElement;
+          kycImages.innerHTML = "";
           if (application.status !== "Verified") {
             Toast.showToast("Your KYC application is not verified yet.");
             return;
@@ -88,10 +92,6 @@ export class UserProfileActions {
           kycCid.textContent = DateUtils.formatToYYYYMMDD(
             application.citizenshipIssueDate
           );
-
-          const kycImages = document.getElementById(
-            "kyc-images"
-          ) as HTMLDivElement;
 
           const userImage = document.createElement("img") as HTMLImageElement;
           userImage.src = application.userPhotoUrl;

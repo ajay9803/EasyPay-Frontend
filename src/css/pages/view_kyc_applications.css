@@ -39,7 +39,7 @@
 }
 
 .kyc-img-div {
-  @apply text-sm mt-3 tracking-wider w-full;
+  @apply text-sm mt-3 tracking-wider w-32;
 }
 
 .kyc-img {

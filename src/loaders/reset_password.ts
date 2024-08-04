@@ -17,5 +17,6 @@ export class ResetPasswordPage {
    */
   static initEventListeners: () => void = () => {
     ResetPasswordAction.resetPassword();
+    ResetPasswordAction.togglePasswordView();
   };
 }
