@@ -165,7 +165,7 @@ export class StatementsActions {
     };
 
     let currentPageNumber = 1;
-    const pageSize = 1;
+    const pageSize = 10;
 
     /**
      * Fetches balance transfer statements based on the selected filters.
