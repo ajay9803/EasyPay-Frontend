@@ -35,7 +35,7 @@ The front end of Easy Pay is designed to provide an intuitive user experience fo
 - TypeScript
 
 ## Packages Used
-- socket.io
+- socket.io-client
 - html2canvas
 - jspdf
 - yup

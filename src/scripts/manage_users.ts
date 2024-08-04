@@ -21,7 +21,7 @@ export class ManageUsersActions {
     ) as HTMLButtonElement;
 
     let currentPageNumber: number = 1;
-    const pageSize: number = 1;
+    const pageSize: number = 5;
 
     const paginationControls = document.getElementById(
       "pagination-controls"
@@ -30,10 +30,12 @@ export class ManageUsersActions {
     const fetchTheUsers = async (page: number, size: number) => {
       const accessToken = UserUtils.getAccessToken();
       usersTableBody.innerHTML = "";
+      paginationControls.style.display = "none";
       await UserService.fetchUsers(accessToken, page, size)
         .then((data) => {
           data.users.forEach((user: IUser) => {
             const row = document.createElement("tr") as HTMLTableRowElement;
+            row.classList.add("users-row");
 
             const nameCell = document.createElement(
               "td"
@@ -101,66 +103,71 @@ export class ManageUsersActions {
             usersTableBody.appendChild(row);
           });
 
-          const pageNumbers = document.getElementById(
-            "page-numbers"
-          ) as HTMLDivElement;
-          const totalPages = Math.ceil(data.totalCount / pageSize);
-          pageNumbers.innerHTML = "";
+          if (data.totalPages > pageSize) {
+            paginationControls.style.display = "flex";
+            const pageNumbers = document.getElementById(
+              "page-numbers"
+            ) as HTMLDivElement;
+            const totalPages = Math.ceil(data.totalCount / pageSize);
+            pageNumbers.innerHTML = "";
 
-          const prevPageButton = document.getElementById(
-            "prev-page"
-          ) as HTMLButtonElement;
-          const nextPageButton = document.getElementById(
-            "next-page"
-          ) as HTMLButtonElement;
+            const prevPageButton = document.getElementById(
+              "prev-page"
+            ) as HTMLButtonElement;
+            const nextPageButton = document.getElementById(
+              "next-page"
+            ) as HTMLButtonElement;
 
-          // Add event listeners to the prev and next page buttons
-          prevPageButton.onclick = async () => {
-            currentPageNumber--;
-            await fetchTheUsers(currentPageNumber, pageSize);
-          };
-
-          nextPageButton.onclick = async () => {
-            currentPageNumber++;
-            await fetchTheUsers(currentPageNumber, pageSize);
-          };
-
-          /**
-           * Disable prev and next button based on the current page number
-           */
-          if (currentPageNumber === 1) {
-            prevPageButton.disabled = true;
-            prevPageButton.style.cursor = "not-allowed";
-          } else {
-            prevPageButton.disabled = false;
-            prevPageButton.style.cursor = "pointer";
-          }
-
-          if (currentPageNumber === totalPages) {
-            nextPageButton.disabled = true;
-            nextPageButton.style.cursor = "not-allowed";
-          } else {
-            nextPageButton.disabled = false;
-            nextPageButton.style.cursor = "pointer";
-          }
-
-          /**
-           * Create page number buttons
-           */
-          for (let i = 1; i <= totalPages; i++) {
-            const pageNumber = document.createElement("div") as HTMLDivElement;
-            pageNumber.innerHTML = i.toString();
-            pageNumber.classList.add("page-number");
-            if (i === currentPageNumber) {
-              pageNumber.classList.add("bg-blue-500", "text-white");
-            } else {
-              pageNumber.classList.remove("bg-blue-500");
-            }
-            pageNumbers.appendChild(pageNumber);
-            pageNumber.onclick = async () => {
-              currentPageNumber = i;
+            // Add event listeners to the prev and next page buttons
+            prevPageButton.onclick = async () => {
+              currentPageNumber--;
               await fetchTheUsers(currentPageNumber, pageSize);
             };
+
+            nextPageButton.onclick = async () => {
+              currentPageNumber++;
+              await fetchTheUsers(currentPageNumber, pageSize);
+            };
+
+            /**
+             * Disable prev and next button based on the current page number
+             */
+            if (currentPageNumber === 1) {
+              prevPageButton.disabled = true;
+              prevPageButton.style.cursor = "not-allowed";
+            } else {
+              prevPageButton.disabled = false;
+              prevPageButton.style.cursor = "pointer";
+            }
+
+            if (currentPageNumber === totalPages) {
+              nextPageButton.disabled = true;
+              nextPageButton.style.cursor = "not-allowed";
+            } else {
+              nextPageButton.disabled = false;
+              nextPageButton.style.cursor = "pointer";
+            }
+
+            /**
+             * Create page number buttons
+             */
+            for (let i = 1; i <= totalPages; i++) {
+              const pageNumber = document.createElement(
+                "div"
+              ) as HTMLDivElement;
+              pageNumber.innerHTML = i.toString();
+              pageNumber.classList.add("page-number");
+              if (i === currentPageNumber) {
+                pageNumber.classList.add("bg-blue-500", "text-white");
+              } else {
+                pageNumber.classList.remove("bg-blue-500");
+              }
+              pageNumbers.appendChild(pageNumber);
+              pageNumber.onclick = async () => {
+                currentPageNumber = i;
+                await fetchTheUsers(currentPageNumber, pageSize);
+              };
+            }
           }
         })
         .catch((e) => {
@@ -172,19 +179,23 @@ export class ManageUsersActions {
     fetchTheUsers(1, pageSize);
 
     cancelButton.onclick = () => {
-      deleteModal.style.display = 'none';
+      deleteModal.style.display = "none";
+      fetchTheUsers(currentPageNumber, pageSize);
     };
 
     confirmDeleteButton.onclick = async () => {
       const accessToken = UserUtils.getAccessToken();
-      await UserService.deleteUser(accessToken, userId).then(async (data) => {
-        Toast.showToast(data.message);
-        await fetchTheUsers(currentPageNumber, pageSize);
-      }).catch((e) => {
-        Toast.showToast(e.message);
-      }).finally(() => {
-        deleteModal.style.display = "none";
-      });
+      await UserService.deleteUser(accessToken, userId)
+        .then(async (data) => {
+          Toast.showToast(data.message);
+          await fetchTheUsers(currentPageNumber, pageSize);
+        })
+        .catch((e) => {
+          Toast.showToast(e.message);
+        })
+        .finally(() => {
+          deleteModal.style.display = "none";
+        });
     };
   };
 }

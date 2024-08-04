@@ -10,3 +10,7 @@
 .delete-modal {
   background-color: var(--modal-color);
 }
+
+.users-row {
+  @apply cursor-pointer;
+}
