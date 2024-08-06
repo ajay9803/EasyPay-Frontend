@@ -1,7 +1,6 @@
 import { HOST_NAME } from "../constants/auth";
 import { LOGIN_PATH, VERIFY_OTP_PATH } from "../constants/routes";
 import { INewUser, IUser } from "../interfaces/user";
-import { Router } from "../router";
 import { handleError } from "../utils/error_handler";
 import Navigator from "../utils/navigate";
 import { Toast } from "../utils/toast";

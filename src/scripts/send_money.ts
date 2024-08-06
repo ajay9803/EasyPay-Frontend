@@ -82,6 +82,14 @@ export class SendMoneyActions {
       "send-money-button"
     ) as HTMLButtonElement;
 
+    const cancelSendMoneyButton = document.getElementById(
+      "send-money-cancel-button"
+    ) as HTMLButtonElement;
+
+    cancelSendMoneyButton.onclick = () => {
+      history.back();
+    };
+
     /**
      * Clear the send money form when the clear button is clicked.
      *
